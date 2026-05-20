@@ -1,0 +1,6 @@
+{
+  "name": "Promptly",
+  "description": "A premier software development engineering agency implementing custom digital experiences, intelligent cloud architectures, and agentic AI solutions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
