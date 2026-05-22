@@ -11,14 +11,14 @@ export const CLIENT_LOGOS = [
 
 export const AGENCY_STATS = [
   {
-    value: 250,
+    value: 50,
     suffix: "+",
     label: "Engineers & Specialists",
     decimals: 0,
     accent: "cyan",
   },
   {
-    value: 12,
+    value: 5,
     suffix: "y",
     label: "Years of Delivery",
     decimals: 0,
@@ -32,7 +32,7 @@ export const AGENCY_STATS = [
     accent: "violet",
   },
   {
-    value: 140,
+    value: 50,
     suffix: "+",
     label: "Products Shipped",
     decimals: 0,

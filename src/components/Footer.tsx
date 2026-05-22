@@ -38,10 +38,10 @@ export default function Footer({ setActiveView }: FooterProps) {
 
   const nav = {
     solutions: [
-      { label: "AI & Cognitive Systems", view: "services" as ViewType },
-      { label: "Cloud Architecture", view: "services" as ViewType },
-      { label: "SaaS & Web Products", view: "services" as ViewType },
-      { label: "Mobile Engineering", view: "services" as ViewType },
+      { label: "Web Applications", view: "services" as ViewType },
+      { label: "AI Automation", view: "services" as ViewType },
+      { label: "AI Systems", view: "services" as ViewType },
+      { label: "App Development", view: "services" as ViewType },
     ],
     company: [
       { label: "About", view: "about" as ViewType },
@@ -148,7 +148,7 @@ export default function Footer({ setActiveView }: FooterProps) {
                   <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/10">
                     <MapPin className="h-3.5 w-3.5 text-indigo-400" />
                   </span>
-                  Global remote · UTC+0 core hours
+                  Lahore, Pakistan
                 </p>
               </div>
             </div>
