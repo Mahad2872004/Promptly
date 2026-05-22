@@ -170,7 +170,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
   {
     id: "team-1",
     name: "Mahad Mateen",
-    role: "Agency CEO & Principal Architect",
+    role: "CEO & Principal Architect",
     bio: "Mahad has spent 5 years orchestrating high-throughput distributed architectures, microservices, and secure API gateways. He loves elegant typography and clean database schemas.",
     specialties: ["System Architecture", "TypeScript", "Express.js", "PostgreSQL", "Scaling"],
     svgAvatarIndex: 1
