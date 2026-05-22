@@ -190,6 +190,14 @@ export const TEAM_MEMBERS: TeamMember[] = [
     bio: "Rabiya has spent 5 years building high-performance web applications and mobile apps. She loves clean and efficient user interfaces.",
     specialties: ["UI/UX Design", "Figma", "Wireframing", "Prototyping", "User Research","Design Systems","Branding","Saas Design"],
     svgAvatarIndex: 3
+  },
+  {
+    id: "team-4",
+    name: "Saim Mehmood",
+    role: "Senior Animation Engineer",
+    bio: "Saim has spent 5 years building high-performance web applications and mobile apps. She loves clean and efficient user interfaces.",
+    specialties: ["UI/UX Design", "Blender", "3D Animations", "After Affects", "Figma", "Wireframing", "Prototyping", "User Research","Design Systems","Branding","Saas Design"],
+    svgAvatarIndex: 3
   }
 ];
 
