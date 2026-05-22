@@ -1,11 +1,55 @@
 import React, { useState } from "react";
 import { ViewType } from "../types";
-import { AGENCY_SERVICES, CASE_STUDIES } from "../data";
-import { Terminal, Cpu, Cloud, Smartphone, Monitor, ArrowRight, ShieldCheck, Zap, Activity, Users, FileLock, Layers } from "lucide-react";
+import { AGENCY_SERVICES, CASE_STUDIES, CLIENT_TESTIMONIALS, TEAM_MEMBERS } from "../data";
+import {
+  CLIENT_LOGOS,
+  AGENCY_STATS,
+  STAT_CARD_STYLES,
+  PROCESS_STEPS,
+  TESTIMONIAL_AVATARS,
+} from "../data/landing";
+import ScrollReveal from "./ui/ScrollReveal";
+import AnimatedCounter from "./ui/AnimatedCounter";
+import {
+  Cpu,
+  Cloud,
+  Smartphone,
+  Monitor,
+  ArrowRight,
+  ShieldCheck,
+  Sparkles,
+  Star,
+  Users,
+  Zap,
+  ChevronRight,
+  Play,
+} from "lucide-react";
 
 interface HomeViewProps {
   setActiveView: (view: ViewType) => void;
   setUserDraftPrompt: (prompt: string) => void;
+}
+
+const serviceIcons: Record<string, React.ReactNode> = {
+  "ai-intelligence": <Cpu className="w-5 h-5 text-cyan-400" />,
+  "cloud-native": <Cloud className="w-5 h-5 text-indigo-400" />,
+  "client-experiences": <Monitor className="w-5 h-5 text-violet-400" />,
+  "mobile-mobility": <Smartphone className="w-5 h-5 text-teal-400" />,
+};
+
+const accentRing: Record<string, string> = {
+  cyan: "ring-cyan-500/30 bg-cyan-500/10 text-cyan-400",
+  indigo: "ring-indigo-500/30 bg-indigo-500/10 text-indigo-400",
+  violet: "ring-violet-500/30 bg-violet-500/10 text-violet-400",
+};
+
+function AvatarBadge({ name }: { name: string }) {
+  const initials = TESTIMONIAL_AVATARS[name] ?? name.split(" ").map((n) => n[0]).join("").slice(0, 2);
+  return (
+    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500/30 to-indigo-500/30 text-sm font-bold text-white ring-2 ring-slate-800">
+      {initials}
+    </div>
+  );
 }
 
 export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeViewProps) {
@@ -19,288 +63,500 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
     }
   };
 
-  const handleServiceClick = () => {
-    setActiveView("services");
-  };
-
-  const activeStats = [
-    { label: "Average Delivery Time", value: "38 Days", desc: "For full-cycle MVPs" },
-    { label: "Engine Uptime SLA", value: "99.99%", desc: "On Google Cloud Run" },
-    { label: "Prompt Architecture Integrity", value: "100%", desc: "Direct git code handoff" },
-    { label: "Active Project Streams", value: "12 Client Nodes", desc: "Monitored concurrently" },
-  ];
+  const featuredProjects = CASE_STUDIES.filter((p) => p.featured);
 
   return (
-    <div className="bg-transparent text-white selection:bg-cyan-500/30 font-sans">
-      
-      {/* 1. Hero Section & Prompt Intake */}
-      <section className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl text-center space-y-8 relative z-10">
-          
-          {/* Subheader Badge */}
-          <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/25 text-cyan-400 text-xs font-bold uppercase tracking-wider">
-            <span className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse"></span>
-            Scale Beyond Boundaries
-          </span>
+    <div className="bg-transparent text-white selection:bg-cyan-500/30">
 
-          {/* Majestic Hero Typography */}
-          <h1 className="font-sans text-5xl font-extrabold tracking-tight sm:text-7xl text-white max-w-4xl mx-auto leading-[1.08] md:leading-[1.12]">
-            Engineering <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400 font-extrabold">High-Impact</span> Digital Products<span className="text-cyan-400">.</span>
-          </h1>
+      {/* ─── Hero ─── */}
+      <section className="relative overflow-hidden section-pad pb-16 md:pb-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-16">
+            <div className="space-y-8 text-center lg:text-left">
+              <ScrollReveal animation="fade-up" delay={0}>
+                <span className="inline-flex items-center gap-2 rounded-full border border-cyan-500/25 bg-cyan-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-cyan-400">
+                  <span className="h-2 w-2 animate-pulse rounded-full bg-cyan-400" />
+                  Premium Digital Agency
+                </span>
+              </ScrollReveal>
 
-          <p className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto font-sans leading-relaxed">
-            Promptly is an elite software engineering house specializing in AI-driven platforms, cloud architecture, and bespoke enterprise solutions. Type what you want below, and watch our compiler scaffold custom blueprints.
-          </p>
+              <ScrollReveal animation="fade-up" delay={80}>
+                <h1 className="font-sans text-[2.75rem] font-extrabold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-[4.25rem] lg:leading-[1.02]">
+                  We build{" "}
+                  <span className="text-gradient-hero">high-converting</span>{" "}
+                  digital products that{" "}
+                  <span className="text-gradient-cyan-indigo">scale</span>
+                  <span className="text-cyan-400">.</span>
+                </h1>
+              </ScrollReveal>
 
-          {/* Interactive Hero Prompt Command Module */}
-          <div className="mt-10 max-w-3xl mx-auto p-5 sm:p-6 rounded-2xl border border-slate-800/60 bg-slate-900/40 hover:border-cyan-500/20 transition-all shadow-2xl backdrop-blur-md">
-            <div className="flex items-center gap-2 pb-3 mb-3 border-b border-slate-800/60 text-xs font-mono text-slate-500">
-              <Terminal className="w-4 h-4 text-cyan-400" />
-              <span>root@promptly:~# _ initialize_architect_brief</span>
+              <ScrollReveal animation="fade-up" delay={160}>
+                <p className="content-width mx-auto text-base leading-relaxed text-slate-400 sm:text-lg lg:mx-0">
+                  Promptly engineers AI platforms, cloud-native SaaS, and bespoke enterprise
+                  experiences—with the polish of a world-class product studio and the velocity of
+                  an elite dev team.
+                </p>
+              </ScrollReveal>
+
+              <ScrollReveal animation="fade-up" delay={240}>
+                <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
+                  <button
+                    onClick={() => setActiveView("contact")}
+                    className="btn-glow group flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-bold text-slate-950 shadow-xl shadow-white/10"
+                  >
+                    Start Your Project
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </button>
+                  <button
+                    onClick={() => setActiveView("portfolio")}
+                    className="card-lift flex items-center gap-2 rounded-full border border-slate-700/80 bg-slate-900/50 px-7 py-4 text-sm font-semibold text-slate-200 backdrop-blur-sm hover:border-cyan-500/30 hover:text-white"
+                  >
+                    <Play className="h-4 w-4 text-cyan-400" />
+                    View Case Studies
+                  </button>
+                </div>
+              </ScrollReveal>
             </div>
 
-            <form onSubmit={handlePromptSubmit} className="flex flex-col sm:flex-row gap-3" id="hero-prompt-analyser-form">
-              <input
-                type="text"
-                required
-                value={draftPrompt}
-                onChange={(e) => setDraftPrompt(e.target.value)}
-                placeholder="PROMPT US: I want a multi-tenant client-portal with custom Stripe tiers..."
-                className="flex-1 rounded-md border border-slate-800 bg-[#020617]/90 px-4 py-3 text-sm text-slate-100 placeholder-slate-500 outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all font-mono"
-              />
-              <button
-                type="submit"
-                className="rounded-full bg-white hover:bg-cyan-50 px-6 py-3 text-sm font-bold text-slate-950 transition-all shadow-lg shadow-white/5 flex items-center justify-center gap-1.5 shrink-0"
-              >
-                Compile Blueprint
-                <ArrowRight className="w-4 h-4 text-slate-950" />
-              </button>
-            </form>
-            
-            <p className="mt-2.5 text-left text-xs text-slate-500 font-mono">
-              💡 Write a short sentence summarizing your project scope to preview specific stacks and sprint roadmaps dynamically.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Core Statistics Matrix (Swiss Grid, Minimalist) */}
-      <section className="border-t border-slate-800/40 py-16 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl flex flex-wrap justify-center gap-8 md:gap-14 items-center">
-          <div className="space-y-1 text-center sm:text-left min-w-[124px]">
-            <div className="text-3xl font-extrabold text-white">250+</div>
-            <div className="text-[10px] uppercase tracking-widest text-slate-500 font-semibold">Engineers</div>
-          </div>
-          <div className="hidden sm:block w-px h-10 bg-slate-800/70"></div>
-          
-          <div className="space-y-1 text-center sm:text-left min-w-[124px]">
-            <div className="text-3xl font-extrabold text-white">12y</div>
-            <div className="text-[10px] uppercase tracking-widest text-slate-500 font-semibold">Experience</div>
-          </div>
-          <div className="hidden sm:block w-px h-10 bg-slate-800/70"></div>
-          
-          <div className="space-y-1 text-center sm:text-left min-w-[124px]">
-            <div className="text-3xl font-extrabold text-white">98%</div>
-            <div className="text-[10px] uppercase tracking-widest text-slate-500 font-semibold">Retention</div>
-          </div>
-          <div className="hidden sm:block w-px h-10 bg-slate-800/70"></div>
-
-          <div className="space-y-1 text-center sm:text-left min-w-[124px]">
-            <div className="text-3xl font-extrabold text-white">100%</div>
-            <div className="text-[10px] uppercase tracking-widest text-slate-500 font-semibold">Audited SLAs</div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Core Capabilities Overview */}
-      <section className="border-t border-slate-800/40 py-20 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl space-y-12">
-          
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div className="space-y-3">
-              <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest">Our Competencies</span>
-              <h2 className="font-sans text-3xl font-extrabold tracking-tight text-slate-100 sm:text-4xl">
-                Technical Mastery Delivered Promptly.
-              </h2>
-            </div>
-            <p className="text-slate-400 max-w-md text-sm leading-relaxed">
-              We skip generic template styling and focus core strength on secure, high-uptime architectures built to execute natively in Cloud Container targets.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4" id="services-brief-grid">
-            {AGENCY_SERVICES.map((serv) => (
-              <div 
-                key={serv.id} 
-                className="group relative flex flex-col justify-between p-6 rounded-2xl border border-slate-800/80 bg-slate-900/40 hover:border-cyan-500/30 hover:bg-slate-900/60 transition-all duration-300 shadow-md"
-              >
-                <div className="space-y-4">
-                  <div className="inline-flex p-3 rounded-lg bg-indigo-500/10 text-indigo-400 group-hover:text-cyan-400 transition-colors">
-                    {serv.id === "ai-intelligence" && <Cpu className="w-5 h-5 text-cyan-400" />}
-                    {serv.id === "cloud-native" && <Cloud className="w-5 h-5 text-indigo-400" />}
-                    {serv.id === "client-experiences" && <Monitor className="w-5 h-5 text-purple-400" />}
-                    {serv.id === "mobile-mobility" && <Smartphone className="w-5 h-5 text-teal-400" />}
+            {/* Hero visual composition */}
+            <ScrollReveal animation="zoom-in" delay={120} className="relative hidden lg:block">
+              <div className="relative mx-auto h-[420px] w-full max-w-lg">
+                <div className="animate-float absolute -left-4 top-8 h-28 w-28 rounded-2xl glass-panel p-4 shadow-2xl">
+                  <Zap className="h-6 w-6 text-cyan-400" />
+                  <p className="mt-2 text-[10px] font-semibold uppercase tracking-wider text-slate-400">38-day MVPs</p>
+                </div>
+                <div className="animate-float-slow absolute -right-2 top-24 h-32 w-36 rounded-2xl glass-panel-strong p-4 shadow-2xl" style={{ animationDelay: "-2s" }}>
+                  <div className="text-2xl font-extrabold text-white">99.99%</div>
+                  <p className="text-[10px] text-slate-500">Uptime SLA</p>
+                </div>
+                <div className="absolute left-1/2 top-1/2 w-[88%] -translate-x-1/2 -translate-y-1/2 rounded-3xl glass-panel-strong p-6 shadow-2xl ring-1 ring-white/5">
+                  <div className="mb-3 flex items-center gap-3 border-b border-slate-800/60 pb-3">
+                    <div className="flex items-center gap-1.5" aria-hidden>
+                      <span className="h-2.5 w-2.5 rounded-full bg-rose-500/80" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-amber-500/80" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80" />
+                    </div>
+                    <span className="font-mono text-xs text-slate-500">promptly · architect</span>
                   </div>
-                  <h3 className="font-sans font-bold text-lg text-slate-100 group-hover:text-cyan-400 transition-colors">
-                    {serv.title}
-                  </h3>
-                  <p className="text-xs text-slate-400 leading-relaxed line-clamp-3">
-                    {serv.description}
-                  </p>
+                  <form onSubmit={handlePromptSubmit} className="space-y-3">
+                    <input
+                      type="text"
+                      value={draftPrompt}
+                      onChange={(e) => setDraftPrompt(e.target.value)}
+                      placeholder="Describe your product vision..."
+                      className="w-full rounded-xl border border-slate-800 bg-[#020617]/80 px-4 py-3 text-sm text-slate-100 placeholder-slate-600 outline-none transition-all focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 font-mono"
+                    />
+                    <button
+                      type="submit"
+                      className="btn-glow w-full rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-500 py-3 text-sm font-bold text-white"
+                    >
+                      Generate Blueprint
+                    </button>
+                  </form>
+                  <p className="mt-2 text-[11px] text-slate-500">AI-powered scope, stack & timeline in seconds</p>
                 </div>
+                <div className="animate-float absolute bottom-6 left-8 flex items-center gap-2 rounded-full border border-slate-800/60 bg-slate-900/60 px-4 py-2 backdrop-blur-md" style={{ animationDelay: "-1s" }}>
+                  <Users className="h-4 w-4 text-indigo-400" />
+                  <span className="text-xs font-semibold text-slate-300">250+ specialists</span>
+                </div>
+              </div>
+            </ScrollReveal>
+          </div>
 
-                <div className="pt-6 mt-4 border-t border-slate-950 flex items-center justify-between text-xs text-slate-500 group-hover:text-slate-300 cursor-pointer" onClick={handleServiceClick}>
-                  <span>Explore competencies</span>
-                  <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+          {/* Mobile prompt module */}
+          <ScrollReveal animation="fade-up" delay={200} className="mt-12 lg:hidden">
+            <div className="glass-panel-strong mx-auto max-w-xl rounded-2xl p-5 shadow-2xl">
+              <form onSubmit={handlePromptSubmit} className="flex flex-col gap-3 sm:flex-row">
+                <input
+                  type="text"
+                  value={draftPrompt}
+                  onChange={(e) => setDraftPrompt(e.target.value)}
+                  placeholder="Describe your product vision..."
+                  className="flex-1 rounded-xl border border-slate-800 bg-[#020617]/80 px-4 py-3 text-sm outline-none focus:border-cyan-500 font-mono"
+                />
+                <button type="submit" className="btn-glow rounded-xl bg-white px-6 py-3 text-sm font-bold text-slate-950">
+                  Blueprint
+                </button>
+              </form>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ─── Client logos ─── */}
+      <section className="border-t border-slate-800/40 py-12">
+        <ScrollReveal animation="fade-up" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+            Trusted by industry leaders
+          </p>
+          <div className="relative overflow-hidden">
+            <div className="flex animate-marquee gap-12 whitespace-nowrap">
+              {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((logo, i) => (
+                <div
+                  key={`${logo.name}-${i}`}
+                  className="flex shrink-0 items-center gap-3 rounded-xl border border-slate-800/50 bg-slate-900/30 px-6 py-3"
+                >
+                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800 text-xs font-bold text-slate-300">
+                    {logo.initials}
+                  </span>
+                  <span className="text-sm font-semibold text-slate-400">{logo.name}</span>
                 </div>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+      </section>
+
+      {/* ─── Statistics ─── */}
+      <section className="border-t border-slate-800/40 section-pad py-16">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 sm:gap-5 md:grid-cols-4 md:gap-6">
+          {AGENCY_STATS.map((stat, i) => {
+            const style = STAT_CARD_STYLES[stat.accent];
+            return (
+              <div key={stat.label} className="h-full">
+                <ScrollReveal animation="fade-up" staggerIndex={i} className="h-full">
+                  <div
+                    className={`card-lift relative flex h-full flex-col items-center justify-center overflow-hidden rounded-2xl border px-5 py-8 text-center backdrop-blur-sm sm:px-6 sm:py-10 ${style.card}`}
+                  >
+                    <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${style.bar}`} />
+                    <AnimatedCounter
+                      value={stat.value}
+                      suffix={stat.suffix}
+                      decimals={stat.decimals}
+                      className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl"
+                    />
+                    <p className="mt-3 text-[10px] font-semibold uppercase leading-snug tracking-widest text-slate-500 sm:text-[11px]">
+                      {stat.label}
+                    </p>
+                  </div>
+                </ScrollReveal>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ─── Services bento ─── */}
+      <section className="border-t border-slate-800/40 section-pad">
+        <div className="mx-auto max-w-7xl space-y-14">
+          <div className="grid gap-8 lg:grid-cols-2 lg:items-end">
+            <ScrollReveal animation="slide-right">
+              <span className="text-xs font-semibold uppercase tracking-widest text-cyan-400">
+                Our Competencies
+              </span>
+              <h2 className="mt-3 font-sans text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+                Technical mastery,{" "}
+                <span className="text-gradient-cyan-indigo">delivered promptly</span>
+              </h2>
+            </ScrollReveal>
+            <ScrollReveal animation="slide-left">
+              <p className="content-width text-sm leading-relaxed text-slate-400 sm:text-base">
+                Secure, high-uptime architectures built for cloud-native deployment—no template
+                bloat, just production-grade engineering and premium UX craft.
+              </p>
+            </ScrollReveal>
+          </div>
+
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+            {AGENCY_SERVICES.map((serv, i) => (
+              <div key={serv.id}>
+              <ScrollReveal animation="zoom-in" staggerIndex={i}>
+                <button
+                  onClick={() => setActiveView("services")}
+                  className="card-lift group flex h-full w-full flex-col justify-between rounded-2xl border border-slate-800/70 bg-slate-900/40 p-6 text-left backdrop-blur-sm hover:border-cyan-500/25"
+                >
+                  <div className="space-y-4">
+                    <div className="inline-flex rounded-xl bg-indigo-500/10 p-3 transition-colors group-hover:bg-cyan-500/10">
+                      {serviceIcons[serv.id]}
+                    </div>
+                    <span className="inline-block rounded-full bg-slate-800/80 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-slate-400">
+                      {serv.badge}
+                    </span>
+                    <h3 className="text-lg font-bold text-slate-100 transition-colors group-hover:text-cyan-400">
+                      {serv.title}
+                    </h3>
+                    <p className="line-clamp-3 text-xs leading-relaxed text-slate-400">
+                      {serv.description}
+                    </p>
+                  </div>
+                  <div className="mt-6 flex items-center gap-1 text-xs font-semibold text-slate-500 transition-colors group-hover:text-cyan-400">
+                    Explore <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
+                  </div>
+                </button>
+              </ScrollReveal>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 4. Highlight Portfolio Showcase */}
-      <section className="border-t border-slate-800/40 py-20 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl space-y-12">
-          
-          <div className="space-y-3 text-center max-w-xl mx-auto">
-            <span className="text-xs font-semibold text-orange-400 uppercase tracking-widest">Case Records</span>
-            <h2 className="font-sans text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-              Verified Operational Success
+      {/* ─── Our Process ─── */}
+      <section className="border-t border-slate-800/40 section-pad bg-slate-900/20">
+        <div className="mx-auto max-w-7xl space-y-14">
+          <ScrollReveal animation="fade-up" className="mx-auto max-w-2xl text-center">
+            <span className="text-xs font-semibold uppercase tracking-widest text-indigo-400">
+              Our Process
+            </span>
+            <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl">
+              From vision to launch,{" "}
+              <span className="text-gradient-cyan-indigo">with clarity</span>
             </h2>
-            <p className="text-slate-400 text-sm leading-relaxed">
-              We compile and maintain state-of-the-art architectures for standard platforms. Inspect featured builds.
+            <p className="mt-4 text-sm leading-relaxed text-slate-400 sm:text-base">
+              A proven three-phase framework that keeps stakeholders aligned and ships on schedule.
             </p>
-          </div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8" id="featured-projects-showcase">
-            {CASE_STUDIES.filter(p => p.featured).map((proj) => (
-              <div 
-                key={proj.id} 
-                className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-cyan-500/30 transition-all duration-300"
-              >
-                {/* Visual Header Grid Accent */}
-                <div className={`h-1.5 bg-gradient-to-r ${proj.visualTheme}`} />
-                
-                <div className="p-6 md:p-8 space-y-5">
-                  <div className="flex items-center justify-between text-xs font-mono">
-                    <span className="text-slate-500 uppercase">CLIENT: {proj.clientName}</span>
-                    <span className="px-2 py-0.5 rounded bg-slate-850 text-orange-400 border border-slate-800/40 font-semibold">{proj.category}</span>
+          <div className="grid gap-6 md:grid-cols-3">
+            {PROCESS_STEPS.map((step, i) => {
+              const Icon = step.icon;
+              return (
+                <div key={step.id}>
+                <ScrollReveal animation="fade-up" staggerIndex={i}>
+                  <div className="card-lift relative flex h-full flex-col rounded-2xl border border-slate-800/60 bg-slate-900/40 p-8 backdrop-blur-sm">
+                    {i < PROCESS_STEPS.length - 1 && (
+                      <div className="absolute -right-3 top-1/2 hidden h-px w-6 bg-gradient-to-r from-cyan-500/50 to-transparent md:block lg:w-10" />
+                    )}
+                    <div
+                      className={`mb-5 flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ring-1 ${accentRing[step.accent]}`}
+                    >
+                      <Icon className="h-6 w-6 shrink-0" strokeWidth={1.75} aria-hidden />
+                    </div>
+                    <span className="font-mono text-xs font-bold text-slate-500">{step.number}</span>
+                    <h3 className="mt-2 text-xl font-bold text-white">{step.title}</h3>
+                    <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-400">
+                      {step.description}
+                    </p>
                   </div>
-
-                  <h3 className="font-sans font-extrabold text-2xl text-slate-100 group-hover:text-orange-400 transition-colors">
-                    {proj.title}
-                  </h3>
-
-                  <p className="text-slate-400 text-sm leading-relaxed">
-                    {proj.tagline}
-                  </p>
-
-                  <div className="flex flex-wrap gap-1.5 pt-2">
-                    {proj.technologies.slice(0, 4).map((tech, idx) => (
-                      <span key={idx} className="font-mono text-[10px] text-slate-550 bg-[#020617] px-2.5 py-1 rounded border border-slate-800/70">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Impact metrics highlight */}
-                  <div className="grid grid-cols-1 gap-2 pt-4 border-t border-slate-900/60">
-                    {proj.metrics.slice(0, 2).map((met, idx) => (
-                      <div key={idx} className="flex items-center gap-2 text-xs font-semibold text-emerald-400">
-                        <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" />
-                        <span>{met}</span>
-                      </div>
-                    ))}
-                  </div>
+                </ScrollReveal>
                 </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
-                <div 
-                  className="px-6 py-4 border-t border-slate-800/30 bg-slate-900/20 text-xs font-semibold text-slate-400 hover:text-white flex items-center justify-between cursor-pointer"
+      {/* ─── Portfolio ─── */}
+      <section className="border-t border-slate-800/40 section-pad">
+        <div className="mx-auto max-w-7xl space-y-14">
+          <ScrollReveal animation="fade-up" className="mx-auto max-w-xl text-center">
+            <span className="text-xs font-semibold uppercase tracking-widest text-orange-400">
+              Selected Work
+            </span>
+            <h2 className="mt-3 text-3xl font-extrabold text-white sm:text-4xl">
+              Projects that drive measurable impact
+            </h2>
+          </ScrollReveal>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {featuredProjects.map((proj, i) => (
+              <div key={proj.id}>
+              <ScrollReveal
+                animation={i % 2 === 0 ? "slide-right" : "slide-left"}
+                staggerIndex={i}
+              >
+                <article
+                  className="group card-lift relative overflow-hidden rounded-2xl border border-slate-800/70 bg-slate-900/40 cursor-pointer"
                   onClick={() => setActiveView("portfolio")}
                 >
-                  <span>Review technical blueprint study</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <div className={`h-1 bg-gradient-to-r ${proj.visualTheme}`} />
+                  <div className="relative p-6 md:p-8">
+                    <div className="project-card-preview absolute inset-0 flex items-center justify-center bg-slate-950/85 backdrop-blur-sm">
+                      <span className="flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-5 py-2.5 text-sm font-semibold text-cyan-400">
+                        View case study <ArrowRight className="h-4 w-4" />
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-xs font-mono uppercase text-slate-500">
+                      <span>{proj.clientName}</span>
+                      <span className="rounded border border-slate-800 px-2 py-0.5 text-orange-400">
+                        {proj.category}
+                      </span>
+                    </div>
+                    <h3 className="mt-4 text-2xl font-extrabold text-white transition-colors group-hover:text-cyan-400">
+                      {proj.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-slate-400">{proj.tagline}</p>
+                    <div className="mt-4 flex flex-wrap gap-1.5">
+                      {proj.technologies.slice(0, 4).map((tech) => (
+                        <span
+                          key={tech}
+                          className="rounded border border-slate-800/70 bg-[#020617] px-2.5 py-1 font-mono text-[10px] text-slate-500"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="mt-5 space-y-2 border-t border-slate-800/50 pt-5">
+                      {proj.metrics.slice(0, 2).map((met) => (
+                        <div key={met} className="flex items-center gap-2 text-xs font-semibold text-emerald-400">
+                          <ShieldCheck className="h-4 w-4 shrink-0" />
+                          {met}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </article>
+              </ScrollReveal>
+              </div>
+            ))}
+          </div>
+
+          <ScrollReveal animation="fade-up" className="text-center">
+            <button
+              onClick={() => setActiveView("portfolio")}
+              className="btn-glow inline-flex items-center gap-2 rounded-full border border-slate-700 px-8 py-3.5 text-sm font-semibold text-slate-200 hover:border-cyan-500/40 hover:text-white"
+            >
+              Explore full portfolio
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* ─── Testimonials ─── */}
+      <section className="border-t border-slate-800/40 section-pad bg-gradient-to-b from-transparent to-slate-900/30">
+        <div className="mx-auto max-w-7xl space-y-12">
+          <ScrollReveal animation="fade-up" className="text-center">
+            <span className="text-xs font-semibold uppercase tracking-widest text-cyan-400">
+              Client Stories
+            </span>
+            <h2 className="mt-3 text-3xl font-extrabold text-white sm:text-4xl">
+              Trusted by teams who ship at scale
+            </h2>
+          </ScrollReveal>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {CLIENT_TESTIMONIALS.map((t, i) => (
+              <div key={t.id}>
+              <ScrollReveal animation="zoom-in" staggerIndex={i}>
+                <div className="card-lift flex h-full flex-col rounded-2xl border border-slate-800/60 bg-slate-900/40 p-6 backdrop-blur-sm">
+                  <div className="mb-4 flex gap-0.5">
+                    {Array.from({ length: t.rating }).map((_, j) => (
+                      <Star key={j} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                    ))}
+                  </div>
+                  <p className="flex-1 text-sm leading-relaxed text-slate-300">&ldquo;{t.quote}&rdquo;</p>
+                  <div className="mt-6 flex items-center gap-3 border-t border-slate-800/50 pt-5">
+                    <AvatarBadge name={t.author} />
+                    <div>
+                      <p className="text-sm font-bold text-white">{t.author}</p>
+                      <p className="text-xs text-slate-500">
+                        {t.role}, {t.company}
+                      </p>
+                    </div>
+                  </div>
                 </div>
+              </ScrollReveal>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 5. Promptly Agile Engineering Cycle */}
-      <section className="border-t border-slate-800/40 py-20 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl space-y-12">
-          
-          <div className="text-center space-y-4">
-            <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest">Our Architecture Pipeline</span>
-            <h2 className="font-sans text-3xl font-extrabold tracking-tight text-white">
-              The Promptly Software Method
-            </h2>
-            <p className="text-slate-400 text-sm max-w-lg mx-auto leading-relaxed">
-              We leverage smart models and top developers to deliver ultra-reliable production code with velocity.
+      {/* ─── Team / Collaboration ─── */}
+      <section className="border-t border-slate-800/40 section-pad">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid items-center gap-12 lg:grid-cols-2">
+            <ScrollReveal animation="slide-right">
+              <span className="text-xs font-semibold uppercase tracking-widest text-violet-400">
+                The Team
+              </span>
+              <h2 className="mt-3 text-3xl font-extrabold text-white sm:text-4xl">
+                Senior specialists,{" "}
+                <span className="text-gradient-cyan-indigo">one cohesive squad</span>
+              </h2>
+              <p className="mt-4 max-w-md text-sm leading-relaxed text-slate-400">
+                Architects, designers, and AI engineers working in tight collaboration—not
+                handoffs between siloed vendors.
+              </p>
+              <button
+                onClick={() => setActiveView("about")}
+                className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-cyan-400 hover:text-cyan-300"
+              >
+                Meet the team <ChevronRight className="h-4 w-4" />
+              </button>
+            </ScrollReveal>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              {TEAM_MEMBERS.map((member, i) => (
+                <div key={member.id}>
+                <ScrollReveal animation="fade-up" staggerIndex={i}>
+                  <div className="card-lift rounded-2xl border border-slate-800/60 bg-slate-900/40 p-5 text-center backdrop-blur-sm">
+                    <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 text-lg font-bold text-white">
+                      {member.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+                    </div>
+                    <p className="text-sm font-bold text-white">{member.name}</p>
+                    <p className="mt-1 text-[11px] leading-snug text-slate-500">{member.role}</p>
+                  </div>
+                </ScrollReveal>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Success metrics bento ─── */}
+      <section className="border-t border-slate-800/40 section-pad py-16">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-4 md:grid-cols-4 md:grid-rows-2">
+            <ScrollReveal animation="zoom-in" className="md:col-span-2 md:row-span-2">
+              <div className="card-lift flex h-full min-h-[220px] flex-col justify-between rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-cyan-950/40 to-indigo-950/30 p-8">
+                <Sparkles className="h-8 w-8 text-cyan-400" />
+                <div>
+                  <p className="text-4xl font-extrabold text-white">38 days</p>
+                  <p className="mt-2 text-sm text-slate-400">Average full-cycle MVP delivery</p>
+                </div>
+              </div>
+            </ScrollReveal>
+            {[
+              { label: "Uptime SLA", value: "99.99%", icon: ShieldCheck },
+              { label: "Code handoff", value: "100%", icon: Zap },
+              { label: "Active streams", value: "12+", icon: Users },
+            ].map((item, i) => (
+              <div key={item.label}>
+              <ScrollReveal animation="fade-up" staggerIndex={i + 1}>
+                <div className="card-lift flex h-full items-center gap-4 rounded-2xl border border-slate-800/60 bg-slate-900/40 p-6">
+                  <item.icon className="h-8 w-8 shrink-0 text-indigo-400" />
+                  <div>
+                    <p className="text-2xl font-extrabold text-white">{item.value}</p>
+                    <p className="text-xs text-slate-500">{item.label}</p>
+                  </div>
+                </div>
+              </ScrollReveal>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── CTA ─── */}
+      <section className="section-pad border-t border-slate-800/40 py-20">
+        <ScrollReveal animation="fade-up">
+          <div className="mx-auto max-w-3xl rounded-3xl border border-slate-800/60 bg-gradient-to-br from-slate-900/80 to-slate-950/80 p-10 text-center backdrop-blur-xl sm:p-14">
+            <h3 className="text-2xl font-extrabold text-white sm:text-3xl">
+              Ready to architect your next product?
+            </h3>
+            <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-slate-400">
+              Get an instant stack recommendation, timeline, and scope estimate—or book a
+              consultation with our principal architects.
             </p>
-          </div>
-
-          <div className="relative space-y-8 before:absolute before:inset-0 before:left-4 sm:before:left-1/2 before:w-0.5 before:bg-slate-800/40" id="methodology-timeline">
-            {/* Step 1 */}
-            <div className="relative flex flex-col sm:flex-row items-start sm:items-center">
-              <div className="absolute left-1.5 sm:left-1/2 transform -translate-x-1/2 flex h-5 w-5 items-center justify-center rounded-full bg-cyan-400 ring-4 ring-cyan-950/50" />
-              <div className="sm:w-1/2 pl-8 sm:pl-0 sm:pr-8 sm:text-right space-y-2">
-                <span className="font-mono text-xs text-cyan-400 font-semibold">STAGE 01</span>
-                <h4 className="font-sans font-bold text-lg text-white">Intake & Scaffolding</h4>
-                <p className="text-xs text-slate-400 max-w-sm sm:ml-auto leading-relaxed">
-                  We process user prompts using our server-side analytical pipeline, resolving database constraints, layout requirements, and system scopes quickly.
-                </p>
-              </div>
-            </div>
-
-            {/* Step 2 */}
-            <div className="relative flex flex-col sm:flex-row-reverse items-start sm:items-center">
-              <div className="absolute left-1.5 sm:left-1/2 transform -translate-x-1/2 flex h-5 w-5 items-center justify-center rounded-full bg-indigo-400 ring-4 ring-indigo-950/50" />
-              <div className="sm:w-1/2 pl-8 sm:pl-8 space-y-2">
-                <span className="font-mono text-xs text-indigo-400 font-semibold">STAGE 02</span>
-                <h4 className="font-sans font-bold text-lg text-white">Full-Stack Implementation</h4>
-                <p className="text-xs text-slate-400 max-w-sm leading-relaxed">
-                  Elite developers construct custom microservice hooks and sleek frontends powered by standard Vite, React, and Tailwind, ensuring absolute modularity.
-                </p>
-              </div>
-            </div>
-
-            {/* Step 3 */}
-            <div className="relative flex flex-col sm:flex-row items-start sm:items-center">
-              <div className="absolute left-1.5 sm:left-1/2 transform -translate-x-1/2 flex h-5 w-5 items-center justify-center rounded-full bg-purple-400 ring-4 ring-purple-950/50" />
-              <div className="sm:w-1/2 pl-8 sm:pl-0 sm:pr-8 sm:text-right space-y-2">
-                <span className="font-mono text-xs text-purple-400 font-semibold">STAGE 03</span>
-                <h4 className="font-sans font-bold text-lg text-white">Continuous Verification (QA)</h4>
-                <p className="text-xs text-slate-400 max-w-sm sm:ml-auto leading-relaxed">
-                  Our pipelines execute rigorous compliance verifications (TypeScript audits, linter scans, responsive screen tests) to ensure reliable deployments.
-                </p>
-              </div>
+            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <button
+                onClick={() => setActiveView("ai-architect")}
+                className="btn-glow rounded-full bg-white px-8 py-4 text-sm font-bold text-slate-950"
+              >
+                Launch AI Architect
+              </button>
+              <button
+                onClick={() => setActiveView("contact")}
+                className="rounded-full border border-slate-700 px-8 py-4 text-sm font-semibold text-slate-300 transition-colors hover:border-cyan-500/40 hover:text-white"
+              >
+                Book a consultation
+              </button>
             </div>
           </div>
-        </div>
+        </ScrollReveal>
       </section>
-
-      {/* 6. Secure Trust Footer Banner */}
-      <section className="bg-slate-900/10 border-t border-slate-800/40 py-20 px-4">
-        <div className="mx-auto max-w-4xl text-center space-y-6">
-          <Layers className="w-10 h-10 text-cyan-400 mx-auto" />
-          <h3 className="font-sans text-2xl font-bold text-white">
-            Ready to explore an instant architecture calculation?
-          </h3>
-          <p className="text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
-            Give our AI Architect any idea and see specific technologies, timelines, and budget estimations in real-time.
-          </p>
-          <button
-            onClick={() => setActiveView("ai-architect")}
-            className="rounded-full bg-white hover:bg-cyan-50 px-8 py-3.5 text-xs font-bold text-slate-950 uppercase tracking-widest transition-all shadow-md shadow-white/5"
-          >
-            Launch Prompt Architect
-          </button>
-        </div>
-      </section>
-
     </div>
   );
 }

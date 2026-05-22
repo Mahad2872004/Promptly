@@ -1,7 +1,18 @@
 import React, { useState } from "react";
 import { ViewType } from "../types";
 import Logo from "./Logo";
-import { Send, Github, Twitter, Linkedin, Sparkles, Check } from "lucide-react";
+import ScrollReveal from "./ui/ScrollReveal";
+import {
+  Send,
+  Github,
+  Twitter,
+  Linkedin,
+  Sparkles,
+  Check,
+  ArrowRight,
+  Mail,
+  MapPin,
+} from "lucide-react";
 
 interface FooterProps {
   setActiveView: (view: ViewType) => void;
@@ -15,120 +26,198 @@ export default function Footer({ setActiveView }: FooterProps) {
     e.preventDefault();
     if (email.trim().length > 3) {
       setSubscribed(true);
-      setTimeout(() => {
-        setEmail("");
-      }, 3000);
+      setTimeout(() => setEmail(""), 3000);
     }
   };
 
+  const nav = {
+    solutions: [
+      { label: "AI & Cognitive Systems", view: "services" as ViewType },
+      { label: "Cloud Architecture", view: "services" as ViewType },
+      { label: "SaaS & Web Products", view: "services" as ViewType },
+      { label: "Mobile Engineering", view: "services" as ViewType },
+    ],
+    company: [
+      { label: "About", view: "about" as ViewType },
+      { label: "Case Studies", view: "portfolio" as ViewType },
+      { label: "AI Architect", view: "ai-architect" as ViewType },
+      { label: "Client Portal", view: "client-portal" as ViewType },
+    ],
+  };
+
   return (
-    <footer className="bg-slate-950 border-t border-slate-900 text-slate-400">
-      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="xl:grid xl:grid-cols-3 xl:gap-8">
-          
-          {/* Brand Info */}
-          <div className="space-y-6">
-            <Logo size={42} />
-            <p className="text-sm text-slate-400 max-w-sm leading-relaxed">
-              We engineer high-fidelity subscription SaaS platforms, automated cloud frameworks, and server-side model pipelines. Crafted with strict architectural honesty.
-            </p>
-            <div className="flex space-x-4">
-              <a href="#" className="hover:text-cyan-400 transition-colors duration-200">
-                <Linkedin className="w-5 h-5" />
-              </a>
-              <a href="#" className="hover:text-cyan-400 transition-colors duration-200">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="hover:text-cyan-400 transition-colors duration-200">
-                <Github className="w-5 h-5" />
-              </a>
+    <footer className="relative border-t border-slate-800/60 bg-slate-950/90 text-slate-400">
+      {/* Consultation CTA band */}
+      <div className="border-b border-slate-800/50 bg-gradient-to-r from-cyan-950/20 via-transparent to-indigo-950/20">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <ScrollReveal animation="fade-up">
+            <div className="flex flex-col items-center justify-between gap-6 rounded-2xl border border-slate-800/60 bg-slate-900/40 p-8 backdrop-blur-sm md:flex-row md:p-10">
+              <div className="text-center md:text-left">
+                <h3 className="text-xl font-extrabold text-white sm:text-2xl">
+                  Let&apos;s build something exceptional
+                </h3>
+                <p className="mt-2 max-w-md text-sm text-slate-400">
+                  Book a free 30-minute architecture consultation with our principal team.
+                </p>
+              </div>
+              <button
+                onClick={() => setActiveView("contact")}
+                className="btn-glow flex shrink-0 items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-slate-950"
+              >
+                Schedule consultation
+                <ArrowRight className="h-4 w-4" />
+              </button>
             </div>
-            
-            {/* Clock context representation requested for professional margin headers */}
-            <div className="font-mono text-[11px] text-slate-600 bg-slate-900/60 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-slate-800">
-              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              SYSTEM CLOCK: UTC 2026-05-20
+          </ScrollReveal>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-8">
+          {/* Brand */}
+          <div className="lg:col-span-4">
+            <Logo size={42} />
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-slate-400">
+              Promptly engineers high-fidelity SaaS platforms, cloud-native systems, and
+              AI-driven products—with architectural honesty and premium craft at every layer.
+            </p>
+            <div className="mt-6 flex gap-3">
+              {[
+                { Icon: Linkedin, label: "LinkedIn" },
+                { Icon: Twitter, label: "Twitter" },
+                { Icon: Github, label: "GitHub" },
+              ].map(({ Icon, label }) => (
+                <a
+                  key={label}
+                  href="#"
+                  aria-label={label}
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-800/80 bg-slate-900/50 text-slate-400 transition-all hover:border-cyan-500/30 hover:text-cyan-400 hover:shadow-lg hover:shadow-cyan-500/10"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
+            </div>
+            <div className="mt-6 space-y-2 text-xs text-slate-500">
+              <p className="flex items-center gap-2">
+                <Mail className="h-3.5 w-3.5 text-cyan-500/70" />
+                hello@promptly.systems
+              </p>
+              <p className="flex items-center gap-2">
+                <MapPin className="h-3.5 w-3.5 text-cyan-500/70" />
+                Global remote · UTC+0 core hours
+              </p>
             </div>
           </div>
 
-          {/* Quick Sitemap Links */}
-          <div className="mt-12 grid grid-cols-2 gap-8 xl:col-span-2 xl:mt-0">
-            <div className="md:grid md:grid-cols-2 md:gap-8">
-              <div>
-                <h3 className="font-sans text-xs font-semibold uppercase tracking-wider text-slate-300">Solutions</h3>
-                <ul className="mt-4 space-y-2.5 text-sm">
-                  <li>
-                    <button onClick={() => setActiveView("services")} className="hover:text-white transition-colors">Cognitive Sprints (AI)</button>
-                  </li>
-                  <li>
-                    <button onClick={() => setActiveView("services")} className="hover:text-white transition-colors">Infrastructure & Cloud</button>
-                  </li>
-                  <li>
-                    <button onClick={() => setActiveView("services")} className="hover:text-white transition-colors">SaaS Web Engine</button>
-                  </li>
-                  <li>
-                    <button onClick={() => setActiveView("services")} className="hover:text-white transition-colors">Responsive Android/iOS</button>
-                  </li>
-                </ul>
-              </div>
-              <div className="mt-10 md:mt-0">
-                <h3 className="font-sans text-xs font-semibold uppercase tracking-wider text-slate-300">Company</h3>
-                <ul className="mt-4 space-y-2.5 text-sm">
-                  <li>
-                    <button onClick={() => setActiveView("about")} className="hover:text-white transition-colors">About Story</button>
-                  </li>
-                  <li>
-                    <button onClick={() => setActiveView("portfolio")} className="hover:text-white transition-colors">Case Studies</button>
-                  </li>
-                  <li>
-                    <button onClick={() => setActiveView("about")} className="hover:text-white transition-colors">Core Specialists</button>
-                  </li>
-                  <li>
-                    <button onClick={() => setActiveView("contact")} className="hover:text-white transition-colors">Book Architectural Brief</button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Newsletter Dispatch */}
+          {/* Links */}
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-5">
             <div>
-              <h3 className="font-sans text-xs font-semibold uppercase tracking-wider text-slate-300">Promptly Gazette</h3>
-              <p className="mt-3 text-sm text-slate-400 leading-relaxed">
-                Stay updated on the latest serverless database trends, custom API security, and agentic prompt structures.
-              </p>
-              
-              <form onSubmit={handleSubscribe} className="mt-4 flex max-w-md gap-2" id="footer-newsletter-form">
-                <input
-                  type="email"
-                  required
-                  placeholder="name@company.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full min-w-0 flex-auto rounded-md border border-slate-800 bg-slate-900 px-3.5 py-2 text-sm text-white placeholder-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-1 focus:ring-cyan-500"
-                />
-                <button
-                  type="submit"
-                  className="flex items-center justify-center rounded-md bg-slate-800 hover:bg-slate-700 hover:text-white transition-colors px-3 text-slate-200"
-                >
-                  {subscribed ? <Check className="w-4 h-4 text-emerald-400" /> : <Send className="w-4 h-4" />}
-                </button>
-              </form>
-              {subscribed && (
-                <p className="mt-2 text-xs text-emerald-400 flex items-center gap-1">
-                  <Sparkles className="w-3.5 h-3.5" /> Welcome to our private engineering letter!
-                </p>
-              )}
+              <h3 className="text-xs font-bold uppercase tracking-widest text-slate-300">
+                Solutions
+              </h3>
+              <ul className="mt-4 space-y-2.5">
+                {nav.solutions.map((link) => (
+                  <li key={link.label}>
+                    <button
+                      onClick={() => setActiveView(link.view)}
+                      className="text-sm text-slate-400 transition-colors hover:text-white"
+                    >
+                      {link.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </div>
+            <div>
+              <h3 className="text-xs font-bold uppercase tracking-widest text-slate-300">
+                Company
+              </h3>
+              <ul className="mt-4 space-y-2.5">
+                {nav.company.map((link) => (
+                  <li key={link.label}>
+                    <button
+                      onClick={() => setActiveView(link.view)}
+                      className="text-sm text-slate-400 transition-colors hover:text-white"
+                    >
+                      {link.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="col-span-2 sm:col-span-1">
+              <h3 className="text-xs font-bold uppercase tracking-widest text-slate-300">
+                Quick links
+              </h3>
+              <ul className="mt-4 space-y-2.5">
+                <li>
+                  <button
+                    onClick={() => setActiveView("contact")}
+                    className="text-sm font-semibold text-cyan-400 hover:text-cyan-300"
+                  >
+                    Start a project →
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => setActiveView("home")}
+                    className="text-sm text-slate-400 hover:text-white"
+                  >
+                    Home
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Newsletter */}
+          <div className="lg:col-span-3">
+            <h3 className="text-xs font-bold uppercase tracking-widest text-slate-300">
+              Promptly Gazette
+            </h3>
+            <p className="mt-3 text-sm leading-relaxed text-slate-400">
+              Insights on serverless trends, API security, and agentic engineering—monthly, no spam.
+            </p>
+            <form onSubmit={handleSubscribe} className="mt-4 flex gap-2">
+              <input
+                type="email"
+                required
+                placeholder="you@company.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="min-w-0 flex-1 rounded-xl border border-slate-800 bg-slate-900/80 px-3.5 py-2.5 text-sm text-white placeholder-slate-600 outline-none transition-all focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500"
+              />
+              <button
+                type="submit"
+                className="flex items-center justify-center rounded-xl border border-slate-700 bg-slate-800 px-3.5 transition-all hover:border-cyan-500/30 hover:bg-slate-700"
+              >
+                {subscribed ? (
+                  <Check className="h-4 w-4 text-emerald-400" />
+                ) : (
+                  <Send className="h-4 w-4 text-slate-300" />
+                )}
+              </button>
+            </form>
+            {subscribed && (
+              <p className="mt-2 flex items-center gap-1 text-xs text-emerald-400">
+                <Sparkles className="h-3.5 w-3.5" /> Welcome aboard!
+              </p>
+            )}
           </div>
         </div>
 
-        {/* Copy lines */}
-        <div className="mt-12 border-t border-slate-900 pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-slate-500 gap-4">
-          <p>© 2026 Promptly Systems Inc. All rights reserved. Precision Software Engineering.</p>
-          <div className="flex space-x-6">
-            <a href="#" className="hover:text-white">Privacy Architecture</a>
-            <a href="#" className="hover:text-white">API Service Level</a>
-            <a href="#" className="hover:text-white">Terms of Cloud Intake</a>
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-slate-900 pt-8 text-xs text-slate-500 md:flex-row">
+          <p>© 2026 Promptly Systems Inc. Precision software engineering.</p>
+          <div className="flex flex-wrap justify-center gap-6">
+            <a href="#" className="hover:text-white transition-colors">
+              Privacy
+            </a>
+            <a href="#" className="hover:text-white transition-colors">
+              Terms
+            </a>
+            <a href="#" className="hover:text-white transition-colors">
+              SLA
+            </a>
           </div>
         </div>
       </div>

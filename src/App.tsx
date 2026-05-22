@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { ViewType } from "./types";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import BackgroundMotion from "./components/BackgroundMotion";
+import CursorGlow from "./components/CursorGlow";
 import HomeView from "./components/HomeView";
 import ServicesView from "./components/ServicesView";
 import PortfolioView from "./components/PortfolioView";
@@ -52,9 +54,9 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020617] font-sans text-slate-200 flex flex-col justify-between relative overflow-hidden">
-      {/* Absolute ambient radial gradients matching Elegant Dark perfectly */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(56,189,248,0.08),transparent_50%),radial-gradient(circle_at_70%_80%,rgba(99,102,241,0.08),transparent_50%)] pointer-events-none z-0"></div>
+    <div className="min-h-screen bg-[#020617] font-sans text-slate-200 flex flex-col justify-between relative overflow-x-hidden">
+      <BackgroundMotion />
+      <CursorGlow />
 
       <div className="relative z-10 flex flex-col min-h-screen justify-between">
         {/* Translucent persistent sticky navigation head */}
