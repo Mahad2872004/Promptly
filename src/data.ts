@@ -182,6 +182,14 @@ export const TEAM_MEMBERS: TeamMember[] = [
     bio: "Iqra has spent 5 years building high-performance web applications and mobile apps. She loves clean code and efficient user interfaces.",
     specialties: ["SaaS Design", "Tailwind CSS", "React & Motion", "Visual Balance", "Typography", "React Native","GHL","Lip Sync"],
     svgAvatarIndex: 2
+  },
+  {
+    id: "team-3",
+    name: "Rabiya Malik",
+    role: "Senior Product Designer",
+    bio: "Rabiya has spent 5 years building high-performance web applications and mobile apps. She loves clean and efficient user interfaces.",
+    specialties: ["UI/UX Design", "Figma", "Wireframing", "Prototyping", "User Research","Design Systems","Branding","Saas Design"],
+    svgAvatarIndex: 3
   }
 ];
 
