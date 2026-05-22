@@ -178,18 +178,10 @@ export const TEAM_MEMBERS: TeamMember[] = [
   {
     id: "team-2",
     name: "Iqra Iqbal",
-    role: "Agency CTO & Front-End Engineer",
+    role: "CTO & Senior Software Engineer",
     bio: "Iqra has spent 5 years building high-performance web applications and mobile apps. She loves clean code and efficient user interfaces.",
-    specialties: ["SaaS Design", "Tailwind CSS", "React & Motion", "Visual Balance", "Typography"],
+    specialties: ["SaaS Design", "Tailwind CSS", "React & Motion", "Visual Balance", "Typography", "React Native","GHL","Lip Sync"],
     svgAvatarIndex: 2
-  },
-  {
-    id: "team-3",
-    name: "Mahad Mateen Butt",
-    role: "Senior AI Engineer",
-    bio: "Mahad Butt specializes in prompt optimization, RAG embedding databases, and model interfaces. He spent 5 years researching neural reasoning and leads the custom agent builds.",
-    specialties: ["Gemini Solutions", "Vector Databases", "Prompt Tuning", "Python", "Node.js"],
-    svgAvatarIndex: 3
   }
 ];
 
