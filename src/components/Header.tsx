@@ -1,127 +1,196 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ViewType } from "../types";
 import Logo from "./Logo";
-import { Sparkles, Terminal, Menu, X, ArrowUpRight, FolderHeart, Layout, MessageSquareCode } from "lucide-react";
+import {
+  Terminal,
+  Menu,
+  X,
+  ArrowUpRight,
+  Layout,
+  Sparkles,
+} from "lucide-react";
 
 interface HeaderProps {
   activeView: ViewType;
   setActiveView: (view: ViewType) => void;
 }
 
+interface NavLink {
+  label: string;
+  view: ViewType;
+  isSpecial?: boolean;
+  icon?: React.ReactNode;
+}
+
 export default function Header({ activeView, setActiveView }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
-  const navLinks: Array<{ label: string; view: ViewType; isSpecial?: boolean; icon?: React.ReactNode }> = [
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  const navLinks: NavLink[] = [
     { label: "Home", view: "home" },
     { label: "Services", view: "services" },
     { label: "Case Studies", view: "portfolio" },
-    { 
-      label: "AI Architect", 
-      view: "ai-architect", 
+    {
+      label: "AI Architect",
+      view: "ai-architect",
       isSpecial: true,
-      icon: <Terminal className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
+      icon: <Terminal className="h-3.5 w-3.5 shrink-0" />,
     },
     { label: "About", view: "about" },
-    { 
-      label: "Client Hub", 
+    {
+      label: "Client Hub",
       view: "client-portal",
-      icon: <Layout className="w-3.5 h-3.5 text-slate-400 group-hover:text-white" /> 
+      icon: <Layout className="h-3.5 w-3.5 shrink-0 opacity-70" />,
     },
   ];
 
   const handleNavClick = (view: ViewType) => {
     setActiveView(view);
     setMobileMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const linkClass = (link: NavLink) => {
+    const active = activeView === link.view;
+    const base =
+      "nav-link group flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold select-none";
+    if (link.isSpecial) {
+      return `${base} nav-link-special ${active ? "is-active" : ""}`;
+    }
+    return `${base} ${active ? "is-active" : ""}`;
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-slate-800/40 elegant-blur-nav">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        
-        {/* Brand Logo Component */}
-        <div className="cursor-pointer" onClick={() => handleNavClick("home")} id="header-logo-container">
+    <header
+      className={`site-header sticky top-0 z-50 w-full ${scrolled ? "is-scrolled" : ""}`}
+    >
+      <div className="mx-auto flex h-[4.25rem] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+        {/* Logo */}
+        <button
+          type="button"
+          onClick={() => handleNavClick("home")}
+          className="shrink-0 rounded-lg outline-none transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-cyan-500/50"
+          id="header-logo-container"
+          aria-label="Go to home"
+        >
           <Logo size={34} />
-        </div>
+        </button>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-1 lg:gap-2">
+        {/* Desktop nav — pill track */}
+        <nav
+          className="hidden items-center gap-0.5 rounded-xl p-1 md:flex"
+          aria-label="Main navigation"
+        >
           {navLinks.map((link) => (
             <button
               key={link.view}
+              type="button"
               id={`nav-link-${link.view}`}
               onClick={() => handleNavClick(link.view)}
-              className={`group flex items-center gap-1.5 px-3 h-9 text-sm font-semibold transition-colors duration-200 rounded-md select-none
-                ${activeView === link.view 
-                  ? "bg-slate-800/50 text-white" 
-                  : link.isSpecial 
-                    ? "text-cyan-400 hover:text-cyan-300 hover:bg-cyan-950/20" 
-                    : "text-slate-400 hover:text-white hover:bg-slate-900/40"
-                }
-              `}
+              className={linkClass(link)}
             >
-              {link.icon && link.icon}
-              {link.label}
-              {link.isSpecial && (
-                <span className="flex h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
+              {link.icon}
+              <span>{link.label}</span>
+              {link.isSpecial && activeView !== link.view && (
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-60" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                </span>
               )}
             </button>
           ))}
         </nav>
 
-        {/* Action Button: Start a Project */}
-        <div className="hidden md:flex items-center gap-4">
+        {/* Desktop CTA */}
+        <div className="hidden shrink-0 items-center gap-3 md:flex">
           <button
+            type="button"
+            onClick={() => handleNavClick("ai-architect")}
+            className="btn-secondary hidden items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold lg:flex"
+          >
+            <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
+            Try AI
+          </button>
+          <button
+            type="button"
             id="nav-btn-contact"
             onClick={() => handleNavClick("contact")}
-            className="btn-glow group flex items-center gap-1.5 bg-white text-slate-950 px-5 py-2.5 text-sm font-bold rounded-full shadow-lg shadow-white/5 hover:bg-cyan-50"
+            className="btn-primary group flex items-center gap-1.5 rounded-full px-5 py-2.5 text-sm"
           >
-            Start a Project
-            <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 text-slate-950" />
+            <span className="relative z-10">Start a Project</span>
+            <ArrowUpRight className="relative z-10 h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </button>
         </div>
 
-        {/* Mobile menu toggle */}
-        <div className="flex md:hidden">
-          <button
-            id="mobile-menu-toggle"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="rounded-md p-1.5 text-slate-400 hover:bg-slate-900 hover:text-white transition-colors"
-          >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
-        </div>
+        {/* Mobile toggle */}
+        <button
+          type="button"
+          id="mobile-menu-toggle"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="btn-secondary flex h-10 w-10 items-center justify-center rounded-xl p-0 md:hidden"
+          aria-expanded={mobileMenuOpen}
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+        >
+          {mobileMenuOpen ? (
+            <X className="h-5 w-5" />
+          ) : (
+            <Menu className="h-5 w-5" />
+          )}
+        </button>
       </div>
 
-      {/* Mobile Menu Panel */}
+      {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-slate-800 bg-[#020617] px-4 py-4 space-y-2 animate-fadeIn">
-          {navLinks.map((link) => (
-            <button
-              key={link.view}
-              id={`mobile-nav-${link.view}`}
-              onClick={() => handleNavClick(link.view)}
-              className={`flex w-full items-center gap-2.5 px-4 py-2.5 text-base font-semibold rounded-md text-left transition-colors
-                ${activeView === link.view 
-                  ? "bg-slate-800/85 text-white" 
-                  : link.isSpecial
-                    ? "text-cyan-300 bg-cyan-950/10"
-                    : "text-slate-300 hover:bg-slate-900 hover:text-white"
-                }
-              `}
-            >
-              {link.icon && link.icon}
-              {link.label}
-            </button>
-          ))}
-          <div className="pt-4 border-t border-slate-900">
-            <button
-              id="mobile-nav-contact"
-              onClick={() => handleNavClick("contact")}
-              className="flex w-full items-center justify-center gap-2 bg-white text-slate-950 py-3 text-base font-bold rounded-full shadow-lg hover:bg-cyan-50 transition-all"
-            >
-              Start a Project
-              <ArrowUpRight className="w-4 h-4" />
-            </button>
+        <div className="animate-fadeIn border-t border-brand md:hidden">
+          <div
+            className="mx-4 mb-4 mt-2 space-y-1 rounded-2xl p-2"
+            style={{ background: "var(--promptly-surface)", border: "1px solid var(--promptly-border)" }}
+          >
+            {navLinks.map((link) => (
+              <button
+                key={link.view}
+                type="button"
+                id={`mobile-nav-${link.view}`}
+                onClick={() => handleNavClick(link.view)}
+                className={`${linkClass(link)} w-full rounded-xl px-4 py-3 text-left text-base`}
+              >
+                {link.icon}
+                {link.label}
+              </button>
+            ))}
+            <div className="grid grid-cols-2 gap-2 border-t border-brand pt-3">
+              <button
+                type="button"
+                onClick={() => handleNavClick("ai-architect")}
+                className="btn-secondary flex items-center justify-center gap-1.5 rounded-xl py-3 text-sm font-semibold"
+              >
+                <Sparkles className="h-4 w-4 text-cyan-400" />
+                Try AI
+              </button>
+              <button
+                type="button"
+                id="mobile-nav-contact"
+                onClick={() => handleNavClick("contact")}
+                className="btn-primary flex items-center justify-center gap-1.5 rounded-xl py-3 text-sm"
+              >
+                Start Project
+                <ArrowUpRight className="h-4 w-4" />
+              </button>
+            </div>
           </div>
         </div>
       )}

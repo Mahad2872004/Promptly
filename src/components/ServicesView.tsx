@@ -121,14 +121,14 @@ export default function ServicesView({ setActiveView }: ServicesViewProps) {
             <div className="pt-4 flex flex-col sm:flex-row gap-4">
               <button
                 onClick={handleBookBrief}
-                className="flex-1 bg-white hover:bg-cyan-50 px-5 py-3 text-xs font-bold text-[#020617] rounded-full shadow-lg shadow-white/5 flex items-center justify-center gap-1.5 cursor-pointer"
+                className="btn-primary flex-1 flex items-center justify-center gap-1.5 rounded-full px-5 py-3 text-xs cursor-pointer"
               >
                 Schedule Kickoff Brief
                 <ArrowRight className="w-4 h-4 text-[#020617]" />
               </button>
               <button
                 onClick={() => setActiveView("portfolio")}
-                className="flex-1 border border-slate-800 hover:border-slate-700 bg-slate-950/80 px-5 py-3 text-xs font-bold text-slate-400 hover:text-white rounded-full text-center transition-colors cursor-pointer"
+                className="btn-secondary flex-1 rounded-full px-5 py-3 text-xs font-bold text-center cursor-pointer"
               >
                 Inspect Associated Case Studies
               </button>

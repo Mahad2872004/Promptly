@@ -54,7 +54,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020617] font-sans text-slate-200 flex flex-col justify-between relative overflow-x-hidden">
+    <div className="min-h-screen bg-brand-bg font-sans text-slate-200 flex flex-col justify-between relative overflow-x-hidden">
       <BackgroundMotion />
       <CursorGlow />
 

@@ -102,14 +102,14 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
                 <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
                   <button
                     onClick={() => setActiveView("contact")}
-                    className="btn-glow group flex items-center gap-2 rounded-full bg-white px-8 py-4 text-sm font-bold text-slate-950 shadow-xl shadow-white/10"
+                    className="btn-primary group flex items-center gap-2 rounded-full px-8 py-4 text-sm"
                   >
                     Start Your Project
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                   </button>
                   <button
                     onClick={() => setActiveView("portfolio")}
-                    className="card-lift flex items-center gap-2 rounded-full border border-slate-700/80 bg-slate-900/50 px-7 py-4 text-sm font-semibold text-slate-200 backdrop-blur-sm hover:border-cyan-500/30 hover:text-white"
+                    className="btn-secondary card-lift flex items-center gap-2 rounded-full px-7 py-4 text-sm font-semibold"
                   >
                     <Play className="h-4 w-4 text-cyan-400" />
                     View Case Studies
@@ -543,7 +543,7 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
             <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
               <button
                 onClick={() => setActiveView("ai-architect")}
-                className="btn-glow rounded-full bg-white px-8 py-4 text-sm font-bold text-slate-950"
+                className="btn-primary rounded-full px-8 py-4 text-sm"
               >
                 Launch AI Architect
               </button>

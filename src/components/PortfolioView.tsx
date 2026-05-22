@@ -198,7 +198,7 @@ export default function PortfolioView({ setActiveView }: PortfolioViewProps) {
                     setSelectedProject(null);
                     handleBookBrief();
                   }}
-                  className="w-full sm:w-auto bg-white hover:bg-cyan-50 px-6 py-2.5 text-xs font-bold text-slate-950 rounded-full shadow-lg shadow-white/5 transition-colors cursor-pointer"
+                  className="btn-primary w-full cursor-pointer rounded-full px-6 py-2.5 text-xs sm:w-auto"
                 >
                   Schedule Architectural Intake
                 </button>
