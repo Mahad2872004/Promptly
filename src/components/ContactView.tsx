@@ -262,7 +262,7 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
 
                 <button
                   type="submit"
-                  className="w-full bg-white hover:bg-cyan-50 py-3.5 text-xs font-bold text-slate-950 uppercase tracking-widest rounded-full transition-all shadow-lg shadow-white/5 flex items-center justify-center gap-1.5 select-none cursor-pointer"
+                  className="btn-primary flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-full py-3.5 text-xs uppercase tracking-widest select-none"
                 >
                   {loading ? "Registering system Brief..." : "Submit Architectural Brief"}
                   <Send className="w-3.5 h-3.5 text-slate-950" />

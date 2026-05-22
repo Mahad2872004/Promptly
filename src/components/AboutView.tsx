@@ -146,7 +146,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
           </p>
           <button
             onClick={handleBookBrief}
-            className="rounded-full bg-white hover:bg-cyan-50 px-8 py-3.5 text-xs font-bold text-slate-950 uppercase tracking-widest transition-all shadow-lg shadow-white/5 cursor-pointer"
+            className="btn-primary cursor-pointer rounded-full px-8 py-3.5 text-xs uppercase tracking-widest"
           >
             Schedule Intake Call
           </button>

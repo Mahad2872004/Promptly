@@ -63,8 +63,8 @@ export default function Logo({ className = "", size = 36, showText = true }: Log
       </svg>
 
       {showText && (
-        <span className="font-sans font-bold text-xl tracking-tight text-white bg-clip-text">
-          Promptly<span className="text-cyan-400">.</span>
+        <span className="font-sans text-xl font-bold tracking-tight text-white">
+          Promptly<span className="text-gradient-cyan-indigo">.</span>
         </span>
       )}
     </div>
