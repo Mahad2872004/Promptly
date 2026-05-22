@@ -2,67 +2,71 @@ import { DemoProject, AgencyService, TeamMember, Testimonial, FAQItem } from "./
 
 export const AGENCY_SERVICES: AgencyService[] = [
   {
-    id: "ai-intelligence",
-    title: "AI & Cognitive Systems",
-    description: "Engineering advanced agentic workflows, dynamic vector searches, and custom model endpoints directly integrated into your business logic.",
+    id: "web-applications",
+    title: "Web Applications",
+    description:
+      "Production-grade SaaS dashboards, client portals, and enterprise web platforms—with AI-assisted UX, smart search, and intelligent workflows baked in from day one.",
     details: [
-      "Custom Fine-Tuning & Model Guidance (including Gemini 3.5 series)",
-      "High-Performance Retrieval-Augmented Generation (RAG) Pipelines",
-      "Dynamic Semantic Vector Search Orchestrations",
-      "Automated Cognitive Agents & Actionable Tool Integrations",
-      "Strict Server-Side Data Protection & API Proxy Proxies"
-    ],
-    iconName: "Cpu",
-    badge: "Most Demanded",
-    heroColor: "from-cyan-400 to-teal-500",
-    caseStudyRef: "promptmind-ai"
-  },
-  {
-    id: "cloud-native",
-    title: "Cloud Architecture & Services",
-    description: "Designing self-healing, scalable serverless solutions, container networks, and hyper-reliable APIs with instant continuous integrations.",
-    details: [
-      "Serverless Deployments & Google Cloud Run Optimization",
-      "Managed SQL & Persistent Globally-Distributed Databases",
-      "Elastic Microservice Architecture & API Gateways",
-      "Dockerized Applications & Zero-Downtime Migration Strategies",
-      "State-of-the-art Webhook Listeners & Queue Brokers"
-    ],
-    iconName: "Cloud",
-    badge: "Core Stack",
-    heroColor: "from-blue-400 to-indigo-600",
-    caseStudyRef: "georoute"
-  },
-  {
-    id: "client-experiences",
-    title: "Elite Frontends & SaaS UI",
-    description: "Creating blazing-fast interactive web dashboards, multi-tenant subscription products, and fully-responsive corporate platforms.",
-    details: [
-      "Vite, React, and Type-Safe State Architecture",
-      "Tailwind Utility styling with layout fluidities",
-      "Generous white space, custom typography, & rich layout rhythm",
-      "Seamless motion transitions & custom visual state feedback",
-      "Interactive analytics charts powered by high-performance libraries"
+      "React, TypeScript & scalable full-stack web architecture",
+      "AI-assisted onboarding, search, and in-app copilots",
+      "Multi-tenant SaaS, subscriptions & role-based access",
+      "Premium UI systems with conversion-focused layouts",
+      "Secure APIs, analytics dashboards & real-time data layers"
     ],
     iconName: "Monitor",
-    badge: "Visual Craft",
-    heroColor: "from-teal-400 to-emerald-500",
+    badge: "AI-Enhanced Web",
+    heroColor: "from-blue-400 to-indigo-600",
     caseStudyRef: "lumina-portal"
   },
   {
-    id: "mobile-mobility",
-    title: "High-Fidelity Mobile App Sprints",
-    description: "Deploying fluid React Native and Kotlin/Compose applications that leverage device permissions securely, from biometrics to camera APIs.",
+    id: "ai-automation",
+    title: "AI Automation",
+    description:
+      "Intelligent automations that replace manual ops—agentic workflows, trigger-based AI tasks, and seamless integrations across your existing tools and CRMs.",
     details: [
-      "Cross-Platform Native Feature Engineering",
-      "Secure Camera, Microphone & Location access workflows",
-      "Offline-first synchronization & transactional storage engines",
-      "Optimal mobile viewport optimization & push notification networks",
-      "App Store & Google Play distribution deployment pipelines"
+      "Custom AI agents for support, sales & internal ops",
+      "Workflow automation across email, Slack, CRM & ERP",
+      "Document parsing, classification & routing pipelines",
+      "Scheduled jobs, webhooks & event-driven AI triggers",
+      "Human-in-the-loop review with audit-ready logging"
+    ],
+    iconName: "Bot",
+    badge: "Core AI",
+    heroColor: "from-cyan-400 to-blue-500",
+    caseStudyRef: "promptmind-ai"
+  },
+  {
+    id: "ai-systems",
+    title: "AI Systems",
+    description:
+      "End-to-end AI infrastructure—RAG pipelines, vector databases, model orchestration, and secure inference layers designed for reliability at scale.",
+    details: [
+      "RAG pipelines with embeddings & semantic retrieval",
+      "Gemini & multi-model orchestration with fallbacks",
+      "Vector databases, chunking strategies & eval suites",
+      "Server-side proxies, guardrails & data isolation",
+      "Monitoring, cost controls & production observability"
+    ],
+    iconName: "Cpu",
+    badge: "Enterprise AI",
+    heroColor: "from-indigo-400 to-violet-600",
+    caseStudyRef: "promptmind-ai"
+  },
+  {
+    id: "app-development",
+    title: "App Development",
+    description:
+      "Native and cross-platform mobile apps plus progressive web experiences—built with AI features like voice, vision, personalization, and on-device intelligence.",
+    details: [
+      "React Native, iOS & Android production sprints",
+      "AI chat, recommendations & smart notifications",
+      "Offline-first sync, auth & secure device APIs",
+      "App Store & Play Store launch pipelines",
+      "Shared codebase with web—one product, every screen"
     ],
     iconName: "Smartphone",
-    badge: "Bespoke Mobile",
-    heroColor: "from-orange-400 to-rose-500",
+    badge: "AI-Ready Apps",
+    heroColor: "from-violet-400 to-purple-600",
     caseStudyRef: "fintech-ledger"
   }
 ];
@@ -165,25 +169,25 @@ export const CASE_STUDIES: DemoProject[] = [
 export const TEAM_MEMBERS: TeamMember[] = [
   {
     id: "team-1",
-    name: "Kamil Vance",
-    role: "Agency Co-Founder & Principal Architect",
-    bio: "Kamil has spent 12 years orchestrating high-throughput distributed architectures, microservices, and secure API gateways. He loves elegant typography and clean database schemas.",
+    name: "Mahad Mateen",
+    role: "Agency CEO & Principal Architect",
+    bio: "Mahad has spent 5 years orchestrating high-throughput distributed architectures, microservices, and secure API gateways. He loves elegant typography and clean database schemas.",
     specialties: ["System Architecture", "TypeScript", "Express.js", "PostgreSQL", "Scaling"],
     svgAvatarIndex: 1
   },
   {
     id: "team-2",
-    name: "Meera Bhatia",
-    role: "Director of Design & Front-End Engineering",
-    bio: "Meera is obsessed with layouts, negative space, and micro-interactions. She designed the Promptly design framework and ensures perfect visual balance across all screens.",
+    name: "Iqra Iqbal",
+    role: "Agency CTO & Front-End Engineer",
+    bio: "Iqra has spent 5 years building high-performance web applications and mobile apps. She loves clean code and efficient user interfaces.",
     specialties: ["SaaS Design", "Tailwind CSS", "React & Motion", "Visual Balance", "Typography"],
     svgAvatarIndex: 2
   },
   {
     id: "team-3",
-    name: "Dr. Ethan Thorne",
+    name: "Mahad Mateen Butt",
     role: "Senior AI Engineer",
-    bio: "Ethan specializes in prompt optimization, RAG embedding databases, and model interfaces. He spent 5 years researching neural reasoning and leads the custom agent builds.",
+    bio: "Mahad Butt specializes in prompt optimization, RAG embedding databases, and model interfaces. He spent 5 years researching neural reasoning and leads the custom agent builds.",
     specialties: ["Gemini Solutions", "Vector Databases", "Prompt Tuning", "Python", "Node.js"],
     svgAvatarIndex: 3
   }

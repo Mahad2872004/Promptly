@@ -12,7 +12,7 @@ import ScrollReveal from "./ui/ScrollReveal";
 import AnimatedCounter from "./ui/AnimatedCounter";
 import {
   Cpu,
-  Cloud,
+  Bot,
   Smartphone,
   Monitor,
   ArrowRight,
@@ -31,10 +31,10 @@ interface HomeViewProps {
 }
 
 const serviceIcons: Record<string, React.ReactNode> = {
-  "ai-intelligence": <Cpu className="w-5 h-5 text-cyan-400" />,
-  "cloud-native": <Cloud className="w-5 h-5 text-indigo-400" />,
-  "client-experiences": <Monitor className="w-5 h-5 text-violet-400" />,
-  "mobile-mobility": <Smartphone className="w-5 h-5 text-teal-400" />,
+  "web-applications": <Monitor className="h-5 w-5 text-cyan-400" />,
+  "ai-automation": <Bot className="h-5 w-5 text-indigo-400" />,
+  "ai-systems": <Cpu className="h-5 w-5 text-violet-400" />,
+  "app-development": <Smartphone className="h-5 w-5 text-teal-400" />,
 };
 
 const accentRing: Record<string, string> = {
@@ -251,8 +251,8 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
             </ScrollReveal>
             <ScrollReveal animation="slide-left">
               <p className="content-width text-sm leading-relaxed text-slate-400 sm:text-base">
-                Secure, high-uptime architectures built for cloud-native deployment—no template
-                bloat, just production-grade engineering and premium UX craft.
+                Web applications, AI automation, AI systems, and app development—every solution
+                we ship is AI-native, production-ready, and built to scale with your business.
               </p>
             </ScrollReveal>
           </div>
@@ -498,8 +498,8 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
       {/* ─── Success metrics bento ─── */}
       <section className="border-t border-slate-800/40 section-pad py-16">
         <div className="mx-auto max-w-7xl">
-          <div className="grid gap-4 md:grid-cols-4 md:grid-rows-2">
-            <ScrollReveal animation="zoom-in" className="md:col-span-2 md:row-span-2">
+          <div className="grid gap-4 md:grid-cols-3">
+            <ScrollReveal animation="zoom-in" className="md:col-span-2">
               <div className="card-lift flex h-full min-h-[220px] flex-col justify-between rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-cyan-950/40 to-indigo-950/30 p-8">
                 <Sparkles className="h-8 w-8 text-cyan-400" />
                 <div>
@@ -508,10 +508,10 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
                 </div>
               </div>
             </ScrollReveal>
+            <div className="grid gap-4">
             {[
               { label: "Uptime SLA", value: "99.99%", icon: ShieldCheck },
               { label: "Code handoff", value: "100%", icon: Zap },
-              { label: "Active streams", value: "12+", icon: Users },
             ].map((item, i) => (
               <div key={item.label}>
               <ScrollReveal animation="fade-up" staggerIndex={i + 1}>
@@ -525,6 +525,7 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
               </ScrollReveal>
               </div>
             ))}
+            </div>
           </div>
         </div>
       </section>
