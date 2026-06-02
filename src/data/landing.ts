@@ -11,7 +11,7 @@ export const CLIENT_LOGOS = [
 
 export const AGENCY_STATS = [
   {
-    value: 50,
+    value: 20,
     suffix: "+",
     label: "Engineers & Specialists",
     decimals: 0,
