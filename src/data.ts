@@ -199,7 +199,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: "Nimra Jabran",
     role: "Senior AI Engineer",
     bio: "Nimra is passionate about building intelligent systems. She has 5 years of experience specializing in prompt optimization, RAG pipelines, and model orchestration.",
-    specialties: ["AI Engineering", "Gemini Solutions", "Vector Databases", "Prompt Tuning", "RAG Pipelines", "Node.js"],
+    specialties: ["AI Engineering", "Gemini Solutions", "Vector Databases", "Prompt Tuning", "RAG Pipelines", "FastAPI", "Flask", "Django"],
     svgAvatarIndex: 4,
     image: "/images/nimra.jpeg"
   }
