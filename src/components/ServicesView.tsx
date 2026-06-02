@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { ViewType, AgencyService } from "../types";
 import { AGENCY_SERVICES } from "../data";
-import { Cpu, Cloud, Monitor, Smartphone, CheckCircle2, ArrowRight, Shield, Rocket, HelpCircle } from "lucide-react";
+import { Cpu, Bot, Monitor, Smartphone, CheckCircle2, ArrowRight, Shield, Rocket, HelpCircle } from "lucide-react";
 
 interface ServicesViewProps {
   setActiveView: (view: ViewType) => void;
 }
 
 export default function ServicesView({ setActiveView }: ServicesViewProps) {
-  const [selectedServiceId, setSelectedServiceId] = useState<string>("ai-intelligence");
+  const [selectedServiceId, setSelectedServiceId] = useState<string>("web-applications");
 
   const activeService = AGENCY_SERVICES.find((s) => s.id === selectedServiceId) || AGENCY_SERVICES[0];
 
@@ -22,12 +22,12 @@ export default function ServicesView({ setActiveView }: ServicesViewProps) {
         
         {/* Header Block */}
         <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest font-mono">Core Solutions</span>
-          <h1 className="font-sans text-4xl font-extrabold tracking-tight sm:text-5xl">
-            Software Competencies
+          <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest font-mono">AI-First Solutions</span>
+          <h1 className="font-sans text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+            Web, AI & App Development
           </h1>
           <p className="text-sm sm:text-base text-slate-400 leading-relaxed">
-            Promptly engineers clean, scalable architectures tailored for robust performance. Select a category below to inspect our detailed technical standards.
+            From web applications and AI automation to full AI systems and mobile apps—every competency is built with intelligent, production-grade AI at the core.
           </p>
         </div>
 
@@ -50,10 +50,10 @@ export default function ServicesView({ setActiveView }: ServicesViewProps) {
                 <div className={`p-2.5 rounded-xl mb-3
                   ${isSelected ? "bg-cyan-950/45 text-cyan-400" : "bg-slate-950 text-slate-400"}
                 `}>
-                  {serv.id === "ai-intelligence" && <Cpu className="w-5 h-5" />}
-                  {serv.id === "cloud-native" && <Cloud className="w-5 h-5" />}
-                  {serv.id === "client-experiences" && <Monitor className="w-5 h-5" />}
-                  {serv.id === "mobile-mobility" && <Smartphone className="w-5 h-5" />}
+                  {serv.id === "web-applications" && <Monitor className="w-5 h-5" />}
+                  {serv.id === "ai-automation" && <Bot className="w-5 h-5" />}
+                  {serv.id === "ai-systems" && <Cpu className="w-5 h-5" />}
+                  {serv.id === "app-development" && <Smartphone className="w-5 h-5" />}
                 </div>
                 <span className="font-sans font-bold text-xs sm:text-sm text-slate-200">
                   {serv.title}
