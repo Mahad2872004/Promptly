@@ -169,23 +169,26 @@ export const TEAM_MEMBERS: TeamMember[] = [
     role: "Agency Co-Founder & Principal Architect",
     bio: "Kamil has spent 12 years orchestrating high-throughput distributed architectures, microservices, and secure API gateways. He loves elegant typography and clean database schemas.",
     specialties: ["System Architecture", "TypeScript", "Express.js", "PostgreSQL", "Scaling"],
-    svgAvatarIndex: 1
+    svgAvatarIndex: 1,
+    image: "/images/mahad.jpeg"
   },
   {
     id: "team-2",
-    name: "Meera Bhatia",
-    role: "Director of Design & Front-End Engineering",
-    bio: "Meera is obsessed with layouts, negative space, and micro-interactions. She designed the Promptly design framework and ensures perfect visual balance across all screens.",
-    specialties: ["SaaS Design", "Tailwind CSS", "React & Motion", "Visual Balance", "Typography"],
-    svgAvatarIndex: 2
+    name: "Iqra Iqbal",
+    role: "CTO & Senior Software Engineer",
+    bio: "Iqra has spent 5 years building high-performance web applications and mobile apps. She loves clean code and efficient user interfaces.",
+    specialties: ["SaaS Design", "Tailwind CSS", "React & Motion", "Visual Balance", "Typography", "React Native","GHL","Lip Sync"],
+    svgAvatarIndex: 2,
+    image: "/images/iqra.png"
   },
   {
     id: "team-3",
-    name: "Dr. Ethan Thorne",
-    role: "Senior AI Engineer",
-    bio: "Ethan specializes in prompt optimization, RAG embedding databases, and model interfaces. He spent 5 years researching neural reasoning and leads the custom agent builds.",
-    specialties: ["Gemini Solutions", "Vector Databases", "Prompt Tuning", "Python", "Node.js"],
-    svgAvatarIndex: 3
+    name: "Rabiya Malik",
+    role: "Senior Product Designer",
+    bio: "Rabiya has spent 5 years building high-performance web applications and mobile apps. She loves clean and efficient user interfaces.",
+    specialties: ["UI/UX Design", "Figma", "Wireframing", "Prototyping", "User Research","Design Systems","Branding","Saas Design"],
+    svgAvatarIndex: 3,
+    image: "/images/rabiya.png"
   }
 ];
 

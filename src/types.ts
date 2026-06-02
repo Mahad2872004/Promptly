@@ -45,6 +45,7 @@ export interface TeamMember {
   bio: string;
   specialties: string[];
   svgAvatarIndex: number;
+  image: string;
 }
 
 export interface Testimonial {

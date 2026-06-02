@@ -481,8 +481,8 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
                 <div key={member.id}>
                 <ScrollReveal animation="fade-up" staggerIndex={i}>
                   <div className="card-lift rounded-2xl border border-slate-800/60 bg-slate-900/40 p-5 text-center backdrop-blur-sm">
-                    <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 text-lg font-bold text-white">
-                      {member.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
+                    <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/30 to-indigo-500/30 text-lg font-bold text-white overflow-hidden">
+                      <img src={member.image} alt={member.name} className="h-14 w-14 rounded-2xl object-cover" />
                     </div>
                     <p className="text-sm font-bold text-white">{member.name}</p>
                     <p className="mt-1 text-[11px] leading-snug text-slate-500">{member.role}</p>
