@@ -193,6 +193,15 @@ export const TEAM_MEMBERS: TeamMember[] = [
     specialties: ["UI/UX Design", "Figma", "Wireframing", "Prototyping", "User Research","Design Systems","Branding","Saas Design"],
     svgAvatarIndex: 3,
     image: "/images/rabiya.png"
+  },
+  {
+    id: "team-4",
+    name: "Nimra Jabran",
+    role: "Senior AI Engineer",
+    bio: "Nimra is passionate about building intelligent systems. She has 5 years of experience specializing in prompt optimization, RAG pipelines, and model orchestration.",
+    specialties: ["AI Engineering", "Gemini Solutions", "Vector Databases", "Prompt Tuning", "RAG Pipelines", "Node.js"],
+    svgAvatarIndex: 4,
+    image: "/images/nimra.jpeg"
   }
 ];
 

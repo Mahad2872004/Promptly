@@ -106,14 +106,20 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
             <p className="text-xs text-slate-400">Every project has an assigned principal specialist. No multi-tier junior buffers.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8" id="team-cards-grid">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="team-cards-grid">
             {TEAM_MEMBERS.map((member) => (
               <div key={member.id} className="group p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-cyan-500/30 transition-all duration-300 flex flex-col justify-between">
                 <div className="space-y-4">
-                  {/* Cyber custom avatar graphic instead of broken images */}
+                  {/* Cyber custom avatar graphic using member.image */}
                   <div className="h-16 w-16 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center text-cyan-400 font-mono font-bold text-xl relative overflow-hidden group-hover:border-cyan-500/30 transition-colors">
-                    <span className="z-10">{member.name[0]}{member.name.split(" ")[1]?.[0]}</span>
-                    <div className="absolute inset-0 bg-gradient-to-tr from-cyan-950/20 to-transparent pointer-events-none" />
+                    {member.image ? (
+                      <img src={member.image} alt={member.name} className="h-full w-full object-cover" />
+                    ) : (
+                      <>
+                        <span className="z-10">{member.name[0]}{member.name.split(" ")[1]?.[0]}</span>
+                        <div className="absolute inset-0 bg-gradient-to-tr from-cyan-950/20 to-transparent pointer-events-none" />
+                      </>
+                    )}
                   </div>
 
                   <div className="space-y-1">

@@ -476,7 +476,7 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
               </button>
             </ScrollReveal>
 
-            <div className="grid gap-4 sm:grid-cols-3">
+            <div className="grid gap-4 grid-cols-2">
               {TEAM_MEMBERS.map((member, i) => (
                 <div key={member.id}>
                 <ScrollReveal animation="fade-up" staggerIndex={i}>
