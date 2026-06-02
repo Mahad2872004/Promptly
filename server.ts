@@ -6,9 +6,11 @@ import dotenv from "dotenv";
 import 'dotenv/config';
 import { createRequire } from "module";
 
-const require = createRequire(import.meta.url);
 // @ts-ignore
-globalThis.require = require;
+if (typeof globalThis.require === "undefined") {
+  // @ts-ignore
+  globalThis.require = createRequire(import.meta.url);
+}
 
 
 (async () => {
