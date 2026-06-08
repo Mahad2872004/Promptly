@@ -495,69 +495,8 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
         </div>
       </section>
 
-      {/* ─── Success metrics bento ─── */}
-      <section className="border-t border-slate-800/40 section-pad py-16">
-        <div className="mx-auto max-w-7xl">
-          <div className="grid gap-4 md:grid-cols-3">
-            <ScrollReveal animation="zoom-in" className="md:col-span-2">
-              <div className="card-lift flex h-full min-h-[220px] flex-col justify-between rounded-2xl border border-cyan-500/20 bg-gradient-to-br from-cyan-950/40 to-indigo-950/30 p-8">
-                <Sparkles className="h-8 w-8 text-cyan-400" />
-                <div>
-                  <p className="text-4xl font-extrabold text-white">38 days</p>
-                  <p className="mt-2 text-sm text-slate-400">Average full-cycle MVP delivery</p>
-                </div>
-              </div>
-            </ScrollReveal>
-            <div className="grid gap-4">
-            {[
-              { label: "Uptime SLA", value: "99.99%", icon: ShieldCheck },
-              { label: "Code handoff", value: "100%", icon: Zap },
-            ].map((item, i) => (
-              <div key={item.label}>
-              <ScrollReveal animation="fade-up" staggerIndex={i + 1}>
-                <div className="card-lift flex h-full items-center gap-4 rounded-2xl border border-slate-800/60 bg-slate-900/40 p-6">
-                  <item.icon className="h-8 w-8 shrink-0 text-indigo-400" />
-                  <div>
-                    <p className="text-2xl font-extrabold text-white">{item.value}</p>
-                    <p className="text-xs text-slate-500">{item.label}</p>
-                  </div>
-                </div>
-              </ScrollReveal>
-              </div>
-            ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ─── CTA ─── */}
-      <section className="section-pad border-t border-slate-800/40 py-20">
-        <ScrollReveal animation="fade-up">
-          <div className="mx-auto max-w-3xl rounded-3xl border border-slate-800/60 bg-gradient-to-br from-slate-900/80 to-slate-950/80 p-10 text-center backdrop-blur-xl sm:p-14">
-            <h3 className="text-2xl font-extrabold text-white sm:text-3xl">
-              Ready to architect your next product?
-            </h3>
-            <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-slate-400">
-              Get an instant stack recommendation, timeline, and scope estimate—or book a
-              consultation with our principal architects.
-            </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <button
-                onClick={() => setActiveView("ai-architect")}
-                className="btn-primary rounded-full px-8 py-4 text-sm"
-              >
-                Launch AI Architect
-              </button>
-              <button
-                onClick={() => setActiveView("contact")}
-                className="rounded-full border border-slate-700 px-8 py-4 text-sm font-semibold text-slate-300 transition-colors hover:border-cyan-500/40 hover:text-white"
-              >
-                Book a consultation
-              </button>
-            </div>
-          </div>
-        </ScrollReveal>
-      </section>
+      
     </div>
   );
 }

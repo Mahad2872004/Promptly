@@ -34,49 +34,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
     <div className="bg-transparent text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 selection:bg-cyan-500/20">
       <div className="mx-auto max-w-5xl space-y-16">
         
-        {/* Story Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Text Summary */}
-          <div className="lg:col-span-7 space-y-6">
-            <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest font-mono">Our Heritage</span>
-            <h1 className="font-sans text-4xl font-extrabold tracking-tight sm:text-5xl">
-              Software Houses Done Right.
-            </h1>
-            <p className="text-sm sm:text-base text-slate-400 leading-relaxed font-sans">
-              Promptly was founded by a compact squad of senior systems architects weary of high-overhead agency processes and boilerplate templates. We wanted to build a lean, lightning-fast studio modeling, compiling, and deploying exceptional code.
-            </p>
-            <p className="text-sm text-slate-400 leading-relaxed font-sans">
-              Today, our teams craft enterprise-grade web tools, NLP microservices, and native mobile apps with strict architectural integrity, serving future-ready firms worldwide.
-            </p>
-          </div>
-
-          {/* Core Certification Badge Box */}
-          <div className="lg:col-span-5 p-6 rounded-2xl border border-slate-800 bg-slate-900/40 space-y-5">
-            <div className="flex items-center gap-2 pb-3.5 border-b border-slate-800/60 text-xs font-mono text-slate-400">
-              <Terminal className="w-4 h-4 text-cyan-400" />
-              <span>root@promptly:~# _ agency_credentials</span>
-            </div>
-
-            <div className="space-y-4 font-mono text-xs text-slate-400">
-              <div className="flex justify-between">
-                <span>FRONTEND PRECISE SPEED:</span>
-                <span className="text-cyan-400 font-bold">100 / 100</span>
-              </div>
-              <div className="flex justify-between">
-                <span>SERVER RUNTIME COLD START:</span>
-                <span className="text-teal-400 font-bold">95ms average</span>
-              </div>
-              <div className="flex justify-between">
-                <span>SECURITY LEAKS DETECTED:</span>
-                <span className="text-emerald-400 font-bold">0.00%</span>
-              </div>
-              <div className="flex justify-between">
-                <span>CLIENT REVENUE BOOST SLA:</span>
-                <span className="text-cyan-400 font-bold">Guaranteed Milestone</span>
-              </div>
-            </div>
-          </div>
-        </div>
+       
 
         {/* Philosophy Core Columns */}
         <div className="border-t border-slate-800/40 pt-16 space-y-8">
@@ -145,18 +103,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
         </div>
 
         {/* CTA */}
-        <div className="p-8 rounded-2xl bg-slate-900/40 border border-slate-800 text-center space-y-6">
-          <h3 className="font-sans text-xl font-bold text-slate-200">Want to partner directly with our specialists?</h3>
-          <p className="text-xs text-slate-400 max-w-sm mx-auto leading-relaxed">
-            We operate in precise development slots to guarantee extreme focus. Lock in your sprint timeframe today.
-          </p>
-          <button
-            onClick={handleBookBrief}
-            className="btn-primary cursor-pointer rounded-full px-8 py-3.5 text-xs uppercase tracking-widest"
-          >
-            Schedule Intake Call
-          </button>
-        </div>
+        
 
       </div>
     </div>
