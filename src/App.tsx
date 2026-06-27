@@ -11,6 +11,7 @@ import AIArchitectView from "./components/AIArchitectView";
 import AboutView from "./components/AboutView";
 import PortalView from "./components/PortalView";
 import ContactView from "./components/ContactView";
+import ConsultationView from "./components/ConsultationView";
 
 export default function App() {
   const [activeView, setActiveView] = useState<ViewType>("home");
@@ -20,9 +21,9 @@ export default function App() {
     switch (activeView) {
       case "home":
         return (
-          <HomeView 
-            setActiveView={setActiveView} 
-            setUserDraftPrompt={setUserDraftPrompt} 
+          <HomeView
+            setActiveView={setActiveView}
+            setUserDraftPrompt={setUserDraftPrompt}
           />
         );
       case "services":
@@ -31,8 +32,8 @@ export default function App() {
         return <PortfolioView setActiveView={setActiveView} />;
       case "ai-architect":
         return (
-          <AIArchitectView 
-            initialPrompt={userDraftPrompt} 
+          <AIArchitectView
+            initialPrompt={userDraftPrompt}
             setUserDraftPrompt={setUserDraftPrompt}
             setActiveView={setActiveView}
           />
@@ -43,11 +44,13 @@ export default function App() {
         return <PortalView />;
       case "contact":
         return <ContactView setActiveView={setActiveView} />;
+      case "consultation":
+        return <ConsultationView setActiveView={setActiveView} />;
       default:
         return (
-          <HomeView 
-            setActiveView={setActiveView} 
-            setUserDraftPrompt={setUserDraftPrompt} 
+          <HomeView
+            setActiveView={setActiveView}
+            setUserDraftPrompt={setUserDraftPrompt}
           />
         );
     }

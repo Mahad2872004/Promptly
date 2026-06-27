@@ -85,19 +85,11 @@ export default function Footer({ setActiveView }: FooterProps) {
 
             <div className="flex flex-col gap-3 sm:flex-row">
               <button
-                onClick={() => handleNav("contact")}
+                onClick={() => handleNav("consultation")}
                 className="btn-primary flex items-center gap-2 rounded-full px-7 py-3.5 text-sm"
               >
-                Schedule consultation
+                Book a Consultation
                 <ArrowRight className="h-4 w-4" />
-              </button>
-
-              <button
-                onClick={() => handleNav("ai-architect")}
-                className="btn-secondary flex items-center gap-2 rounded-full px-6 py-3.5 text-sm font-semibold"
-              >
-                <Terminal className="h-4 w-4 text-cyan-400" />
-                Try AI Architect
               </button>
             </div>
 

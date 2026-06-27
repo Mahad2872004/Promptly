@@ -44,18 +44,17 @@ export default function Header({ activeView, setActiveView }: HeaderProps) {
     { label: "Home", view: "home" },
     { label: "Services", view: "services" },
     { label: "Case Studies", view: "portfolio" },
-    {
-      label: "AI Architect",
-      view: "ai-architect",
-      isSpecial: true,
-      icon: <Terminal className="h-3.5 w-3.5 shrink-0" />,
-    },
+    // {
+    //   label: "AI Architect",
+    //   view: "ai-architect",
+    //   isSpecial: true,
+    //   icon: <Terminal className="h-3.5 w-3.5 shrink-0" />,
+    // },
     { label: "About", view: "about" },
     {
-      label: "Client Hub",
-      view: "client-portal",
-      icon: <Layout className="h-3.5 w-3.5 shrink-0 opacity-70" />,
-    },
+      label: "Contact Us",
+      view: "contact"
+    }
   ];
 
   const handleNavClick = (view: ViewType) => {
@@ -119,19 +118,11 @@ export default function Header({ activeView, setActiveView }: HeaderProps) {
         <div className="hidden shrink-0 items-center gap-3 md:flex">
           <button
             type="button"
-            onClick={() => handleNavClick("ai-architect")}
-            className="btn-secondary hidden items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold lg:flex"
-          >
-            <Sparkles className="h-3.5 w-3.5 text-cyan-400" />
-            Try AI
-          </button>
-          <button
-            type="button"
             id="nav-btn-contact"
-            onClick={() => handleNavClick("contact")}
+            onClick={() => handleNavClick("consultation")}
             className="btn-primary group flex items-center gap-1.5 rounded-full px-5 py-2.5 text-sm"
           >
-            <span className="relative z-10">Start a Project</span>
+            <span className="relative z-10">Book a Consultation</span>
             <ArrowUpRight className="relative z-10 h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </button>
         </div>
@@ -173,14 +164,6 @@ export default function Header({ activeView, setActiveView }: HeaderProps) {
               </button>
             ))}
             <div className="grid grid-cols-2 gap-2 border-t border-brand pt-3">
-              <button
-                type="button"
-                onClick={() => handleNavClick("ai-architect")}
-                className="btn-secondary flex items-center justify-center gap-1.5 rounded-xl py-3 text-sm font-semibold"
-              >
-                <Sparkles className="h-4 w-4 text-cyan-400" />
-                Try AI
-              </button>
               <button
                 type="button"
                 id="mobile-nav-contact"
