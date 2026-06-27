@@ -186,13 +186,6 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
                   alt="Promptly Hero Visual"
                   className="relative h-full w-full rounded-3xl object-cover shadow-2xl ring-1 ring-white/10"
                 />
-                {/* Floating badge */}
-                <div className="absolute -bottom-4 -right-4 rounded-xl border border-slate-800 bg-slate-900/90 px-4 py-3 backdrop-blur-sm">
-                  <div className="flex items-center gap-2 text-xs font-semibold text-cyan-400">
-                    <Zap className="h-4 w-4" />
-                    <span>AI‑Native since 2020</span>
-                  </div>
-                </div>
               </div>
             </ScrollReveal>
           </div>
