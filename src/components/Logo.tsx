@@ -52,12 +52,12 @@ export default function Logo({ className = "", size = 36, showText = true }: Log
         }
         <defs>
           <linearGradient id="cyanTopGradient" x1="28" y1="27.5" x2="80" y2="27.5" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#06B6D4" />
-            <stop offset="100%" stop-color="#0284C7" />
+            <stop offset="0%" stopColor="#06B6D4" />
+            <stop offset="100%" stopColor="#0284C7" />
           </linearGradient>
           <linearGradient id="orangeLoopGradient" x1="46" y1="51.5" x2="80" y2="51.5" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stop-color="#EF4444" />
-            <stop offset="100%" stop-color="#F97316" />
+            <stop offset="0%" stopColor="#EF4444" />
+            <stop offset="100%" stopColor="#F97316" />
           </linearGradient>
         </defs>
       </svg>

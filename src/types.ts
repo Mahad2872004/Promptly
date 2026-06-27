@@ -1,11 +1,12 @@
-export type ViewType = 
+export type ViewType =
   | "home"
   | "services"
   | "portfolio"
   | "ai-architect"
   | "about"
   | "client-portal"
-  | "contact";
+  | "contact"
+  | "consultation";
 
 export interface DemoProject {
   id: string;
