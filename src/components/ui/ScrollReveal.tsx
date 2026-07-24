@@ -7,7 +7,10 @@ export type RevealAnimation =
   | "zoom-in"
   | "slide-left"
   | "slide-right"
-  | "fade";
+  | "fade"
+  | "scale-in"
+  | "slide-left-full"
+  | "slide-right-full";
 
 export interface ScrollRevealProps {
   children: React.ReactNode;
@@ -17,6 +20,7 @@ export interface ScrollRevealProps {
   className?: string;
   style?: React.CSSProperties;
   staggerIndex?: number;
+  threshold?: number;
 }
 
 const animationClass: Record<RevealAnimation, string> = {
@@ -26,6 +30,9 @@ const animationClass: Record<RevealAnimation, string> = {
   "slide-left": "reveal-slide-left",
   "slide-right": "reveal-slide-right",
   fade: "reveal-fade",
+  "scale-in": "reveal-scale-in",
+  "slide-left-full": "reveal-slide-left-full",
+  "slide-right-full": "reveal-slide-right-full",
 };
 
 export default function ScrollReveal({
@@ -36,9 +43,10 @@ export default function ScrollReveal({
   className = "",
   style,
   staggerIndex,
+  threshold = 0.1,
 }: ScrollRevealProps) {
-  const { ref, inView } = useInView<HTMLDivElement>();
-  const staggerDelay = staggerIndex != null ? staggerIndex * 90 : 0;
+  const { ref, inView } = useInView<HTMLDivElement>({ threshold });
+  const staggerDelay = staggerIndex != null ? staggerIndex * 120 : 0;
   const totalDelay = delay + staggerDelay;
 
   return (

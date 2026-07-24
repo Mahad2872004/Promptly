@@ -1,7 +1,7 @@
 import React from "react";
 import { ViewType } from "../types";
 import { TEAM_MEMBERS } from "../data";
-import { Compass, Shield, Award, Terminal, ArrowRight } from "lucide-react";
+import { Target, Zap, Shield, Users, Award, ArrowRight, Sparkles, CheckCircle, MessageSquare } from "lucide-react";
 import ScrollReveal from "./ui/ScrollReveal";
 
 interface AboutViewProps {
@@ -9,21 +9,69 @@ interface AboutViewProps {
 }
 
 export default function AboutView({ setActiveView }: AboutViewProps) {
-  const corePhilosophy = [
+  const corePrinciples = [
     {
-      title: "Absolute Systems Security",
-      desc: "We skip insecure client-side credentials. All third-party secrets live inside isolated sever-side proxy gateways.",
-      icon: <Shield className="w-5 h-5 text-cyan-400" />
+      title: "Build Real Things",
+      desc: "We focus on solutions that actually work in the real world. No over-engineering, no unnecessary complexity.",
+      icon: <Target className="w-5 h-5 text-cyan-400" />
     },
     {
-      title: "Swiss Layout Aesthetics",
-      desc: "SaaS products deserve elite visual balance. We pair Inter with monospace labels and plenty of breathable white space.",
-      icon: <Compass className="w-5 h-5 text-teal-400" />
+      title: "AI First, Always",
+      desc: "When approaching any problem, we ask: how can AI or automation make this better? It's a default, not an option.",
+      icon: <Sparkles className="w-5 h-5 text-indigo-400" />
     },
     {
-      title: "Production Speed Assurance",
-      desc: "No corporate slow-down. We iterate on weekly sprints with auto-compiled staging domains fully audited.",
-      icon: <Award className="w-5 h-5 text-orange-400" />
+      title: "Clients Are Partners",
+      desc: "We treat clients as long-term partners, not transactions. Their success is our success.",
+      icon: <Users className="w-5 h-5 text-emerald-400" />
+    },
+    {
+      title: "Products > Projects",
+      desc: "Alongside client work, we invest in our own products (like xSender) so the company grows beyond hourly billing.",
+      icon: <Award className="w-5 h-5 text-violet-400" />
+    },
+    {
+      title: "Speed with Quality",
+      desc: "We move fast, but we don't cut corners. Speed matters only if the output is good.",
+      icon: <Zap className="w-5 h-5 text-amber-400" />
+    },
+    {
+      title: "Clear Communication Always",
+      desc: "We communicate clearly — with clients, with each other, and about our products. No jargon, no confusion.",
+      icon: <MessageSquare className="w-5 h-5 text-teal-400" />
+    }
+  ];
+
+  const differentiators = [
+    {
+      title: "AI at the Core",
+      desc: "We don't just use buzzwords. Every solution we design is genuinely powered by modern AI tools and automation.",
+      icon: <Sparkles className="w-6 h-6 text-cyan-400" />
+    },
+    {
+      title: "Speed to Market",
+      desc: "We move fast. Clients get working products quickly — not months of back and forth with no results.",
+      icon: <Zap className="w-6 h-6 text-emerald-400" />
+    },
+    {
+      title: "Global Mindset",
+      desc: "We build for a global audience. xSender and our solutions work for businesses anywhere, not just locally.",
+      icon: <Shield className="w-6 h-6 text-indigo-400" />
+    },
+    {
+      title: "Agency + Product",
+      desc: "We are both a service agency AND a product company. This means better cash flow, more stability, and a stronger long-term business.",
+      icon: <Award className="w-6 h-6 text-violet-400" />
+    },
+    {
+      title: "Real Partnerships",
+      desc: "We don't take one-off projects and disappear. We build long-term relationships with the clients and businesses we work with.",
+      icon: <Users className="w-6 h-6 text-teal-400" />
+    },
+    {
+      title: "Structured Systems",
+      desc: "We deliver real systems, not patchwork fixes. Every product is designed to be clean, maintainable, and scalable.",
+      icon: <CheckCircle className="w-6 h-6 text-amber-400" />
     }
   ];
 
@@ -33,34 +81,91 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
 
   return (
     <div className="bg-transparent text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 selection:bg-cyan-500/20">
-      <div className="mx-auto max-w-5xl space-y-16">
+      <div className="mx-auto max-w-6xl space-y-20">
 
-        {/* Philosophy Core Columns */}
+        {/* Hero Section */}
         <ScrollReveal>
-          <div className="border-t border-slate-800/40 pt-16 space-y-8">
+          <div className="text-center max-w-3xl mx-auto space-y-6">
+            <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest font-mono">
+              About Promptly
+            </span>
+            <h1 className="font-sans text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
+              AI-Powered Digital Solutions for{" "}
+              <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+                Startups & Businesses
+              </span>
+            </h1>
+            <p className="text-base sm:text-lg text-slate-400 leading-relaxed">
+              Promptly is a software agency delivering AI-powered digital solutions for startups and businesses — and building its own products to scale beyond services.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        {/* Core Principles */}
+        <ScrollReveal>
+          <div className="space-y-8">
             <div className="text-center max-w-xl mx-auto space-y-2">
               <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest font-mono">
-                Engineering Standards
+                How We Work
               </span>
               <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl">
-                Our Guiding Framework
+                Our Core Principles
               </h2>
+              <p className="text-sm text-slate-400">
+                These principles guide how every person at Promptly thinks, works, and makes decisions.
+              </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {corePhilosophy.map((phil, idx) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {corePrinciples.map((principle, idx) => (
                 <div
                   key={idx}
-                  className="p-5 rounded-2xl border border-slate-800/80 bg-slate-900/40 space-y-4"
+                  className="p-6 rounded-2xl border border-slate-800/80 bg-slate-900/40 space-y-4 hover:border-cyan-500/30 transition-all"
                 >
-                  <div className="p-2.5 rounded-lg bg-slate-950 inline-block border border-slate-805">
-                    {phil.icon}
+                  <div className="p-3 rounded-xl bg-slate-950 inline-block border border-slate-800">
+                    {principle.icon}
                   </div>
                   <h3 className="font-sans font-bold text-slate-100">
-                    {phil.title}
+                    {principle.title}
                   </h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    {phil.desc}
+                  <p className="text-sm text-slate-400 leading-relaxed">
+                    {principle.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Why Promptly */}
+        <ScrollReveal>
+          <div className="space-y-8">
+            <div className="text-center max-w-xl mx-auto space-y-2">
+              <span className="text-xs font-semibold text-emerald-400 uppercase tracking-widest font-mono">
+                Why Choose Us
+              </span>
+              <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl">
+                Why Promptly?
+              </h2>
+              <p className="text-sm text-slate-400">
+                There are many agencies out there. Here is why clients and partners choose Promptly.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {differentiators.map((diff, idx) => (
+                <div
+                  key={idx}
+                  className="p-6 rounded-2xl border border-slate-800/80 bg-slate-900/40 space-y-4 hover:border-emerald-500/30 transition-all"
+                >
+                  <div className="p-3 rounded-xl bg-slate-950 inline-block border border-slate-800">
+                    {diff.icon}
+                  </div>
+                  <h3 className="font-sans font-bold text-slate-100">
+                    {diff.title}
+                  </h3>
+                  <p className="text-sm text-slate-400 leading-relaxed">
+                    {diff.desc}
                   </p>
                 </div>
               ))}
@@ -88,8 +193,9 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
               id="team-cards-grid"
             >
               {TEAM_MEMBERS.map((member, index) => (
-                <ScrollReveal key={member.id} delay={index * 0.1}>
-                  <div className="group p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-cyan-500/30 transition-all duration-300 flex flex-col justify-between">
+                <div key={member.id}>
+                  <ScrollReveal delay={index * 0.1}>
+                    <div className="group p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-cyan-500/30 transition-all duration-300 flex flex-col justify-between">
                     
                     <div className="space-y-4">
                       {/* Avatar */}
@@ -137,12 +243,32 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
                     </div>
                   </div>
                 </ScrollReveal>
+                </div>
               ))}
             </div>
           </div>
         </ScrollReveal>
 
-        {/* CTA (kept as placeholder section) */}
+        {/* CTA Section */}
+        <ScrollReveal>
+          <div className="border-t border-slate-800/40 pt-16 text-center">
+            <div className="max-w-2xl mx-auto space-y-6">
+              <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl">
+                Ready to Build Something Great?
+              </h2>
+              <p className="text-sm text-slate-400">
+                Let's discuss how Promptly can help your startup or business with AI-powered digital solutions.
+              </p>
+              <button
+                onClick={handleBookBrief}
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-transform hover:scale-[1.02]"
+              >
+                Start Your Project
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        </ScrollReveal>
 
       </div>
     </div>

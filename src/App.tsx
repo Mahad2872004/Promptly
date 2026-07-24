@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ViewType } from "./types";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BackgroundMotion from "./components/BackgroundMotion";
 import CursorGlow from "./components/CursorGlow";
+import PageLoader from "./components/PageLoader";
 import HomeView from "./components/HomeView";
 import ServicesView from "./components/ServicesView";
 import PortfolioView from "./components/PortfolioView";
@@ -16,6 +17,14 @@ import ConsultationView from "./components/ConsultationView";
 export default function App() {
   const [activeView, setActiveView] = useState<ViewType>("home");
   const [userDraftPrompt, setUserDraftPrompt] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1600);
+    return () => clearTimeout(timer);
+  }, []);
 
   const renderActiveView = () => {
     switch (activeView) {
@@ -58,10 +67,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-brand-bg font-sans text-slate-200 flex flex-col justify-between relative overflow-x-hidden">
+      <PageLoader />
       <BackgroundMotion />
       <CursorGlow />
 
-      <div className="relative z-10 flex flex-col min-h-screen justify-between">
+      <div className={`relative z-10 flex flex-col min-h-screen justify-between transition-opacity duration-500 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
         {/* Translucent persistent sticky navigation head */}
         <Header activeView={activeView} setActiveView={setActiveView} />
 

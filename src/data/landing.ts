@@ -1,4 +1,21 @@
-import { Compass, PenTool, Rocket, LucideIcon } from "lucide-react";
+import { Compass, PenTool, Rocket, LucideIcon, Brain, Cloud } from "lucide-react";
+import { 
+  SiReact, 
+  SiNextdotjs, 
+  SiTypescript, 
+  SiTailwindcss, 
+  SiVite,
+  SiNodedotjs,
+  SiPython,
+  SiGo,
+  SiPostgresql,
+  SiRedis,
+  SiTensorflow,
+  SiPytorch,
+  SiDocker,
+  SiKubernetes,
+  SiGithubactions
+} from "react-icons/si";
 
 export const CLIENT_LOGOS = [
   { name: "Lumina Health", initials: "LH" },
@@ -7,7 +24,94 @@ export const CLIENT_LOGOS = [
   { name: "MindCorp", initials: "MC" },
   { name: "NovaStack", initials: "NS" },
   { name: "Arcline", initials: "AR" },
+  { name: "Elevate Retail", initials: "ER" },
+  { name: "PropTech Solutions", initials: "PS" },
 ];
+
+export const INDUSTRIES = [
+  {
+    id: "startups",
+    name: "Startups",
+    description: "Early-stage to growth companies",
+    icon: "🚀",
+    services: ["AI Solutions", "Software Development", "Startup Support"]
+  },
+  {
+    id: "ecommerce",
+    name: "E-commerce",
+    description: "Retail & D2C brands",
+    icon: "🛒",
+    services: ["Digital Transformation", "Software Development"]
+  },
+  {
+    id: "realestate",
+    name: "Real Estate",
+    description: "PropTech solutions",
+    icon: "🏠",
+    services: ["AI Solutions", "Software Development"]
+  },
+  {
+    id: "enterprise",
+    name: "Enterprise",
+    description: "Scale-up businesses",
+    icon: "🏢",
+    services: ["Digital Transformation", "AI Solutions"]
+  },
+  {
+    id: "healthcare",
+    name: "Healthcare",
+    description: "Digital health solutions",
+    icon: "🏥",
+    services: ["AI Solutions", "Software Development"]
+  },
+  {
+    id: "fintech",
+    name: "FinTech",
+    description: "Financial technology",
+    icon: "💰",
+    services: ["AI Solutions", "Software Development"]
+  },
+];
+
+export const PARTNERS = [
+  { name: "Vercel", category: "Infrastructure" },
+  { name: "AWS", category: "Cloud" },
+  { name: "OpenAI", category: "AI" },
+  { name: "Stripe", category: "Payments" },
+  { name: "Shopify", category: "E-commerce" },
+  { name: "MongoDB", category: "Database" },
+];
+
+export const TECH_STACK = {
+  frontend: [
+    { name: "React", icon: SiReact },
+    { name: "Next.js", icon: SiNextdotjs },
+    { name: "TypeScript", icon: SiTypescript },
+    { name: "TailwindCSS", icon: SiTailwindcss },
+    { name: "Vite", icon: SiVite },
+  ],
+  backend: [
+    { name: "Node.js", icon: SiNodedotjs },
+    { name: "Python", icon: SiPython },
+    { name: "Go", icon: SiGo },
+    { name: "PostgreSQL", icon: SiPostgresql },
+    { name: "Redis", icon: SiRedis },
+  ],
+  ai: [
+    { name: "OpenAI", icon: Brain },
+    { name: "LangChain", icon: null },
+    { name: "TensorFlow", icon: SiTensorflow },
+    { name: "PyTorch", icon: SiPytorch },
+    { name: "Hugging Face", icon: null },
+  ],
+  devops: [
+    { name: "Docker", icon: SiDocker },
+    { name: "Kubernetes", icon: SiKubernetes },
+    { name: "AWS", icon: Cloud },
+    { name: "CI/CD", icon: null },
+    { name: "GitHub Actions", icon: SiGithubactions },
+  ],
+};
 
 export const AGENCY_STATS = [
   {

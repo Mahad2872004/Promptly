@@ -111,7 +111,7 @@ export default function Footer({ setActiveView }: FooterProps) {
                 </button>
 
                 <p className="mt-5 text-sm text-slate-400">
-                  Promptly builds SaaS platforms and AI systems with production-grade engineering.
+                  Promptly delivers AI-powered digital solutions for startups and businesses — and builds its own products to scale beyond services.
                 </p>
 
                 <div className="mt-6 flex gap-2.5">
@@ -205,7 +205,7 @@ export default function Footer({ setActiveView }: FooterProps) {
           <ScrollReveal delay={0.2}>
             <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-brand pt-8 md:flex-row">
               <p className="text-xs text-slate-500">
-                © 2026 Promptly Systems Inc.
+                © 2026 Promptly. AI-powered digital solutions for startups and businesses.
               </p>
 
               <div className="flex gap-6">
