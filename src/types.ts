@@ -4,6 +4,14 @@ export type ViewType =
 
   | "services"
 
+  | "ai-solutions"
+
+  | "software-development"
+
+  | "digital-transformation"
+
+  | "startup-support"
+
   | "portfolio"
 
   | "ai-architect"
@@ -14,7 +22,19 @@ export type ViewType =
 
   | "contact"
 
-  | "consultation";
+  | "consultation"
+
+  | "xsender"
+
+  | "products"
+
+  | "startups"
+
+  | "ecommerce"
+
+  | "realestate"
+
+  | "enterprise";
 
 
 

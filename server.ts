@@ -6,6 +6,9 @@ import dotenv from "dotenv";
 import 'dotenv/config';
 import { createRequire } from "module";
 
+// Load .env file explicitly
+dotenv.config();
+
 // @ts-ignore
 if (typeof globalThis.require === "undefined") {
   // @ts-ignore

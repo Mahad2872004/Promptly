@@ -68,6 +68,10 @@ import {
 
   MoveRight,
 
+  Brain,
+
+  Code,
+
 } from "lucide-react";
 
 
@@ -426,240 +430,145 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
             <ScrollReveal animation="scale-in" delay={200} threshold={0.05} className="relative hidden lg:block">
 
-              <div className="relative mx-auto h-[500px] w-full max-w-xl">
+              <div className="relative mx-auto h-[600px] w-full max-w-2xl">
 
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 blur-2xl animate-pulse" />
+                {/* Background glow effects */}
+                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 blur-3xl animate-pulse" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[400px] rounded-full bg-violet-500/10 blur-[100px]" />
 
+                {/* Main floating card */}
                 <div className="relative h-full w-full rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 card-3d">
-
-                  {/* Software Company Visual */}
-
-                  <div className="h-full w-full bg-gradient-to-br from-slate-900 to-slate-950 p-6 flex flex-col">
-
-                    {/* Header */}
-
+                  
+                  {/* Dashboard Interface */}
+                  <div className="h-full w-full bg-gradient-to-br from-slate-900 to-slate-950 p-8 flex flex-col">
+                    
+                    {/* Top bar */}
                     <div className="flex items-center justify-between mb-8">
-
                       <div className="flex items-center gap-3">
-
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-indigo-500 animate-pulse">
-
-                          <Cpu className="h-5 w-5 text-white" />
-
+                        <div className="flex h-14 w-14 items-center justify-center overflow-hidden">
+                          <img 
+                            src="/images/Dynamic Logo for Software Agency 'Promptly' (3).png" 
+                            alt="Promptly Logo" 
+                            className="h-12 w-12 object-contain"
+                          />
                         </div>
-
                         <div>
-
-                          <p className="text-sm font-bold text-white">Promptly</p>
-
-                          <p className="text-[10px] text-slate-400">Software Solutions</p>
-
+                          <p className="text-sm font-bold text-white">Promptly Dashboard</p>
+                          <p className="text-[10px] text-slate-400">Real-time Analytics</p>
                         </div>
-
                       </div>
-
-                      <div className="flex gap-2">
-
+                      <div className="flex items-center gap-2">
                         <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-
-                        <div className="h-2 w-2 rounded-full bg-slate-600" />
-
-                        <div className="h-2 w-2 rounded-full bg-slate-600" />
-
+                        <span className="text-xs text-slate-400">Live</span>
                       </div>
-
                     </div>
 
-
-
-                    {/* Main Content */}
-
-                    <div className="flex-1 space-y-6 stagger-children">
-
-                      {/* Project Cards */}
-
-                      <div className="grid grid-cols-2 gap-4">
-
-                        <div className="rounded-xl bg-gradient-to-br from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 p-4 hover:border-cyan-500/40 transition-colors">
-
-                          <div className="flex items-center gap-2 mb-3">
-
-                            <Bot className="h-4 w-4 text-cyan-400" />
-
-                            <span className="text-[10px] font-mono text-cyan-400">AI SOLUTIONS</span>
-
-                          </div>
-
-                          <p className="text-2xl font-bold text-white mb-1">12</p>
-
-                          <p className="text-[10px] text-slate-400">Active Projects</p>
-
+                    {/* Service cards */}
+                    <div className="grid grid-cols-3 gap-4 mb-6">
+                      <div className="rounded-xl bg-slate-800/50 border border-slate-700/50 p-4 hover:border-cyan-500/40 transition-colors">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Brain className="h-4 w-4 text-cyan-400" />
+                          <p className="text-[10px] text-slate-400 uppercase tracking-wider">AI Solutions</p>
                         </div>
-
-                        <div className="rounded-xl bg-gradient-to-br from-indigo-500/10 to-violet-500/10 border border-indigo-500/20 p-4 hover:border-indigo-500/40 transition-colors">
-
-                          <div className="flex items-center gap-2 mb-3">
-
-                            <Monitor className="h-4 w-4 text-indigo-400" />
-
-                            <span className="text-[10px] font-mono text-indigo-400">WEB APPS</span>
-
-                          </div>
-
-                          <p className="text-2xl font-bold text-white mb-1">8</p>
-
-                          <p className="text-[10px] text-slate-400">Deployed</p>
-
-                        </div>
-
+                        <p className="text-xs font-semibold text-white">Automation & Intelligence</p>
                       </div>
-
-
-
-                      {/* Progress Section */}
-
-                      <div className="rounded-xl bg-slate-800/30 border border-slate-700/50 p-4">
-
-                        <div className="flex items-center justify-between mb-3">
-
-                          <span className="text-xs font-semibold text-slate-300">Development Progress</span>
-
-                          <span className="text-xs font-mono text-cyan-400">87%</span>
-
+                      <div className="rounded-xl bg-slate-800/50 border border-slate-700/50 p-4 hover:border-indigo-500/40 transition-colors">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Code className="h-4 w-4 text-indigo-400" />
+                          <p className="text-[10px] text-slate-400 uppercase tracking-wider">Development</p>
                         </div>
-
-                        <div className="h-2 rounded-full bg-slate-700 overflow-hidden">
-
-                          <div className="h-full w-[87%] bg-gradient-to-r from-cyan-500 to-indigo-500 rounded-full animate-shimmer" />
-
-                        </div>
-
-                        <div className="flex items-center justify-between mt-3">
-
-                          <span className="text-[10px] text-slate-400">xSender Platform</span>
-
-                          <span className="text-[10px] text-emerald-400">On Track</span>
-
-                        </div>
-
+                        <p className="text-xs font-semibold text-white">Web & Mobile Apps</p>
                       </div>
-
-
-
-                      {/* Team/Client Stats */}
-
-                      <div className="grid grid-cols-3 gap-3">
-
-                        <div className="text-center group hover:scale-105 transition-transform">
-
-                          <p className="text-xl font-bold text-white group-hover:text-cyan-400 transition-colors">23</p>
-
-                          <p className="text-[10px] text-slate-400">Clients</p>
-
+                      <div className="rounded-xl bg-slate-800/50 border border-slate-700/50 p-4 hover:border-violet-500/40 transition-colors">
+                        <div className="flex items-center gap-2 mb-2">
+                          <Sparkles className="h-4 w-4 text-violet-400" />
+                          <p className="text-[10px] text-slate-400 uppercase tracking-wider">Innovation</p>
                         </div>
-
-                        <div className="text-center border-l border-r border-slate-700 group hover:scale-105 transition-transform">
-
-                          <p className="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">15</p>
-
-                          <p className="text-[10px] text-slate-400">Team</p>
-
-                        </div>
-
-                        <div className="text-center group hover:scale-105 transition-transform">
-
-                          <p className="text-xl font-bold text-white group-hover:text-violet-400 transition-colors">99%</p>
-
-                          <p className="text-[10px] text-slate-400">Satisfaction</p>
-
-                        </div>
-
+                        <p className="text-xs font-semibold text-white">Cutting-edge Tech</p>
                       </div>
-
                     </div>
 
-
-
-                    {/* Footer */}
-
-                    <div className="mt-6 pt-4 border-t border-slate-800">
-
-                      <div className="flex items-center justify-between">
-
-                        <span className="text-[10px] text-slate-500">Real-time Dashboard</span>
-
-                        <div className="flex items-center gap-2">
-
-                          <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-
-                          <span className="text-[10px] text-emerald-400">Live</span>
-
-                        </div>
-
+                    {/* Chart area */}
+                    <div className="flex-1 rounded-xl bg-slate-800/30 border border-slate-700/50 p-4 relative overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-indigo-500/5" />
+                      <div className="relative h-full flex items-end justify-between gap-2">
+                        {[40, 65, 45, 80, 55, 90, 70, 85, 60, 95, 75, 88].map((height, i) => (
+                          <div
+                            key={i}
+                            className="flex-1 rounded-t bg-gradient-to-t from-cyan-500/60 to-indigo-500/60 transition-all hover:from-cyan-400 hover:to-indigo-400"
+                            style={{ height: `${height}%` }}
+                          />
+                        ))}
                       </div>
-
                     </div>
 
+                    {/* Bottom floating elements */}
+                    <div className="absolute bottom-6 left-6 right-6 flex justify-between">
+                      <div className="rounded-xl bg-slate-800/80 border border-slate-700/50 backdrop-blur-sm p-3 flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center">
+                          <Bot className="h-4 w-4 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold text-white">AI Assistant</p>
+                          <p className="text-[10px] text-slate-400">Active</p>
+                        </div>
+                      </div>
+                      <div className="rounded-xl bg-slate-800/80 border border-slate-700/50 backdrop-blur-sm p-3 flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-cyan-500 to-teal-500 flex items-center justify-center">
+                          <Sparkles className="h-4 w-4 text-white" />
+                        </div>
+                        <div>
+                          <p className="text-xs font-semibold text-white">Auto-Scaling</p>
+                          <p className="text-[10px] text-slate-400">Enabled</p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-
                 </div>
 
-              </div>
+                {/* Floating decorative elements */}
+                <div className="absolute -top-4 -right-4 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 backdrop-blur-sm border border-cyan-500/30 p-4 shadow-xl animate-float">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-5 w-5 text-cyan-400" />
+                    <span className="text-xs font-semibold text-white">Project Complete</span>
+                  </div>
+                </div>
 
+                <div className="absolute -bottom-4 -left-4 rounded-2xl bg-gradient-to-br from-violet-500/20 to-purple-500/20 backdrop-blur-sm border border-violet-500/30 p-4 shadow-xl animate-float" style={{ animationDelay: '1s' }}>
+                  <div className="flex items-center gap-2">
+                    <Zap className="h-5 w-5 text-violet-400" />
+                    <span className="text-xs font-semibold text-white">99.9% Uptime</span>
+                  </div>
+                </div>
+              </div>
             </ScrollReveal>
 
           </div>
-
-
-
-          {/* Mobile prompt */}
-
-          <ScrollReveal animation="fade-up" delay={200} className="mt-12 lg:hidden">
-
-            <div className="mx-auto max-w-xl rounded-2xl border border-slate-800 bg-slate-900/60 p-5 shadow-2xl backdrop-blur-sm">
-
-              <form onSubmit={handlePromptSubmit} className="flex flex-col gap-3 sm:flex-row">
-
-                <input
-
-                  type="text"
-
-                  value={draftPrompt}
-
-                  onChange={(e) => setDraftPrompt(e.target.value)}
-
-                  placeholder="Describe your product vision…"
-
-                  className="flex-1 rounded-xl border border-slate-700 bg-[#020617]/80 px-4 py-3 text-sm outline-none transition focus:border-cyan-500 font-mono"
-
-                />
-
-                <button
-
-                  type="submit"
-
-                  className="rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-cyan-500/25"
-
-                >
-
-                  Blueprint
-
-                </button>
-
-              </form>
-
-            </div>
-
-          </ScrollReveal>
-
         </div>
-
       </section>
 
-
+      {/* Mobile prompt */}
+      <ScrollReveal animation="fade-up" delay={200} threshold={0.05} className="mt-12 lg:hidden">
+        <div className="mx-auto max-w-xl rounded-2xl border border-slate-800 bg-slate-900/60 p-5 shadow-2xl backdrop-blur-sm">
+          <form onSubmit={handlePromptSubmit} className="flex flex-col gap-3 sm:flex-row">
+            <input
+              type="text"
+              value={draftPrompt}
+              onChange={(e) => setDraftPrompt(e.target.value)}
+              placeholder="Describe your product vision…"
+              className="flex-1 rounded-xl border border-slate-700 bg-[#020617]/80 px-4 py-3 text-sm outline-none transition focus:border-cyan-500 font-mono"
+            />
+            <button
+              type="submit"
+              className="rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-cyan-500/25"
+            >
+              Blueprint
+            </button>
+          </form>
+        </div>
+      </ScrollReveal>
 
       {/* ─── PRODUCTS ───────────────────────────────────────────────────── */}
-
       <section className="border-t border-slate-800/40 py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent to-slate-900/20 parallax-section">
 
         <div className="mx-auto max-w-7xl space-y-10">
@@ -1260,7 +1169,10 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
                     <button
 
-                      onClick={() => setActiveView("about")}
+                      onClick={() => {
+                        setActiveView("about");
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
 
                       className="magnetic-btn inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 px-6 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.02]"
 
@@ -1720,7 +1632,7 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
 
 
-      {/* ─── PORTFOLIO ──────────────────────────────────────────────────── */}
+      {/* ─── PORTFOLIO ────────────────────────────────────────────────────
 
       <section className="border-t border-slate-800/40 py-16 md:py-20 px-4 sm:px-6 lg:px-8 parallax-section">
 
@@ -1920,7 +1832,7 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
         </div>
 
-      </section>
+      </section> */}
 
 
 

@@ -55,10 +55,10 @@ export default function Header({ activeView, setActiveView }: HeaderProps) {
       hasDropdown: true,
       icon: <Briefcase className="h-3.5 w-3.5 shrink-0" />,
       dropdownItems: [
-        { label: "AI Solutions", view: "services", description: "AI automation & intelligent systems" },
-        { label: "Software Development", view: "services", description: "Web apps & custom software" },
-        { label: "Digital Transformation", view: "services", description: "Business process automation" },
-        { label: "Startup Support", view: "services", description: "MVP development & scaling" },
+        { label: "AI Solutions", view: "ai-solutions", description: "AI automation & intelligent systems" },
+        { label: "Software Development", view: "software-development", description: "Web apps & custom software" },
+        { label: "Digital Transformation", view: "digital-transformation", description: "Business process automation" },
+        { label: "Startup Support", view: "startup-support", description: "MVP development & scaling" },
       ]
     },
     { 
@@ -66,8 +66,8 @@ export default function Header({ activeView, setActiveView }: HeaderProps) {
       hasDropdown: true,
       icon: <Package className="h-3.5 w-3.5 shrink-0" />,
       dropdownItems: [
-        { label: "xSender", view: "home", description: "WhatsApp Order Management" },
-        { label: "Coming Soon", view: "home", description: "More products in development" },
+        { label: "xSender", view: "xsender", description: "WhatsApp Order Management" },
+        { label: "All Products", view: "products", description: "View our product portfolio" },
       ]
     },
     { 
@@ -75,10 +75,10 @@ export default function Header({ activeView, setActiveView }: HeaderProps) {
       hasDropdown: true,
       icon: <Building2 className="h-3.5 w-3.5 shrink-0" />,
       dropdownItems: [
-        { label: "Startups", view: "portfolio", description: "Early-stage to growth" },
-        { label: "E-commerce", view: "portfolio", description: "Retail & D2C brands" },
-        { label: "Real Estate", view: "portfolio", description: "PropTech solutions" },
-        { label: "Enterprise", view: "portfolio", description: "Scale-up businesses" },
+        { label: "Startups", view: "startups", description: "Early-stage to growth" },
+        { label: "E-commerce", view: "ecommerce", description: "Retail & D2C brands" },
+        { label: "Real Estate", view: "realestate", description: "PropTech solutions" },
+        { label: "Enterprise", view: "enterprise", description: "Scale-up businesses" },
       ]
     },
     { label: "About", view: "about", icon: <Users className="h-3.5 w-3.5 shrink-0" /> },

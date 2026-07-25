@@ -31,18 +31,21 @@ export default function PageLoader() {
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#020617]">
       <div className="relative w-full max-w-md px-4">
         {/* Logo/Brand Animation */}
-        <div className="mb-8 text-center">
-          <div className="inline-flex items-center justify-center gap-3 mb-4">
+        <div className="mb-12 text-center">
+          <div className="inline-flex items-center justify-center gap-3 mb-6">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-indigo-500 blur-xl opacity-50 animate-pulse" />
-              <div className="relative flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500 to-indigo-500 animate-float">
-                <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+              {/* Large glow effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 via-indigo-500 to-violet-500 blur-3xl opacity-40 animate-pulse scale-150" />
+              <div className="relative flex h-40 w-40 items-center justify-center animate-float overflow-hidden bg-slate-900/50 backdrop-blur-sm rounded-3xl border border-slate-800/50 shadow-2xl">
+                <img 
+                  src="/images/Dynamic Logo for Software Agency 'Promptly' (3).png" 
+                  alt="Promptly Logo" 
+                  className="h-32 w-32 object-contain"
+                />
               </div>
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-white tracking-tight animate-fadeIn">Promptly</h1>
+          <h1 className="text-4xl font-bold text-white tracking-tight animate-fadeIn">Promptly</h1>
           <p className="text-sm text-slate-400 mt-2 animate-fadeIn" style={{ animationDelay: '0.2s' }}>AI-Powered Digital Solutions</p>
         </div>
 

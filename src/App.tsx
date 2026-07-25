@@ -7,12 +7,22 @@ import CursorGlow from "./components/CursorGlow";
 import PageLoader from "./components/PageLoader";
 import HomeView from "./components/HomeView";
 import ServicesView from "./components/ServicesView";
+import AISolutionsView from "./components/AISolutionsView";
+import SoftwareDevelopmentView from "./components/SoftwareDevelopmentView";
+import DigitalTransformationView from "./components/DigitalTransformationView";
+import StartupSupportView from "./components/StartupSupportView";
 import PortfolioView from "./components/PortfolioView";
 import AIArchitectView from "./components/AIArchitectView";
 import AboutView from "./components/AboutView";
 import PortalView from "./components/PortalView";
 import ContactView from "./components/ContactView";
 import ConsultationView from "./components/ConsultationView";
+import XSenderView from "./components/XSenderView";
+import ProductsView from "./components/ProductsView";
+import StartupsView from "./components/StartupsView";
+import EcommerceView from "./components/EcommerceView";
+import RealEstateView from "./components/RealEstateView";
+import EnterpriseView from "./components/EnterpriseView";
 
 export default function App() {
   const [activeView, setActiveView] = useState<ViewType>("home");
@@ -37,6 +47,14 @@ export default function App() {
         );
       case "services":
         return <ServicesView setActiveView={setActiveView} />;
+      case "ai-solutions":
+        return <AISolutionsView setActiveView={setActiveView} />;
+      case "software-development":
+        return <SoftwareDevelopmentView setActiveView={setActiveView} />;
+      case "digital-transformation":
+        return <DigitalTransformationView setActiveView={setActiveView} />;
+      case "startup-support":
+        return <StartupSupportView setActiveView={setActiveView} />;
       case "portfolio":
         return <PortfolioView setActiveView={setActiveView} />;
       case "ai-architect":
@@ -55,6 +73,18 @@ export default function App() {
         return <ContactView setActiveView={setActiveView} />;
       case "consultation":
         return <ConsultationView setActiveView={setActiveView} />;
+      case "xsender":
+        return <XSenderView setActiveView={setActiveView} />;
+      case "products":
+        return <ProductsView setActiveView={setActiveView} />;
+      case "startups":
+        return <StartupsView setActiveView={setActiveView} />;
+      case "ecommerce":
+        return <EcommerceView setActiveView={setActiveView} />;
+      case "realestate":
+        return <RealEstateView setActiveView={setActiveView} />;
+      case "enterprise":
+        return <EnterpriseView setActiveView={setActiveView} />;
       default:
         return (
           <HomeView

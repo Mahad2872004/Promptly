@@ -128,9 +128,9 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                             <div className="flex items-center justify-between pt-6 border-t border-slate-800">
                                 <div className="flex items-center gap-3">
                                     <img
-                                        src="/images/mahad.png"
+                                        src="/images/212.png"
                                         alt="Mahad Mateen"
-                                        className="h-10 w-10 rounded-full object-cover"
+                                        className="h-14 w-14 rounded-full object-cover"
                                     />
                                     <div>
                                         <div className="text-sm font-bold text-slate-200">Mahad Mateen</div>
@@ -193,7 +193,7 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                             </button>
 
                             {/* CTA block below phone */}
-                            <div className="w-full space-y-3">
+                            <div className="w-full">
                                 <button
                                     onClick={openCalendly}
                                     className="w-full flex items-center justify-between text-white font-bold text-sm rounded-full px-5 py-3.5 cursor-pointer transition-opacity hover:opacity-90 my-10 border-0 outline-none"
@@ -204,33 +204,6 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                                         <ArrowRight className="w-3.5 h-3.5 text-white" />
                                     </span>
                                 </button>
-
-                                {[
-                                    { icon: <Lock className="w-3.5 h-3.5" />, text: "No credit card required" },
-                                    { icon: <CheckCircle className="w-3.5 h-3.5" />, text: "Completely free session" },
-                                    { icon: <Calendar className="w-3.5 h-3.5" />, text: "Cancel or reschedule anytime" },
-                                ].map((t) => (
-                                    <div
-                                        key={t.text}
-                                        className="flex items-center gap-3 rounded-xl px-4 py-3 text-xs text-slate-400"
-                                        style={{
-                                            border: "1px solid #818cf830",
-                                            background: "linear-gradient(135deg, #22d3ee08 0%, #a78bfa08 100%)"
-                                        }}
-                                    >
-                                        <span
-                                            style={{
-                                                background: "linear-gradient(135deg, #22d3ee 0%, #818cf8 55%, #a78bfa 100%)",
-                                                WebkitBackgroundClip: "text",
-                                                WebkitTextFillColor: "transparent",
-                                                backgroundClip: "text"
-                                            }}
-                                        >
-                                            {t.icon}
-                                        </span>
-                                        {t.text}
-                                    </div>
-                                ))}
                             </div>
                         </div>
 

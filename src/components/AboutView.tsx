@@ -1,7 +1,7 @@
 import React from "react";
 import { ViewType } from "../types";
 import { TEAM_MEMBERS } from "../data";
-import { Target, Zap, Shield, Users, Award, ArrowRight, Sparkles, CheckCircle, MessageSquare } from "lucide-react";
+import { Target, Zap, Shield, Users, Award, ArrowRight, Sparkles, CheckCircle, MessageSquare, CheckCircle as CheckIcon } from "lucide-react";
 import ScrollReveal from "./ui/ScrollReveal";
 
 interface AboutViewProps {
@@ -173,76 +173,115 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
           </div>
         </ScrollReveal>
 
-        {/* Dynamic Team Members Section */}
-        <ScrollReveal>
+        {/* Leadership Section */}
+        <ScrollReveal animation="fade-up" threshold={0.1}>
           <div className="border-t border-slate-800/40 pt-16 space-y-8">
             <div className="text-center max-w-xl mx-auto space-y-2">
               <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest font-mono">
-                The Specialists
+                Leadership
               </span>
               <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl">
-                Lead Craft Engineers
+                Meet the{" "}
+                <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+                  Founder
+                </span>
               </h2>
-              <p className="text-xs text-slate-400">
-                Every project has an assigned principal specialist. No multi-tier junior buffers.
+              <p className="text-sm text-slate-400">
+                Building the future of AI-powered digital solutions.
               </p>
             </div>
 
-            <div
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"
-              id="team-cards-grid"
-            >
-              {TEAM_MEMBERS.map((member, index) => (
+            <div className="max-w-4xl mx-auto">
+              <div className="group relative overflow-hidden rounded-3xl border border-slate-800/70 bg-slate-900/40 p-8 backdrop-blur-sm transition-all hover:border-cyan-500/40 hover:shadow-xl hover:shadow-cyan-500/10 card-3d">
+                <div className="flex flex-col md:flex-row items-center gap-8">
+                  <div className="relative shrink-0">
+                    <div className="h-48 w-48 md:h-56 md:w-56 rounded-2xl overflow-hidden border-2 border-cyan-500/30 shadow-xl">
+                      <img 
+                        src="/images/212.png" 
+                        alt="Promptly Founder" 
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <div className="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500 shadow-lg">
+                      <CheckIcon className="h-5 w-5 text-white" />
+                    </div>
+                  </div>
+
+                  <div className="flex-1 text-center md:text-left">
+                    <h3 className="text-3xl font-bold text-white mb-2">Promptly Founder</h3>
+                    <p className="text-base text-cyan-400 font-semibold mb-4">Founder & CEO</p>
+
+                    <p className="text-slate-400 text-base leading-relaxed mb-6">
+                      Passionate about building AI-powered solutions that transform businesses. With expertise in software development, AI automation, and digital transformation, leading a team dedicated to delivering exceptional results.
+                    </p>
+
+                    <button
+                      onClick={() => {
+                        setActiveView("consultation");
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      }}
+                      className="magnetic-btn inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 px-6 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.02]"
+                    >
+                      Get in Touch
+                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        {/* Team Section */}
+        <ScrollReveal animation="fade-up" threshold={0.1}>
+          <div className="border-t border-slate-800/40 pt-16 space-y-8">
+            <div className="text-center max-w-xl mx-auto space-y-2">
+              <span className="text-xs font-semibold text-violet-400 uppercase tracking-widest font-mono">
+                The Team
+              </span>
+              <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl">
+                Senior specialists,{" "}
+                <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+                  one cohesive squad
+                </span>
+              </h2>
+              <p className="text-sm text-slate-400">
+                Architects, designers, and AI engineers working in tight collaboration—not handoffs between siloed vendors.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {TEAM_MEMBERS.filter(member => member.name !== "Mahad Mateen").map((member, i) => (
                 <div key={member.id}>
-                  <ScrollReveal delay={index * 0.1}>
-                    <div className="group p-6 rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-cyan-500/30 transition-all duration-300 flex flex-col justify-between">
-                    
-                    <div className="space-y-4">
-                      {/* Avatar */}
-                      <div className="h-16 w-16 rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center text-cyan-400 font-mono font-bold text-xl relative overflow-hidden group-hover:border-cyan-500/30 transition-colors">
-                        {member.image ? (
+                  <ScrollReveal animation="fade-up" staggerIndex={i} threshold={0.1}>
+                    <div className="group magnetic-btn relative overflow-hidden rounded-3xl border border-slate-800/70 bg-slate-900/40 p-6 text-center backdrop-blur-sm transition-all hover:border-violet-500/40 hover:bg-slate-800/40 hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1 card-3d">
+                      <div className="absolute top-0 right-0 h-32 w-32 bg-gradient-to-br from-violet-500/10 to-transparent rounded-full blur-3xl group-hover:blur-2xl transition-all" />
+
+                      <div className="relative">
+                        <div className="mx-auto mb-4 h-28 w-28 overflow-hidden rounded-2xl bg-gradient-to-br from-violet-500/20 to-cyan-500/20 border border-violet-500/30 group-hover:scale-110 transition-transform">
                           <img
                             src={member.image}
                             alt={member.name}
-                            className="h-full w-full object-cover"
+                            className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
                           />
-                        ) : (
-                          <>
-                            <span className="z-10">
-                              {member.name[0]}
-                              {member.name.split(" ")[1]?.[0]}
+                        </div>
+
+                        <h3 className="text-base font-bold text-white group-hover:text-violet-400 transition-colors">{member.name}</h3>
+                        <p className="mt-1 text-xs font-semibold text-violet-400 group-hover:text-cyan-400 transition-colors">{member.role}</p>
+
+                        <div className="mt-4 flex flex-wrap justify-center gap-1.5">
+                          {member.specialties.slice(0, 3).map((specialty) => (
+                            <span
+                              key={specialty}
+                              className="rounded-full border border-slate-700/60 bg-slate-800/80 px-2 py-1 text-[10px] font-medium uppercase tracking-wider text-slate-400 group-hover:border-violet-500/40 group-hover:text-violet-400 transition-colors"
+                            >
+                              {specialty}
                             </span>
-                            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-950/20 to-transparent pointer-events-none" />
-                          </>
-                        )}
+                          ))}
+                        </div>
                       </div>
-
-                      <div className="space-y-1">
-                        <p className="font-sans font-bold text-slate-100">
-                          {member.name}
-                        </p>
-                        <p className="font-mono text-[10px] text-cyan-400 uppercase tracking-wider">
-                          {member.role}
-                        </p>
-                      </div>
-
-                      <p className="text-xs text-slate-400 leading-relaxed font-sans mt-2">
-                        {member.bio}
-                      </p>
                     </div>
-
-                    <div className="pt-4 mt-4 border-t border-slate-800/60 flex flex-wrap gap-1">
-                      {member.specialties.map((spec) => (
-                        <span
-                          key={spec}
-                          className="font-mono text-[9px] text-slate-500 bg-[#020617] px-2.5 py-1 rounded border border-slate-800/70"
-                        >
-                          {spec}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </ScrollReveal>
+                  </ScrollReveal>
                 </div>
               ))}
             </div>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Mail, User, Building, Check, Send, AlertCircle } from "lucide-react";
+import { supabase } from "../lib/supabase";
 
 interface ContactViewProps {
   setActiveView: (view: any) => void;
@@ -34,6 +35,12 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!supabase) {
+      setErrorMsg("Contact form is not configured. Please add Supabase credentials.");
+      return;
+    }
+
     if (!name.trim() || !email.trim() || !message.trim()) {
       setErrorMsg("Please fill in your name, email, and project details.");
       return;
@@ -44,24 +51,25 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
     setErrorMsg("");
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, company, projectType, budget, message }),
-      });
+      const { error } = await supabase
+        .from('contact_submissions')
+        .insert({
+          name: name.trim(),
+          email: email.trim(),
+          company: company.trim(),
+          project_type: projectType,
+          budget: budget,
+          message: message.trim(),
+          created_at: new Date().toISOString()
+        });
 
-      if (!response.ok) throw new Error("Something went wrong. Please try again.");
+      if (error) throw error;
 
-      const resJson = await response.json();
-      if (resJson.success) {
-        setSuccessMsg(resJson.message);
-        setName("");
-        setEmail("");
-        setCompany("");
-        setMessage("");
-      } else {
-        throw new Error(resJson.error || "Submission failed. Please try again.");
-      }
+      setSuccessMsg("Thanks for reaching out! We've received your project brief.");
+      setName("");
+      setEmail("");
+      setCompany("");
+      setMessage("");
     } catch (err: any) {
       setErrorMsg(err.message || "Something went wrong. Please try again.");
     } finally {
