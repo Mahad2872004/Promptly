@@ -183,11 +183,11 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
               <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl">
                 Meet the{" "}
                 <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
-                  Founder
+                  Founder & CEO
                 </span>
               </h2>
               <p className="text-sm text-slate-400">
-                Building the future of AI-powered digital solutions.
+                Full Stack Developer & AI Consultant driving Promptly's vision.
               </p>
             </div>
 
@@ -198,7 +198,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
                     <div className="h-48 w-48 md:h-56 md:w-56 rounded-2xl overflow-hidden border-2 border-cyan-500/30 shadow-xl">
                       <img 
                         src="/images/212.png" 
-                        alt="Promptly Founder" 
+                        alt="Mahad Mateen Butt" 
                         className="h-full w-full object-cover"
                       />
                     </div>
@@ -208,11 +208,12 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
                   </div>
 
                   <div className="flex-1 text-center md:text-left">
-                    <h3 className="text-3xl font-bold text-white mb-2">Promptly Founder</h3>
-                    <p className="text-base text-cyan-400 font-semibold mb-4">Founder & CEO</p>
+                    <h3 className="text-3xl font-bold text-white mb-1">Mahad Mateen Butt</h3>
+                    <p className="text-base text-cyan-400 font-semibold mb-1">Founder &amp; CEO</p>
+                    <p className="text-xs text-slate-500 font-medium mb-4 uppercase tracking-widest">Full Stack Developer &amp; AI Consultant</p>
 
                     <p className="text-slate-400 text-base leading-relaxed mb-6">
-                      Passionate about building AI-powered solutions that transform businesses. With expertise in software development, AI automation, and digital transformation, leading a team dedicated to delivering exceptional results.
+                      Driving Promptly's business strategy, product vision, and AI &amp; automation architecture. Mahad leads client consulting and strategic partnerships — the final decision maker behind every major move the agency makes.
                     </p>
 
                     <button
@@ -250,36 +251,47 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {TEAM_MEMBERS.filter(member => member.name !== "Mahad Mateen").map((member, i) => (
-                <div key={member.id}>
-                  <ScrollReveal animation="fade-up" staggerIndex={i} threshold={0.1}>
-                    <div className="group magnetic-btn relative overflow-hidden rounded-3xl border border-slate-800/70 bg-slate-900/40 p-6 text-center backdrop-blur-sm transition-all hover:border-violet-500/40 hover:bg-slate-800/40 hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1 card-3d">
-                      <div className="absolute top-0 right-0 h-32 w-32 bg-gradient-to-br from-violet-500/10 to-transparent rounded-full blur-3xl group-hover:blur-2xl transition-all" />
+            <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 pt-16 items-stretch">
+              {TEAM_MEMBERS.filter(member => member.name !== "Mahad Mateen Butt").map((member, i) => (
+                <div key={member.id} className="h-full">
+                  <ScrollReveal animation="fade-up" staggerIndex={i} threshold={0.1} className="h-full">
+                    <div className="group relative pt-16 text-center h-full">
 
-                      <div className="relative">
-                        <div className="mx-auto mb-4 h-28 w-28 overflow-hidden rounded-2xl bg-gradient-to-br from-violet-500/20 to-cyan-500/20 border border-violet-500/30 group-hover:scale-110 transition-transform">
-                          <img
-                            src={member.image}
-                            alt={member.name}
-                            className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                          />
+                      {/* Circular photo with cyan→violet gradient ring */}
+                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-10">
+                        <div className="h-28 w-28 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 p-[3px] shadow-xl group-hover:shadow-cyan-500/40 transition-shadow">
+                          <div className="h-full w-full rounded-full overflow-hidden ring-4 ring-slate-900">
+                            <img
+                              src={member.image}
+                              alt={member.name}
+                              className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                            />
+                          </div>
                         </div>
+                      </div>
 
-                        <h3 className="text-base font-bold text-white group-hover:text-violet-400 transition-colors">{member.name}</h3>
-                        <p className="mt-1 text-xs font-semibold text-violet-400 group-hover:text-cyan-400 transition-colors">{member.role}</p>
+                      {/* Dark card body */}
+                      <div className="rounded-3xl border border-slate-800/70 bg-slate-900/60 backdrop-blur-sm shadow-xl hover:shadow-cyan-500/10 hover:border-cyan-500/30 transition-all hover:-translate-y-1 px-6 pt-16 pb-7 flex flex-col h-full">
+                        <h3 className="text-xl font-extrabold text-white mb-0.5">{member.name}</h3>
+                        <p className="text-sm font-semibold text-cyan-400 mb-4">{member.role}</p>
 
-                        <div className="mt-4 flex flex-wrap justify-center gap-1.5">
-                          {member.specialties.slice(0, 3).map((specialty) => (
+                        <p className="text-sm text-slate-400 leading-relaxed mb-5">{member.bio}</p>
+
+                        <div className="border-t border-slate-700/50 mb-4" />
+
+                        <p className="text-sm font-bold text-slate-200 mb-3">⭐ Expert in</p>
+                        <div className="flex flex-wrap justify-center gap-2 mb-5">
+                          {member.specialties.map((specialty) => (
                             <span
                               key={specialty}
-                              className="rounded-full border border-slate-700/60 bg-slate-800/80 px-2 py-1 text-[10px] font-medium uppercase tracking-wider text-slate-400 group-hover:border-violet-500/40 group-hover:text-violet-400 transition-colors"
+                              className="rounded-full bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 text-xs font-medium text-cyan-300 group-hover:bg-cyan-500/20 transition-colors"
                             >
                               {specialty}
                             </span>
                           ))}
                         </div>
                       </div>
+
                     </div>
                   </ScrollReveal>
                 </div>

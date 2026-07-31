@@ -1236,64 +1236,49 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
 
 
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 pt-16 items-stretch">
 
-            {TEAM_MEMBERS.filter(member => member.name !== "Mahad Mateen").map((member, i) => (
+            {TEAM_MEMBERS.filter(member => member.name !== "Mahad Mateen Butt").map((member, i) => (
 
-              <div key={member.id}>
+              <div key={member.id} className="h-full">
 
-                <ScrollReveal animation="fade-up" staggerIndex={i} threshold={0.1}>
+                <ScrollReveal animation="fade-up" staggerIndex={i} threshold={0.1} className="h-full">
 
-                  <div className="group magnetic-btn relative overflow-hidden rounded-3xl border border-slate-800/70 bg-slate-900/40 p-6 text-center backdrop-blur-sm transition-all hover:border-violet-500/40 hover:bg-slate-800/40 hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1 card-3d">
+                  <div className="group relative pt-16 text-center h-full">
 
-                    <div className="absolute top-0 right-0 h-32 w-32 bg-gradient-to-br from-violet-500/10 to-transparent rounded-full blur-3xl group-hover:blur-2xl transition-all" />
-
-                    
-
-                    <div className="relative">
-
-                      <div className="mx-auto mb-4 h-28 w-28 overflow-hidden rounded-2xl bg-gradient-to-br from-violet-500/20 to-cyan-500/20 border border-violet-500/30 group-hover:scale-110 transition-transform">
-
-                        <img
-
-                          src={member.image}
-
-                          alt={member.name}
-
-                          className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-
-                        />
-
+                    {/* Circular photo with cyan→violet gradient ring */}
+                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-10">
+                      <div className="h-28 w-28 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 p-[3px] shadow-xl group-hover:shadow-cyan-500/40 transition-shadow">
+                        <div className="h-full w-full rounded-full overflow-hidden ring-4 ring-slate-900">
+                          <img
+                            src={member.image}
+                            alt={member.name}
+                            className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                          />
+                        </div>
                       </div>
+                    </div>
 
-                      
+                    {/* Dark card body */}
+                    <div className="rounded-3xl border border-slate-800/70 bg-slate-900/60 backdrop-blur-sm shadow-xl hover:shadow-cyan-500/10 hover:border-cyan-500/30 transition-all hover:-translate-y-1 px-6 pt-16 pb-7 flex flex-col h-full">
+                      <h3 className="text-xl font-extrabold text-white mb-0.5">{member.name}</h3>
+                      <p className="text-sm font-semibold text-cyan-400 mb-4">{member.role}</p>
 
-                      <h3 className="text-base font-bold text-white group-hover:text-violet-400 transition-colors">{member.name}</h3>
+                      <p className="text-sm text-slate-400 leading-relaxed mb-5">{member.bio}</p>
 
-                      <p className="mt-1 text-xs font-semibold text-violet-400 group-hover:text-cyan-400 transition-colors">{member.role}</p>
+                      <div className="border-t border-slate-700/50 mb-4" />
 
-                      
-
-                      <div className="mt-4 flex flex-wrap justify-center gap-1.5">
-
-                        {member.specialties.slice(0, 3).map((specialty) => (
-
+                      <p className="text-sm font-bold text-slate-200 mb-3">⭐ Expert in</p>
+                      <div className="flex flex-wrap justify-center gap-2 mb-5">
+                        {member.specialties.map((specialty) => (
                           <span
-
                             key={specialty}
-
-                            className="rounded-full border border-slate-700/60 bg-slate-800/80 px-2 py-1 text-[10px] font-medium uppercase tracking-wider text-slate-400 group-hover:border-violet-500/40 group-hover:text-violet-400 transition-colors"
-
+                            className="rounded-full bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 text-xs font-medium text-cyan-300 group-hover:bg-cyan-500/20 transition-colors"
                           >
-
                             {specialty}
-
                           </span>
-
                         ))}
-
                       </div>
-
                     </div>
 
                   </div>
@@ -1866,18 +1851,27 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
                 <ScrollReveal animation="fade-up" staggerIndex={i}>
 
-                  <div className="group relative rounded-3xl border border-slate-800/60 bg-slate-900/30 p-8 text-center transition-all hover:border-cyan-500/30 hover:bg-slate-800/30 hover:shadow-xl hover:shadow-cyan-500/5 hover:-translate-y-1">
+                  <div className={`group relative rounded-3xl border p-8 text-center transition-all hover:-translate-y-1 hover:shadow-xl
+                    ${step.accent === 'cyan'   ? 'border-cyan-500/20   bg-gradient-to-b from-cyan-950/30   to-slate-900/30 hover:border-cyan-500/40   hover:shadow-cyan-500/10'   : ''}
+                    ${step.accent === 'indigo' ? 'border-indigo-500/20 bg-gradient-to-b from-indigo-950/30 to-slate-900/30 hover:border-indigo-500/40 hover:shadow-indigo-500/10' : ''}
+                    ${step.accent === 'violet' ? 'border-violet-500/20 bg-gradient-to-b from-violet-950/30 to-slate-900/30 hover:border-violet-500/40 hover:shadow-violet-500/10' : ''}
+                  `}>
 
-                    <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 text-2xl font-bold text-cyan-400">
-
-                      {typeof step.icon === "string" ? step.icon : "🔷"}
-
+                    {/* Icon box */}
+                    <div className={`mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl
+                      ${step.accent === 'cyan'   ? 'bg-cyan-500/15   text-cyan-400'   : ''}
+                      ${step.accent === 'indigo' ? 'bg-indigo-500/15 text-indigo-400' : ''}
+                      ${step.accent === 'violet' ? 'bg-violet-500/15 text-violet-400' : ''}
+                    `}>
+                      <step.icon className="h-8 w-8" strokeWidth={1.6} />
                     </div>
 
-                    <div className="mb-3 inline-flex items-center gap-1 rounded-full bg-cyan-500/10 px-3 py-1 text-xs font-semibold text-cyan-400">
-
+                    <div className={`mb-3 inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold
+                      ${step.accent === 'cyan'   ? 'bg-cyan-500/10   text-cyan-400'   : ''}
+                      ${step.accent === 'indigo' ? 'bg-indigo-500/10 text-indigo-400' : ''}
+                      ${step.accent === 'violet' ? 'bg-violet-500/10 text-violet-400' : ''}
+                    `}>
                       <span className="font-mono">0{i + 1}</span>
-
                     </div>
 
                     <h3 className="text-xl font-bold text-white">{step.title}</h3>
@@ -1896,71 +1890,61 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
 
 
-          {/* Trust Signals */}
-
+          {/* Trust Signals — Premium */}
           <ScrollReveal animation="fade-up" delay={0.2}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-
-              <div className="rounded-2xl border border-slate-800/50 bg-slate-900/30 p-6 text-center">
-
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/10 mx-auto">
-
-                  <ShieldCheck className="h-6 w-6 text-emerald-400" />
-
+              {/* Security */}
+              <div className="group relative overflow-hidden rounded-3xl border border-emerald-500/20 bg-gradient-to-b from-emerald-950/40 to-slate-950/60 p-7 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:shadow-2xl hover:shadow-emerald-500/10">
+                {/* Ambient glow orb */}
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 h-24 w-24 rounded-full bg-emerald-500/15 blur-2xl group-hover:bg-emerald-500/25 transition-all" />
+                {/* Icon */}
+                <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500/15 border border-emerald-500/25 shadow-lg shadow-emerald-500/10">
+                  <ShieldCheck className="h-7 w-7 text-emerald-400" strokeWidth={1.5} />
                 </div>
-
-                <p className="text-2xl font-bold text-white">100%</p>
-
-                <p className="mt-1 text-xs text-slate-400">Security Compliant</p>
-
+                {/* Stat */}
+                <p className="text-3xl font-black bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text text-transparent leading-none mb-1">100%</p>
+                {/* Accent bar */}
+                <div className="mx-auto my-3 h-px w-12 bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent" />
+                <p className="text-xs font-semibold tracking-widest uppercase text-slate-400">Security Compliant</p>
               </div>
 
-              <div className="rounded-2xl border border-slate-800/50 bg-slate-900/30 p-6 text-center">
-
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-500/10 mx-auto">
-
-                  <Zap className="h-6 w-6 text-cyan-400" />
-
+              {/* Delivery */}
+              <div className="group relative overflow-hidden rounded-3xl border border-cyan-500/20 bg-gradient-to-b from-cyan-950/40 to-slate-950/60 p-7 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/40 hover:shadow-2xl hover:shadow-cyan-500/10">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 h-24 w-24 rounded-full bg-cyan-500/15 blur-2xl group-hover:bg-cyan-500/25 transition-all" />
+                <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/15 border border-cyan-500/25 shadow-lg shadow-cyan-500/10">
+                  <Zap className="h-7 w-7 text-cyan-400" strokeWidth={1.5} />
                 </div>
-
-                <p className="text-2xl font-bold text-white">&lt;8wks</p>
-
-                <p className="mt-1 text-xs text-slate-400">Avg Delivery</p>
-
+                <p className="text-3xl font-black bg-gradient-to-r from-cyan-300 to-sky-300 bg-clip-text text-transparent leading-none mb-1">&lt;8wks</p>
+                <div className="mx-auto my-3 h-px w-12 bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
+                <p className="text-xs font-semibold tracking-widest uppercase text-slate-400">Avg Delivery</p>
               </div>
 
-              <div className="rounded-2xl border border-slate-800/50 bg-slate-900/30 p-6 text-center">
-
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10 mx-auto">
-
-                  <Users className="h-6 w-6 text-indigo-400" />
-
+              {/* Support */}
+              <div className="group relative overflow-hidden rounded-3xl border border-indigo-500/20 bg-gradient-to-b from-indigo-950/40 to-slate-950/60 p-7 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/40 hover:shadow-2xl hover:shadow-indigo-500/10">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 h-24 w-24 rounded-full bg-indigo-500/15 blur-2xl group-hover:bg-indigo-500/25 transition-all" />
+                <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-500/15 border border-indigo-500/25 shadow-lg shadow-indigo-500/10">
+                  <Users className="h-7 w-7 text-indigo-400" strokeWidth={1.5} />
                 </div>
-
-                <p className="text-2xl font-bold text-white">24/7</p>
-
-                <p className="mt-1 text-xs text-slate-400">Support Available</p>
-
+                <p className="text-3xl font-black bg-gradient-to-r from-indigo-300 to-blue-300 bg-clip-text text-transparent leading-none mb-1">24/7</p>
+                <div className="mx-auto my-3 h-px w-12 bg-gradient-to-r from-transparent via-indigo-500/60 to-transparent" />
+                <p className="text-xs font-semibold tracking-widest uppercase text-slate-400">Support Available</p>
               </div>
 
-              <div className="rounded-2xl border border-slate-800/50 bg-slate-900/30 p-6 text-center">
-
-                <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-xl bg-violet-500/10 mx-auto">
-
-                  <Star className="h-6 w-6 text-violet-400" />
-
+              {/* Rating */}
+              <div className="group relative overflow-hidden rounded-3xl border border-violet-500/20 bg-gradient-to-b from-violet-950/40 to-slate-950/60 p-7 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:shadow-2xl hover:shadow-violet-500/10">
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 h-24 w-24 rounded-full bg-violet-500/15 blur-2xl group-hover:bg-violet-500/25 transition-all" />
+                <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-500/15 border border-violet-500/25 shadow-lg shadow-violet-500/10">
+                  <Star className="h-7 w-7 text-violet-400" strokeWidth={1.5} />
                 </div>
-
-                <p className="text-2xl font-bold text-white">4.9/5</p>
-
-                <p className="mt-1 text-xs text-slate-400">Client Rating</p>
-
+                <p className="text-3xl font-black bg-gradient-to-r from-violet-300 to-purple-300 bg-clip-text text-transparent leading-none mb-1">4.9/5</p>
+                <div className="mx-auto my-3 h-px w-12 bg-gradient-to-r from-transparent via-violet-500/60 to-transparent" />
+                <p className="text-xs font-semibold tracking-widest uppercase text-slate-400">Client Rating</p>
               </div>
 
             </div>
-
           </ScrollReveal>
+
 
         </div>
 
@@ -1970,74 +1954,131 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
       {/* ─── TESTIMONIALS ────────────────────────────────────────────────── */}
 
-      <section className="border-t border-slate-800/40 py-12 md:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent to-slate-900/30">
+      <section className="border-t border-slate-800/40 py-12 md:py-16">
 
-        <div className="mx-auto max-w-7xl space-y-8">
-
+        {/* Heading — stays in normal content width */}
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-10">
           <SectionHeader
 
             badgeLabel="Client Stories"
 
             badgeColor="cyan"
 
-            title="Trusted by teams who ship at scale"
+            title="What Our Clients Say"
 
             centered
 
           />
+        </div>
 
+        {/* Full-width marquee — no container constraint */}
+        <div className="relative w-full overflow-hidden py-4">
+            {/* Left and right fade overlays to enhance layout */}
+            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-slate-950 via-slate-950/40 to-transparent pointer-events-none z-10 hidden md:block" />
+            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-slate-950 via-slate-950/40 to-transparent pointer-events-none z-10 hidden md:block" />
 
-
-          <div className="grid gap-6 md:grid-cols-3">
-
-            {CLIENT_TESTIMONIALS.map((t, i) => (
-
-              <div key={t.id}>
-
-                <ScrollReveal animation="zoom-in" staggerIndex={i}>
-
-                  <div className="flex h-full flex-col rounded-2xl border border-slate-800/60 bg-slate-900/40 p-6 backdrop-blur-sm transition hover:border-cyan-500/20 hover:shadow-xl">
-
-                    <div className="mb-4 flex gap-0.5">
-
-                      {Array.from({ length: t.rating }).map((_, j) => (
-
-                        <Star key={j} className="h-4 w-4 fill-amber-400 text-amber-400" />
-
-                      ))}
-
+            {/* Infinite Marquee Track */}
+            <div className="flex gap-8 w-max animate-marquee hover:[animation-play-state:paused] cursor-pointer">
+              {/* First Set of Testimonials */}
+              {CLIENT_TESTIMONIALS.map((t, i) => (
+                <div key={`first-${t.id}`} className="shrink-0">
+                  <div className="flex w-[480px] max-w-[85vw] min-h-[220px] rounded-3xl border border-slate-800/50 bg-slate-950/90 p-6 backdrop-blur-md transition-all duration-300 hover:border-cyan-500/30 hover:shadow-cyan-500/5 hover:shadow-2xl">
+                    {/* Left Column: Author Info */}
+                    <div className="w-[140px] shrink-0 flex flex-col items-center justify-center text-center border-r border-slate-800/40 pr-4 mr-4">
+                      {t.avatar === "panther" ? (
+                        <div className="h-14 w-14 rounded-full bg-gradient-to-br from-cyan-500/30 to-violet-500/30 p-[2px] shadow-lg mb-3 flex items-center justify-center border border-cyan-500/20">
+                          <div className="h-full w-full rounded-full bg-slate-950 overflow-hidden flex items-center justify-center text-cyan-400">
+                            <svg className="h-9 w-9" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M12 2c-.6 0-1.1.3-1.4.8L8.2 6.5C7.4 6.2 6.5 6 5.5 6c-2 0-3.5 1.5-3.5 3.5 0 2.2 1.5 4.5 3.5 5.5 1 2.5 3.5 4 6.5 4s5.5-1.5 6.5-4c2-1 3.5-3.3 3.5-5.5C22 7.5 20.5 6 18.5 6c-1 0-1.9.2-2.7.5L13.4 2.8c-.3-.5-.8-.8-1.4-.8zm-4 7c.8 0 1.5.7 1.5 1.5S8.8 12 8 12s-1.5-.7-1.5-1.5S7.2 9 8 9zm8 0c.8 0 1.5.7 1.5 1.5S16.8 12 16 12s-1.5-.7-1.5-1.5S15.2 9 16 9zm-4 4.5c1.4 0 2.5 1.1 2.5 2.5H9.5c0-1.4 1.1-2.5 2.5-2.5z" />
+                            </svg>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="h-14 w-14 rounded-full bg-gradient-to-br from-slate-800 to-slate-950 p-[2px] shadow-lg mb-3 flex items-center justify-center border border-slate-700/50">
+                          <div className="h-full w-full rounded-full bg-slate-900 overflow-hidden flex items-center justify-center text-slate-500">
+                            <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                          </div>
+                        </div>
+                      )}
+                      <p className="text-sm font-extrabold text-white leading-tight mb-1">{t.author}</p>
+                      <p className="text-[10px] text-slate-400 font-semibold leading-tight mb-2">
+                        {t.role}, {t.company}
+                      </p>
+                      {t.flag && t.country && (
+                        <div className="flex items-center gap-1 bg-slate-950/50 px-2 py-0.5 rounded-full border border-slate-800/80">
+                          <span className="text-xs leading-none">{t.flag}</span>
+                          <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">{t.country}</span>
+                        </div>
+                      )}
                     </div>
 
-                    <p className="flex-1 text-sm leading-relaxed text-slate-300">&ldquo;{t.quote}&rdquo;</p>
-
-                    <div className="mt-6 flex items-center gap-3 border-t border-slate-800/50 pt-5">
-
-                      <AvatarBadge name={t.author} />
-
-                      <div>
-
-                        <p className="text-sm font-bold text-white">{t.author}</p>
-
-                        <p className="text-xs text-slate-500">
-
-                          {t.role}, {t.company}
-
-                        </p>
-
+                    {/* Right Column: Review Text & Stars */}
+                    <div className="flex-1 flex flex-col justify-between">
+                      <p className="text-[13px] leading-relaxed text-slate-300 italic font-medium mt-1">
+                        &ldquo;{t.quote}&rdquo;
+                      </p>
+                      <div className="flex justify-end gap-0.5 mt-2">
+                        {Array.from({ length: t.rating }).map((_, j) => (
+                          <Star key={j} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                        ))}
                       </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
 
+              {/* Duplicated Second Set for Seamless Loop */}
+              {CLIENT_TESTIMONIALS.map((t, i) => (
+                <div key={`second-${t.id}`} className="shrink-0">
+                  <div className="flex w-[480px] max-w-[85vw] min-h-[220px] rounded-3xl border border-slate-800/70 bg-slate-900/60 p-6 backdrop-blur-md transition-all duration-300 hover:border-cyan-500/30 hover:shadow-cyan-500/5 hover:shadow-2xl">
+                    {/* Left Column: Author Info */}
+                    <div className="w-[140px] shrink-0 flex flex-col items-center justify-center text-center border-r border-slate-800/40 pr-4 mr-4">
+                      {t.avatar === "panther" ? (
+                        <div className="h-14 w-14 rounded-full bg-gradient-to-br from-cyan-500/30 to-violet-500/30 p-[2px] shadow-lg mb-3 flex items-center justify-center border border-cyan-500/20">
+                          <div className="h-full w-full rounded-full bg-slate-950 overflow-hidden flex items-center justify-center text-cyan-400">
+                            <svg className="h-9 w-9" viewBox="0 0 24 24" fill="currentColor">
+                              <path d="M12 2c-.6 0-1.1.3-1.4.8L8.2 6.5C7.4 6.2 6.5 6 5.5 6c-2 0-3.5 1.5-3.5 3.5 0 2.2 1.5 4.5 3.5 5.5 1 2.5 3.5 4 6.5 4s5.5-1.5 6.5-4c2-1 3.5-3.3 3.5-5.5C22 7.5 20.5 6 18.5 6c-1 0-1.9.2-2.7.5L13.4 2.8c-.3-.5-.8-.8-1.4-.8zm-4 7c.8 0 1.5.7 1.5 1.5S8.8 12 8 12s-1.5-.7-1.5-1.5S7.2 9 8 9zm8 0c.8 0 1.5.7 1.5 1.5S16.8 12 16 12s-1.5-.7-1.5-1.5S15.2 9 16 9zm-4 4.5c1.4 0 2.5 1.1 2.5 2.5H9.5c0-1.4 1.1-2.5 2.5-2.5z" />
+                            </svg>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="h-14 w-14 rounded-full bg-gradient-to-br from-slate-800 to-slate-950 p-[2px] shadow-lg mb-3 flex items-center justify-center border border-slate-700/50">
+                          <div className="h-full w-full rounded-full bg-slate-900 overflow-hidden flex items-center justify-center text-slate-500">
+                            <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                          </div>
+                        </div>
+                      )}
+                      <p className="text-sm font-extrabold text-white leading-tight mb-1">{t.author}</p>
+                      <p className="text-[10px] text-slate-400 font-semibold leading-tight mb-2">
+                        {t.role}, {t.company}
+                      </p>
+                      {t.flag && t.country && (
+                        <div className="flex items-center gap-1 bg-slate-950/50 px-2 py-0.5 rounded-full border border-slate-800/80">
+                          <span className="text-xs leading-none">{t.flag}</span>
+                          <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">{t.country}</span>
+                        </div>
+                      )}
                     </div>
 
+                    {/* Right Column: Review Text & Stars */}
+                    <div className="flex-1 flex flex-col justify-between">
+                      <p className="text-[13px] leading-relaxed text-slate-300 italic font-medium mt-1">
+                        &ldquo;{t.quote}&rdquo;
+                      </p>
+                      <div className="flex justify-end gap-0.5 mt-2">
+                        {Array.from({ length: t.rating }).map((_, j) => (
+                          <Star key={j} className="h-4 w-4 fill-amber-400 text-amber-400" />
+                        ))}
+                      </div>
+                    </div>
                   </div>
-
-                </ScrollReveal>
-
-              </div>
-
-            ))}
-
-          </div>
-
+                </div>
+              ))}
+            </div>
         </div>
 
       </section>

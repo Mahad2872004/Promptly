@@ -394,17 +394,39 @@ export const TEAM_MEMBERS: TeamMember[] = [
 
     id: "team-1",
 
-    name: "Mahad Mateen",
+    name: "Mahad Mateen Butt",
 
-    role: "CEO & Principal Architect",
+    role: "Founder & CEO",
 
-    bio: "Mahad has spent 5 years orchestrating high-throughput distributed architectures, microservices, and secure API gateways. He loves elegant typography and clean database schemas.",
+    bio: "Mahad is a Full Stack Developer & AI Consultant leading Promptly's business strategy, product vision, and AI automation architecture. As the final decision maker, he drives client consulting, strategic partnerships, and the overall direction of the agency.",
 
-    specialties: ["System Architecture", "TypeScript", "Express.js", "PostgreSQL", "Scaling", "DevOps", "Docker", "AWS / GCP", "CI/CD"],
+    specialties: ["Business Strategy", "Product Vision", "AI & Automation Architecture", "Client Consulting", "Partnerships", "Full Stack Dev", "AI Consulting", "Final Decision Maker"],
 
     svgAvatarIndex: 1,
 
-    image: "/images/212.png"
+    image: "/images/212.png",
+
+    experience: "5+ years"
+
+  },
+
+  {
+
+    id: "team-5",
+
+    name: "Misbah Adil",
+
+    role: "Founding Member & Director of Engineering",
+
+    bio: "Misbah leads the development team as Founding Member & Director of Engineering. She drives project delivery, sprint planning, code reviews, and software development — ensuring every product meets Promptly's standards from first commit to final deployment.",
+
+    specialties: ["Development Team Lead", "Project Delivery", "Sprint Planning", "Code Reviews", "Software Development", "Technical Documentation"],
+
+    svgAvatarIndex: 5,
+
+    image: "/images/misbah.jpeg",
+
+    experience: "6+ years"
 
   },
 
@@ -414,51 +436,37 @@ export const TEAM_MEMBERS: TeamMember[] = [
 
     name: "Iqra Iqbal",
 
-    role: "CTO & Senior Software Engineer",
+    role: "Co-Founder & CTO",
 
-    bio: "Iqra has spent 5 years building high-performance web applications and mobile apps. She loves clean code and efficient user interfaces.",
+    bio: "Iqra leads the entire technical direction of Promptly as Co-Founder & CTO. She owns technical leadership, system architecture, AI & software strategy, and upholds the engineering standards that govern every product we ship.",
 
-    specialties: ["SaaS Design", "Tailwind CSS", "React & Motion", "Visual Balance", "Typography", "React Native","GHL","Lip Sync"],
+    specialties: ["Technical Leadership", "System Architecture", "AI & Software Strategy", "Technical Hiring", "Code Quality", "Engineering Standards"],
 
     svgAvatarIndex: 2,
 
-    image: "/images/iqra.png"
+    image: "/images/iqbal.png",
+
+    experience: "5+ years"
 
   },
 
   {
 
-    id: "team-3",
+    id: "team-6",
 
-    name: "Rabiya Malik",
+    name: "Hasnain Farooq",
 
-    role: "Senior Product Designer",
+    role: "Sales & Business Development Manager",
 
-    bio: "Rabiya has spent 5 years building high-performance web applications and mobile apps. She loves clean and efficient user interfaces.",
+    bio: "Hasnain owns the full sales engine at Promptly — from lead generation and client outreach to proposals, CRM management, and strategic partnerships. He drives the predictable revenue growth that fuels the agency's expansion.",
 
-    specialties: ["UI/UX Design", "Figma", "Wireframing", "Prototyping", "User Research","Design Systems","Branding","Saas Design"],
+    specialties: ["Lead Generation", "Client Outreach", "Sales Calls", "Proposal Follow-ups", "CRM Management", "Partnerships"],
 
-    svgAvatarIndex: 3,
+    svgAvatarIndex: 6,
 
-    image: "/images/rabiya.png"
+    image: "/images/hasnain.jpeg",
 
-  },
-
-  {
-
-    id: "team-4",
-
-    name: "Nimra Jabran",
-
-    role: "Senior AI Engineer",
-
-    bio: "Nimra is passionate about building intelligent systems. She has 5 years of experience specializing in prompt optimization, RAG pipelines, and model orchestration.",
-
-    specialties: ["AI Engineering", "Gemini Solutions", "Vector Databases", "Prompt Tuning", "RAG Pipelines", "FastAPI", "Flask", "Django"],
-
-    svgAvatarIndex: 4,
-
-    image: "/images/nimra.jpeg"
+    experience: "5+ years"
 
   }
 
@@ -472,15 +480,19 @@ export const CLIENT_TESTIMONIALS: Testimonial[] = [
 
     id: "test-1",
 
-    quote: "Promptly understands engineering at a level few agencies do. They don't just write templates; they write robust, production-ready systems that scale natively.",
+    quote: "AutoReach360 saved my sales team 30+ hours a week. From prospecting to replies — it's all automated. Our cold outreach reply rate jumped by 80%. It's a no-brainer if you're scaling B2B sales.",
 
-    author: "Elena Rostov",
+    author: "Rayan Dalton",
 
-    role: "Head of Customer Relations",
+    role: "VP Sales",
 
-    company: "MindCorp Group",
+    company: "LeadWave Inc.",
 
-    rating: 5
+    rating: 5,
+
+    flag: "🇺🇸",
+
+    country: "United States"
 
   },
 
@@ -488,15 +500,21 @@ export const CLIENT_TESTIMONIALS: Testimonial[] = [
 
     id: "test-2",
 
-    quote: "They delivered our wealth tracking ledger under an extreme timeline, and the UI layout is simply beautiful (our investors were blown away). Truly a high-caliber team.",
+    quote: "Their team integrated seamlessly with our backend systems and built a beautiful React Native app. But more importantly, they truly understood our business goals. Highly professional and deadline-focused.",
 
-    author: "Alex Rivera",
+    author: "Omar",
 
-    role: "VP of Product",
+    role: "Head of Engineering",
 
-    company: "FinTech Scale",
+    company: "Elevated Culture",
 
-    rating: 5
+    rating: 5,
+
+    flag: "🇺🇸",
+
+    country: "United States",
+
+    avatar: "panther"
 
   },
 
@@ -504,15 +522,59 @@ export const CLIENT_TESTIMONIALS: Testimonial[] = [
 
     id: "test-3",
 
-    quote: "We spent months talking to agencies who wanted to over-engineer a simple core concept. Promptly got the vision instantly, modeled it, and had an MVP running in three weeks.",
+    quote: "We were stuck with an outdated legacy portal. Promptly modernized our entire stack and moved us to the cloud with zero downtime. Their support during and after delivery was phenomenal.",
 
-    author: "Marcus Vance",
+    author: "Mario Mason",
 
-    role: "Director of Operations",
+    role: "Product Manager",
 
-    company: "GeoRoute Transport",
+    company: "EduTrack",
 
-    rating: 5
+    rating: 5,
+
+    flag: "🇲🇽",
+
+    country: "Mexico"
+
+  },
+
+  {
+
+    id: "test-4",
+
+    quote: "Promptly isn't just a software agency. They're a tech strategy partner. We came with an idea — they challenged it, improved it, and delivered better than expected. Can't recommend them enough.",
+
+    author: "Ceem Klodin",
+
+    role: "CEO",
+
+    company: "StratusLogic",
+
+    rating: 5,
+
+    flag: "🇬🇧",
+
+    country: "United Kingdom"
+
+  },
+
+  {
+
+    id: "test-5",
+
+    quote: "Promptly delivered our MVP way ahead of schedule. The code quality is top-notch, and their communication was seamless throughout the process.",
+
+    author: "Akin",
+
+    role: "CEO & Founder",
+
+    company: "G-COSMOS",
+
+    rating: 5,
+
+    flag: "🇬🇪",
+
+    country: "Georgia"
 
   }
 

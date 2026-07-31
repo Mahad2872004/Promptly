@@ -118,6 +118,8 @@ export interface TeamMember {
 
   image: string;
 
+  experience?: string;
+
 }
 
 
@@ -135,6 +137,12 @@ export interface Testimonial {
   company: string;
 
   rating: number;
+
+  flag?: string;
+
+  country?: string;
+
+  avatar?: string;
 
 }
 
