@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { ViewType } from "../types";
 import Logo from "./Logo";
 import ScrollReveal from "./ui/ScrollReveal";
+import { useNavigate } from "react-router-dom";
+import { VIEW_PATHS } from "../routes";
 import {
   Send,
-  Github,
-  Twitter,
   Linkedin,
   Sparkles,
   Check,
@@ -20,6 +20,7 @@ interface FooterProps {
 }
 
 export default function Footer({ setActiveView }: FooterProps) {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
@@ -32,8 +33,7 @@ export default function Footer({ setActiveView }: FooterProps) {
   };
 
   const handleNav = (view: ViewType) => {
-    setActiveView(view);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigate(VIEW_PATHS[view]);
   };
 
   const nav = {
@@ -52,9 +52,7 @@ export default function Footer({ setActiveView }: FooterProps) {
   };
 
   const socials = [
-    { Icon: Linkedin, label: "LinkedIn" },
-    { Icon: Twitter, label: "Twitter" },
-    { Icon: Github, label: "GitHub" },
+    { Icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/company/promptlypk/" },
   ];
 
   return (
@@ -115,8 +113,14 @@ export default function Footer({ setActiveView }: FooterProps) {
                 </p>
 
                 <div className="mt-6 flex gap-2.5">
-                  {socials.map(({ Icon, label }) => (
-                    <a key={label} href="#" className="footer-social flex h-10 w-10 items-center justify-center rounded-xl">
+                  {socials.map(({ Icon, label, href }) => (
+                    <a
+                      key={label}
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="footer-social flex h-10 w-10 items-center justify-center rounded-xl"
+                    >
                       <Icon className="h-4 w-4" />
                     </a>
                   ))}
@@ -125,7 +129,9 @@ export default function Footer({ setActiveView }: FooterProps) {
                 <div className="surface-card mt-6 space-y-2.5 rounded-xl p-4">
                   <p className="flex items-center gap-2.5 text-xs text-slate-400">
                     <Mail className="h-3.5 w-3.5 text-cyan-400" />
-                    hello@promptly.systems
+                    <a href="mailto:promptlypk@gmail.com" className="hover:text-cyan-300 transition-colors">
+                      promptlypk@gmail.com
+                    </a>
                   </p>
                   <p className="flex items-center gap-2.5 text-xs text-slate-400">
                     <MapPin className="h-3.5 w-3.5 text-indigo-400" />

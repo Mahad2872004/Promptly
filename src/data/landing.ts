@@ -1,20 +1,32 @@
-import { Compass, PenTool, Rocket, LucideIcon, Brain, Cloud } from "lucide-react";
+import { Compass, PenTool, Rocket, LucideIcon, Brain, Cloud, Workflow, BrainCircuit, Database } from "lucide-react";
 import { 
   SiReact, 
   SiNextdotjs, 
   SiTypescript, 
   SiTailwindcss, 
   SiVite,
+  SiFramer,
+  SiRedux,
+  SiGraphql,
   SiNodedotjs,
   SiPython,
   SiGo,
   SiPostgresql,
   SiRedis,
+  SiMongodb,
+  SiExpress,
+  SiPrisma,
+  SiSupabase,
   SiTensorflow,
   SiPytorch,
+  SiHuggingface,
+  SiLangchain,
   SiDocker,
   SiKubernetes,
-  SiGithubactions
+  SiGithubactions,
+  SiVercel,
+  SiTerraform,
+  SiNginx
 } from "react-icons/si";
 
 export const CLIENT_LOGOS = [
@@ -89,6 +101,9 @@ export const TECH_STACK = {
     { name: "TypeScript", icon: SiTypescript },
     { name: "TailwindCSS", icon: SiTailwindcss },
     { name: "Vite", icon: SiVite },
+    { name: "Framer Motion", icon: SiFramer },
+    { name: "Redux", icon: SiRedux },
+    { name: "GraphQL", icon: SiGraphql },
   ],
   backend: [
     { name: "Node.js", icon: SiNodedotjs },
@@ -96,20 +111,29 @@ export const TECH_STACK = {
     { name: "Go", icon: SiGo },
     { name: "PostgreSQL", icon: SiPostgresql },
     { name: "Redis", icon: SiRedis },
+    { name: "MongoDB", icon: SiMongodb },
+    { name: "Express", icon: SiExpress },
+    { name: "Prisma", icon: SiPrisma },
+    { name: "Supabase", icon: SiSupabase },
   ],
   ai: [
     { name: "OpenAI", icon: Brain },
-    { name: "LangChain", icon: null },
+    { name: "LangChain", icon: SiLangchain },
     { name: "TensorFlow", icon: SiTensorflow },
     { name: "PyTorch", icon: SiPytorch },
-    { name: "Hugging Face", icon: null },
+    { name: "Hugging Face", icon: SiHuggingface },
+    { name: "Anthropic", icon: BrainCircuit },
+    { name: "Vector DBs", icon: Database },
   ],
   devops: [
     { name: "Docker", icon: SiDocker },
     { name: "Kubernetes", icon: SiKubernetes },
     { name: "AWS", icon: Cloud },
-    { name: "CI/CD", icon: null },
+    { name: "Vercel", icon: SiVercel },
+    { name: "Terraform", icon: SiTerraform },
+    { name: "Nginx", icon: SiNginx },
     { name: "GitHub Actions", icon: SiGithubactions },
+    { name: "CI/CD", icon: Workflow },
   ],
 };
 

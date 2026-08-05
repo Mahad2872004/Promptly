@@ -72,6 +72,8 @@ import {
 
   Code,
 
+  Award,
+
 } from "lucide-react";
 
 
@@ -811,6 +813,75 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
 
 
+      {/* ─── AUTOMATION VALUE PROP ───────────────────────────────────────── */}
+      <section className="border-t border-slate-800/40 py-16 md:py-20 px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <ScrollReveal animation="fade-up" threshold={0.1}>
+            <div className="relative overflow-hidden rounded-3xl border border-cyan-500/20 bg-gradient-to-br from-slate-900/80 via-cyan-950/30 to-indigo-950/30 p-8 md:p-12 backdrop-blur-sm">
+
+              {/* Glow effects */}
+              <div className="absolute top-0 left-1/4 h-64 w-64 rounded-full bg-cyan-500/10 blur-3xl -translate-y-1/2" />
+              <div className="absolute bottom-0 right-1/4 h-64 w-64 rounded-full bg-indigo-500/10 blur-3xl translate-y-1/2" />
+
+              <div className="relative flex flex-col items-center text-center gap-8">
+                {/* Label */}
+                <span className="inline-flex items-center gap-2 rounded-full border border-cyan-500/25 bg-cyan-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-cyan-400">
+                  <Zap className="h-3 w-3" />
+                  What We Do
+                </span>
+
+                {/* Main statement */}
+                <h2 className="text-2xl font-extrabold text-white sm:text-3xl lg:text-4xl max-w-3xl leading-tight">
+                  We automate the repetitive tasks that your employees spend{" "}
+                  <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+                    hours doing every day
+                  </span>
+                </h2>
+
+                {/* Supporting line */}
+                <p className="text-base text-slate-400 max-w-2xl leading-relaxed">
+                  Reducing costs, saving time, and allowing your team to focus on what truly drives growth.
+                </p>
+
+                {/* Benefit icons */}
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl mt-2">
+                  <div className="flex flex-col items-center gap-3 rounded-2xl border border-slate-800/60 bg-slate-900/40 p-5">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 border border-emerald-500/20">
+                      <MoveRight className="h-5 w-5 text-emerald-400" />
+                    </div>
+                    <p className="text-sm font-semibold text-white">Reduce Costs</p>
+                    <p className="text-xs text-slate-500 text-center">Cut overhead by eliminating manual, repetitive work</p>
+                  </div>
+                  <div className="flex flex-col items-center gap-3 rounded-2xl border border-slate-800/60 bg-slate-900/40 p-5">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/10 border border-amber-500/20">
+                      <Zap className="h-5 w-5 text-amber-400" />
+                    </div>
+                    <p className="text-sm font-semibold text-white">Save Time</p>
+                    <p className="text-xs text-slate-500 text-center">Reclaim hours every day with intelligent automation</p>
+                  </div>
+                  <div className="flex flex-col items-center gap-3 rounded-2xl border border-slate-800/60 bg-slate-900/40 p-5">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/10 border border-cyan-500/20">
+                      <Users className="h-5 w-5 text-cyan-400" />
+                    </div>
+                    <p className="text-sm font-semibold text-white">Focus on Growth</p>
+                    <p className="text-xs text-slate-500 text-center">Let your team do the work that actually moves the needle</p>
+                  </div>
+                </div>
+
+                {/* CTA */}
+                <button
+                  onClick={() => setActiveView("contact")}
+                  className="group magnetic-btn inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-all hover:scale-[1.02] hover:shadow-cyan-500/40"
+                >
+                  Start Automating
+                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </button>
+              </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
       {/* ─── INDUSTRIES ─────────────────────────────────────────────────── */}
 
       <section className="border-t border-slate-800/40 py-16 md:py-20 px-4 sm:px-6 lg:px-8 parallax-section">
@@ -1001,16 +1072,11 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
 
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 items-stretch">
             {Object.entries(TECH_STACK).map(([category, technologies], categoryIndex) => (
-
-              <div key={category}>
-
-                <ScrollReveal animation="fade-up" staggerIndex={categoryIndex} threshold={0.1}>
-
-                  <div className="group magnetic-btn relative overflow-hidden rounded-3xl border border-slate-800/70 bg-slate-900/40 p-6 backdrop-blur-sm transition-all hover:border-violet-500/40 hover:bg-slate-800/40 hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1 card-3d">
-
+              <div key={category} className="h-full">
+                <ScrollReveal animation="fade-up" staggerIndex={categoryIndex} threshold={0.1} className="h-full">
+                  <div className="group magnetic-btn relative flex flex-col h-full overflow-hidden rounded-3xl border border-slate-800/70 bg-slate-900/40 p-6 backdrop-blur-sm transition-all hover:border-violet-500/40 hover:bg-slate-800/40 hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1 card-3d">
                     <div className="absolute top-0 right-0 h-32 w-32 bg-gradient-to-br from-violet-500/10 to-transparent rounded-full blur-3xl group-hover:blur-2xl transition-all" />
 
                     
@@ -1234,11 +1300,58 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
           />
 
+          {/* Strategic Advisor Centered Prominent Card */}
+          {TEAM_MEMBERS.filter(member => member.role === "Strategic Advisor").map((advisor) => (
+            <div key={advisor.id} className="max-w-2xl mx-auto mt-16 w-full px-4 sm:px-0">
+              <ScrollReveal animation="fade-up" threshold={0.1}>
+                <div className="group relative pt-16 text-center">
 
+                  {/* Circular photo with violet→indigo gradient ring */}
+                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-10">
+                    <div className="h-32 w-32 rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 p-[3px] shadow-xl group-hover:shadow-violet-500/40 transition-shadow">
+                      <div className="h-full w-full rounded-full overflow-hidden ring-4 ring-slate-900">
+                        <img
+                          src={advisor.image}
+                          alt={advisor.name}
+                          className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                        />
+                      </div>
+                    </div>
+                    <div className="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full bg-violet-600 shadow-lg border border-violet-400">
+                      <Award className="h-4.5 w-4.5 text-white" />
+                    </div>
+                  </div>
+
+                  {/* Dark card body - in sync with other cards but slightly larger text and violet theme */}
+                  <div className="rounded-3xl border border-violet-500/30 bg-slate-900/60 backdrop-blur-sm shadow-xl hover:shadow-violet-500/10 hover:border-violet-500/50 transition-all hover:-translate-y-1 px-8 pt-16 pb-7 flex flex-col h-full">
+                    <h3 className="text-2xl font-extrabold text-white mb-0.5">{advisor.name}</h3>
+                    <p className="text-sm font-semibold text-violet-400 mb-4">{advisor.role}</p>
+
+                    <p className="text-sm text-slate-400 leading-relaxed mb-5 max-w-xl mx-auto">{advisor.bio}</p>
+
+                    <div className="border-t border-slate-700/50 mb-4" />
+
+                    <p className="text-sm font-bold text-slate-200 mb-3">⭐ Expert in</p>
+                    <div className="flex flex-wrap justify-center gap-2 mb-5">
+                      {advisor.specialties.map((specialty) => (
+                        <span
+                          key={specialty}
+                          className="rounded-full bg-violet-500/10 border border-violet-500/20 px-3 py-1 text-xs font-medium text-violet-300 group-hover:bg-violet-500/20 transition-colors"
+                        >
+                          {specialty}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                </div>
+              </ScrollReveal>
+            </div>
+          ))}
 
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 pt-16 items-stretch">
 
-            {TEAM_MEMBERS.filter(member => member.name !== "Mahad Mateen Butt").map((member, i) => (
+            {TEAM_MEMBERS.filter(member => member.name !== "Mahad Mateen Butt" && member.role !== "Strategic Advisor").map((member, i) => (
 
               <div key={member.id} className="h-full">
 

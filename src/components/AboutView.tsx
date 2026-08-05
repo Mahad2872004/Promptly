@@ -251,8 +251,58 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
               </p>
             </div>
 
+            {/* Strategic Advisor Centered Prominent Card */}
+            {TEAM_MEMBERS.filter(member => member.role === "Strategic Advisor").map((advisor) => (
+              <div key={advisor.id} className="max-w-2xl mx-auto mt-16 w-full px-4 sm:px-0">
+                <ScrollReveal animation="fade-up" threshold={0.1}>
+                  <div className="group relative pt-16 text-center">
+
+                    {/* Circular photo with violet→indigo gradient ring */}
+                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-10">
+                      <div className="h-32 w-32 rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 p-[3px] shadow-xl group-hover:shadow-violet-500/40 transition-shadow">
+                        <div className="h-full w-full rounded-full overflow-hidden ring-4 ring-slate-900">
+                          <img
+                            src={advisor.image}
+                            alt={advisor.name}
+                            className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                          />
+                        </div>
+                      </div>
+                      <div className="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full bg-violet-600 shadow-lg border border-violet-400">
+                        <Award className="h-4.5 w-4.5 text-white" />
+                      </div>
+                    </div>
+
+                    {/* Dark card body - in sync with other cards but slightly larger text and violet theme */}
+                    <div className="rounded-3xl border border-violet-500/30 bg-slate-900/60 backdrop-blur-sm shadow-xl hover:shadow-violet-500/10 hover:border-violet-500/50 transition-all hover:-translate-y-1 px-8 pt-16 pb-7 flex flex-col h-full">
+                      <h3 className="text-2xl font-extrabold text-white mb-0.5">{advisor.name}</h3>
+                      <p className="text-sm font-semibold text-violet-400 mb-4">{advisor.role}</p>
+
+                      <p className="text-sm text-slate-400 leading-relaxed mb-5 max-w-xl mx-auto">{advisor.bio}</p>
+
+                      <div className="border-t border-slate-700/50 mb-4" />
+
+                      <p className="text-sm font-bold text-slate-200 mb-3">⭐ Expert in</p>
+                      <div className="flex flex-wrap justify-center gap-2 mb-5">
+                        {advisor.specialties.map((specialty) => (
+                          <span
+                            key={specialty}
+                            className="rounded-full bg-violet-500/10 border border-violet-500/20 px-3 py-1 text-xs font-medium text-violet-300 group-hover:bg-violet-500/20 transition-colors"
+                          >
+                            {specialty}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                  </div>
+                </ScrollReveal>
+              </div>
+            ))}
+
+
             <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 pt-16 items-stretch">
-              {TEAM_MEMBERS.filter(member => member.name !== "Mahad Mateen Butt").map((member, i) => (
+              {TEAM_MEMBERS.filter(member => member.name !== "Mahad Mateen Butt" && member.role !== "Strategic Advisor").map((member, i) => (
                 <div key={member.id} className="h-full">
                   <ScrollReveal animation="fade-up" staggerIndex={i} threshold={0.1} className="h-full">
                     <div className="group relative pt-16 text-center h-full">

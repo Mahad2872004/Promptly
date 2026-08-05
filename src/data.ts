@@ -468,6 +468,26 @@ export const TEAM_MEMBERS: TeamMember[] = [
 
     experience: "5+ years"
 
+  },
+
+  {
+
+    id: "team-advisor",
+
+    name: "Dr. Qurat ul Ain Akram",
+
+    role: "Strategic Advisor",
+
+    bio: "Dr. Qurat ul Ain Akram is a PhD-level professor and Strategic Advisor at Promptly. With over 10+ years of academic and research experience, she specializes in computer vision, Optical Character Recognition (OCR), and related image processing technologies, steering Promptly's research and advanced technical strategies.",
+
+    specialties: ["Computer Vision", "Optical Character Recognition (OCR)", "Image Processing", "Strategic Advisory", "PhD Research", "Deep Learning"],
+
+    svgAvatarIndex: 7,
+
+    image: "/images/qurat.png",
+
+    experience: "10+ years"
+
   }
 
 ];

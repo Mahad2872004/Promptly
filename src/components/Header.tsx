@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { ViewType } from "../types";
 import Logo from "./Logo";
+import { useNavigate, useLocation } from "react-router-dom";
+import { VIEW_PATHS } from "../routes";
 import {
   Terminal,
   Menu,
@@ -30,6 +32,8 @@ interface NavLink {
 }
 
 export default function Header({ activeView, setActiveView }: HeaderProps) {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -85,10 +89,9 @@ export default function Header({ activeView, setActiveView }: HeaderProps) {
   ];
 
   const handleNavClick = (view: ViewType) => {
-    setActiveView(view);
+    navigate(VIEW_PATHS[view]);
     setMobileMenuOpen(false);
     setOpenDropdown(null);
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const toggleDropdown = (label: string) => {
