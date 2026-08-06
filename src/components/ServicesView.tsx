@@ -3,6 +3,8 @@ import { ViewType } from "../types";
 import { AGENCY_SERVICES } from "../data";
 import { Cpu, Bot, Monitor, Smartphone, CheckCircle2, ArrowRight, Shield, Rocket } from "lucide-react";
 import ScrollReveal from "./ui/ScrollReveal";
+import PageAtmosphere from "./ui/PageAtmosphere";
+import { accentVars } from "../theme/tokens";
 
 interface ServicesViewProps {
   setActiveView: (view: ViewType) => void;
@@ -19,7 +21,8 @@ export default function ServicesView({ setActiveView }: ServicesViewProps) {
   };
 
   return (
-    <div className="bg-transparent text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 selection:bg-cyan-500/20">
+    <div className="bg-transparent text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 selection:bg-cyan-500/20 relative" style={accentVars("ai")}>
+      <PageAtmosphere module="ai" />
       <div className="mx-auto max-w-7xl space-y-16">
 
         {/* Header Block */}
@@ -32,7 +35,8 @@ export default function ServicesView({ setActiveView }: ServicesViewProps) {
               </span>
               AI-First Solutions
             </span>
-            <h1 className="font-sans text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+            <p className="script-tagline mb-3">Whatever you need.</p>
+            <h1 className="display-heading font-sans text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
               Digital Solutions for{" "}
               <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
                 Real Business
@@ -222,7 +226,7 @@ export default function ServicesView({ setActiveView }: ServicesViewProps) {
                   className="btn-primary flex-1 flex items-center justify-center gap-2 rounded-full px-6 py-4 text-sm font-bold cursor-pointer hover:scale-105 transition-transform"
                 >
                   Start Your Project
-                  <ArrowRight className="w-4 h-4 text-[#020617]" />
+                  <ArrowRight className="w-4 h-4 text-[var(--bg-base)]" />
                 </button>
 
                 <button
@@ -240,7 +244,7 @@ export default function ServicesView({ setActiveView }: ServicesViewProps) {
         <ScrollReveal delay={0.3}>
           <div className="border-t border-slate-800/40 py-20">
             <div className="text-center mb-12">
-              <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest font-mono">
+              <span className="eyebrow accent-text">
                 Our Process
               </span>
               <h2 className="font-sans text-2xl font-extrabold tracking-tight text-white sm:text-3xl mt-4">

@@ -98,6 +98,20 @@ export interface AgencyService {
 
   category: string;
 
+  /**
+   * Pricing shown in the Systems scene modal.
+   *
+   * TODO(promptly): these are placeholders — no pricing existed anywhere in
+   * the codebase. Replace with the real numbers; the modal renders whatever
+   * string is here verbatim, so "From $2,500" or "Custom quote" both work.
+   */
+  setupCost?: string;
+
+  ongoingCost?: string;
+
+  /** "Good to know" caveats — scope boundaries, dependencies, lead times. */
+  caveats?: string[];
+
 }
 
 

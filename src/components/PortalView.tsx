@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { PortalTask, PortalInvoice, PortalMessage } from "../types";
+import ScrollReveal from "./ui/ScrollReveal";
 import { MessageSquare, Send, CheckSquare, Square, FileText, CheckCircle2, RefreshCw, SendHorizonal, Terminal } from "lucide-react";
+import PageAtmosphere from "./ui/PageAtmosphere";
+import { accentVars } from "../theme/tokens";
 
 export default function PortalView() {
   const [tasks, setTasks] = useState<PortalTask[]>([
@@ -72,25 +75,35 @@ export default function PortalView() {
   };
 
   return (
-    <div className="bg-slate-950 text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 selection:bg-cyan-500/20">
+    <div className="bg-transparent text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 selection:bg-cyan-500/20 relative" style={accentVars("dev")}>
+      <PageAtmosphere module="dev" />
       <div className="mx-auto max-w-7xl space-y-12">
-        
+
         {/* Title Block */}
         <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest font-mono">Simulated Workspace</span>
-          <h1 className="font-sans text-4xl font-extrabold tracking-tight sm:text-5xl">
-            Client Hub
-          </h1>
-          <p className="text-sm text-slate-400 leading-relaxed font-sans">
-            Welcome to your interactive simulator hub! We give our clients absolute clarity. Click on active tasks to simulate status updates, or chat directly with your principal engineer below.
-          </p>
+          <ScrollReveal animation="fade-up">
+            <span className="eyebrow accent-text">Simulated Workspace</span>
+          </ScrollReveal>
+          <ScrollReveal animation="fade-up" delay={80}>
+            <p className="script-tagline mb-3">Absolute clarity, always.</p>
+            <h1 className="display-heading font-sans text-4xl font-extrabold tracking-tight sm:text-5xl">
+              Client Hub
+            </h1>
+          </ScrollReveal>
+          <ScrollReveal animation="fade-up" delay={160}>
+            <p className="text-sm text-slate-400 leading-relaxed font-sans">
+              Welcome to your interactive simulator hub! We give our clients absolute clarity. Click on active tasks to simulate status updates, or chat directly with your principal engineer below.
+            </p>
+          </ScrollReveal>
         </div>
 
-        {/* Dashboard Grid */}
+        {/* Dashboard Grid — stays a plain grid: its children carry col-span,
+            which must remain on the grid item itself. Each column reveals via
+            its own ScrollReveal instead. */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8" id="client-dashboard-hub">
           
           {/* Left Block - Interactive Sprint Tasks & Invoices (Col 7) */}
-          <div className="lg:col-span-7 space-y-6">
+          <ScrollReveal animation="fade-up" className="lg:col-span-7 space-y-6">
             
             {/* Direct Project Health Stats Row */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-xl border border-slate-905 bg-slate-900/30">
@@ -113,7 +126,7 @@ export default function PortalView() {
             </div>
 
             {/* Task Tracker Block */}
-            <div className="p-5 rounded-2xl border border-slate-900 bg-slate-900/10 space-y-4">
+            <div className="p-5 rounded-2xl surface-card space-y-4">
               <div className="flex items-center justify-between border-b border-slate-900 pb-3">
                 <h3 className="font-sans font-extrabold text-sm uppercase tracking-wider text-slate-300">Milestone Task Registry</h3>
                 <span className="text-[10px] font-mono text-slate-500">CLICK ROW TO TOGGLE STATUS</span>
@@ -148,7 +161,7 @@ export default function PortalView() {
             </div>
 
             {/* Invoices Block */}
-            <div className="p-5 rounded-2xl border border-slate-900 bg-slate-900/10 space-y-4">
+            <div className="p-5 rounded-2xl surface-card space-y-4">
               <h3 className="font-sans font-extrabold text-sm uppercase tracking-wider text-slate-300 border-b border-slate-900 pb-3">Financial Disclosures (Simulated)</h3>
               
               <div className="space-y-3">
@@ -177,10 +190,10 @@ export default function PortalView() {
               </div>
             </div>
 
-          </div>
+          </ScrollReveal>
 
           {/* Right Block - Simulated Real-Time Specialist Developer Chat (Col 5) */}
-          <div className="lg:col-span-5 flex flex-col h-[580px] rounded-2xl border border-slate-900 bg-slate-900/20 shadow-xl overflow-hidden">
+          <ScrollReveal animation="fade-up" delay={120} className="lg:col-span-5 flex flex-col h-[580px] rounded-2xl surface-card shadow-xl overflow-hidden">
             
             {/* Chat Head */}
             <div className="p-4 bg-slate-950 border-b border-slate-900 flex items-center gap-3">
@@ -205,7 +218,7 @@ export default function PortalView() {
                     key={msg.id} 
                     className={`max-w-[85%] rounded-xl p-3 text-xs leading-relaxed flex flex-col space-y-1 text-left
                       ${isClient 
-                        ? "bg-gradient-to-r from-orange-500 to-red-600 text-white self-end rounded-tr-none" 
+                        ? "bg-gradient-to-r from-orange-500 to-orange-700 text-white self-end rounded-tr-none" 
                         : "bg-slate-950 border border-slate-850 text-slate-300 self-start rounded-tl-none"
                       }
                     `}
@@ -239,7 +252,7 @@ export default function PortalView() {
               </button>
             </form>
 
-          </div>
+          </ScrollReveal>
 
         </div>
 

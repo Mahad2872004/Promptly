@@ -9,7 +9,10 @@ interface LogoProps {
 export default function Logo({ className = "", size = 36, showText = true }: LogoProps) {
   return (
     <div className={`flex items-center gap-2.5 select-none ${className}`}>
-      {/* Handcrafted high-fidelity geometric P icon mimicking the attached image */}
+      {/* Handcrafted high-fidelity geometric P icon mimicking the attached image.
+          The navy backing chip is deliberately NOT themed — it stays navy in
+          both modes so the mark reads as "the logo" rather than inverting with
+          the page. It's small enough not to clash on a light background. */}
       <svg
         width={size}
         height={size}
@@ -18,6 +21,7 @@ export default function Logo({ className = "", size = 36, showText = true }: Log
         xmlns="http://www.w3.org/2000/svg"
         className="transform transition-transform duration-300 hover:rotate-3"
       >
+        <rect x="0" y="0" width="100" height="100" rx="24" fill="#0a0e17" />
         {/* Top cyan element - isometrical perspective */}
         <path
           d="M39 20H80L69 35H28L39 20Z"
@@ -63,7 +67,7 @@ export default function Logo({ className = "", size = 36, showText = true }: Log
       </svg>
 
       {showText && (
-        <span className="font-sans text-xl font-bold tracking-tight text-white">
+        <span className="font-sans text-xl font-bold tracking-tight text-[var(--text-heading)]">
           Promptly<span className="text-gradient-cyan-indigo">.</span>
         </span>
       )}

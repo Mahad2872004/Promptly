@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 
 import ScrollReveal from "./ui/ScrollReveal";
+import PageAtmosphere from "./ui/PageAtmosphere";
+import { accentVars } from "../theme/tokens";
 
 interface PortfolioViewProps {
   setActiveView: (view: ViewType) => void;
@@ -27,17 +29,19 @@ export default function PortfolioView({ setActiveView }: PortfolioViewProps) {
   const handleBookBrief = () => setActiveView("contact");
 
   return (
-    <div className="bg-transparent text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+    <div className="bg-transparent text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 relative" style={accentVars("ai")}>
+      <PageAtmosphere module="ai" />
 
       <div className="mx-auto max-w-7xl space-y-12">
 
         {/* Header */}
         <ScrollReveal>
           <div className="text-center space-y-4 max-w-2xl mx-auto">
-            <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest font-mono">
+            <span className="eyebrow accent-text">
               Our Achievements
             </span>
-            <h1 className="text-4xl font-extrabold sm:text-5xl">
+            <p className="script-tagline mb-3">Proof, not promises.</p>
+            <h1 className="display-heading text-4xl font-extrabold sm:text-5xl">
               Case Blueprints
             </h1>
             <p className="text-sm text-slate-400">
@@ -73,7 +77,7 @@ export default function PortfolioView({ setActiveView }: PortfolioViewProps) {
           {filteredCaseStudies.map((study, index) => (
             <ScrollReveal key={study.id} delay={index * 0.05}>
 
-              <div className="group flex flex-col rounded-2xl border border-slate-800 bg-slate-900/40 hover:border-cyan-500/30 transition-all overflow-hidden">
+              <div className="group flex flex-col rounded-2xl surface-card hover:border-cyan-500/30 transition-all overflow-hidden">
 
                 <div className={`h-1.5 bg-gradient-to-r ${study.visualTheme}`} />
 
@@ -121,7 +125,7 @@ export default function PortfolioView({ setActiveView }: PortfolioViewProps) {
           <ScrollReveal>
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
 
-              <div className="w-full max-w-3xl rounded-3xl bg-[#020617] border border-slate-800 overflow-hidden">
+              <div className="w-full max-w-3xl rounded-3xl bg-transparent border border-slate-800 overflow-hidden">
 
                 {/* Header */}
                 <div className="p-6 border-b border-slate-800 flex justify-between">

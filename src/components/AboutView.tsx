@@ -3,6 +3,9 @@ import { ViewType } from "../types";
 import { TEAM_MEMBERS } from "../data";
 import { Target, Zap, Shield, Users, Award, ArrowRight, Sparkles, CheckCircle, MessageSquare, CheckCircle as CheckIcon } from "lucide-react";
 import ScrollReveal from "./ui/ScrollReveal";
+import RevealGroup from "./ui/RevealGroup";
+import PageAtmosphere from "./ui/PageAtmosphere";
+import { accentVars } from "../theme/tokens";
 
 interface AboutViewProps {
   setActiveView: (view: ViewType) => void;
@@ -80,16 +83,18 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
   };
 
   return (
-    <div className="bg-transparent text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 selection:bg-cyan-500/20">
+    <div className="bg-transparent text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 selection:bg-cyan-500/20 relative" style={accentVars("dev")}>
+      <PageAtmosphere module="dev" />
       <div className="mx-auto max-w-6xl space-y-20">
 
         {/* Hero Section */}
         <ScrollReveal>
           <div className="text-center max-w-3xl mx-auto space-y-6">
-            <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest font-mono">
+            <span className="eyebrow accent-text">
               About Promptly
             </span>
-            <h1 className="font-sans text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
+            <p className="script-tagline mb-3">People before process.</p>
+            <h1 className="display-heading font-sans text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
               AI-Powered Digital Solutions for{" "}
               <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
                 Startups & Businesses
@@ -105,7 +110,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
         <ScrollReveal>
           <div className="space-y-8">
             <div className="text-center max-w-xl mx-auto space-y-2">
-              <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest font-mono">
+              <span className="eyebrow accent-text">
                 How We Work
               </span>
               <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl">
@@ -116,7 +121,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <RevealGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" itemClassName="h-full">
               {corePrinciples.map((principle, idx) => (
                 <div
                   key={idx}
@@ -133,7 +138,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
                   </p>
                 </div>
               ))}
-            </div>
+            </RevealGroup>
           </div>
         </ScrollReveal>
 
@@ -152,7 +157,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <RevealGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" itemClassName="h-full">
               {differentiators.map((diff, idx) => (
                 <div
                   key={idx}
@@ -169,7 +174,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
                   </p>
                 </div>
               ))}
-            </div>
+            </RevealGroup>
           </div>
         </ScrollReveal>
 
@@ -177,7 +182,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
         <ScrollReveal animation="fade-up" threshold={0.1}>
           <div className="border-t border-slate-800/40 pt-16 space-y-8">
             <div className="text-center max-w-xl mx-auto space-y-2">
-              <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest font-mono">
+              <span className="eyebrow accent-text">
                 Leadership
               </span>
               <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl">
@@ -192,7 +197,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
             </div>
 
             <div className="max-w-4xl mx-auto">
-              <div className="group relative overflow-hidden rounded-3xl border border-slate-800/70 bg-slate-900/40 p-8 backdrop-blur-sm transition-all hover:border-cyan-500/40 hover:shadow-xl hover:shadow-cyan-500/10 card-3d">
+              <div className="group relative overflow-hidden rounded-3xl surface-card p-8 backdrop-blur-sm transition-all hover:border-cyan-500/40 hover:shadow-xl hover:shadow-cyan-500/10 card-3d">
                 <div className="flex flex-col md:flex-row items-center gap-8">
                   <div className="relative shrink-0">
                     <div className="h-48 w-48 md:h-56 md:w-56 rounded-2xl overflow-hidden border-2 border-cyan-500/30 shadow-xl">

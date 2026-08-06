@@ -36,7 +36,21 @@ export const AGENCY_SERVICES: AgencyService[] = [
 
     caseStudyRef: "promptmind-ai",
 
-    category: "AI & Automation"
+    category: "AI & Automation",
+
+    setupCost: "Custom quote", // TODO(promptly): real pricing
+
+    ongoingCost: "Retainer from monthly", // TODO(promptly): real pricing
+
+    caveats: [
+
+      "Model/API usage billed at cost on top of the retainer",
+
+      "Requires access to your existing data sources before build starts",
+
+      "Accuracy targets agreed per use case, not guaranteed in advance"
+
+    ]
 
   },
 
@@ -72,7 +86,21 @@ export const AGENCY_SERVICES: AgencyService[] = [
 
     caseStudyRef: "lumina-portal",
 
-    category: "Software Development"
+    category: "Software Development",
+
+    setupCost: "Custom quote", // TODO(promptly): real pricing
+
+    ongoingCost: "Optional support retainer", // TODO(promptly): real pricing
+
+    caveats: [
+
+      "Hosting and third-party service fees billed separately",
+
+      "Scope fixed per sprint; changes re-estimated",
+
+      "Full git repository handed over at each milestone"
+
+    ]
 
   },
 
@@ -108,7 +136,21 @@ export const AGENCY_SERVICES: AgencyService[] = [
 
     caseStudyRef: "xsender",
 
-    category: "Software Development"
+    category: "Software Development",
+
+    setupCost: "Custom quote", // TODO(promptly): real pricing
+
+    ongoingCost: "Per-platform monthly", // TODO(promptly): real pricing
+
+    caveats: [
+
+      "WhatsApp Business API approval is handled by Meta and can add lead time",
+
+      "Payment gateway fees are set by the provider",
+
+      "Existing data migration quoted separately"
+
+    ]
 
   },
 
@@ -144,7 +186,21 @@ export const AGENCY_SERVICES: AgencyService[] = [
 
     caseStudyRef: "fintech-ledger",
 
-    category: "Software Development"
+    category: "Software Development",
+
+    setupCost: "Custom quote", // TODO(promptly): real pricing
+
+    ongoingCost: "Sprint-based", // TODO(promptly): real pricing
+
+    caveats: [
+
+      "MVP scope capped per sprint to protect the timeline",
+
+      "Design system kept deliberately lean at MVP stage",
+
+      "Post-launch iteration quoted as a separate engagement"
+
+    ]
 
   }
 

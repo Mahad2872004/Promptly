@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { ViewType } from "../types";
 import Logo from "./Logo";
+import ThemeToggle from "./ThemeToggle";
 import { useNavigate, useLocation } from "react-router-dom";
 import { VIEW_PATHS } from "../routes";
 import {
-  Terminal,
   Menu,
   X,
   ArrowUpRight,
-  Layout,
-  Sparkles,
   ChevronDown,
   Briefcase,
   Building2,
@@ -25,18 +23,19 @@ interface HeaderProps {
 interface NavLink {
   label: string;
   view?: ViewType;
-  isSpecial?: boolean;
   icon?: React.ReactNode;
-  hasDropdown?: boolean;
   dropdownItems?: { label: string; view: ViewType; description?: string }[];
 }
 
+/** Desktop nav appears at lg, not md: five items plus two CTAs cannot fit 768px. */
 export default function Header({ activeView, setActiveView }: HeaderProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const navRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -52,41 +51,77 @@ export default function Header({ activeView, setActiveView }: HeaderProps) {
     };
   }, [mobileMenuOpen]);
 
-  const navLinks: NavLink[] = [
-    { label: "Home", view: "home" },
-    { 
-      label: "What We Do", 
-      hasDropdown: true,
-      icon: <Briefcase className="h-3.5 w-3.5 shrink-0" />,
-      dropdownItems: [
-        { label: "AI Solutions", view: "ai-solutions", description: "AI automation & intelligent systems" },
-        { label: "Software Development", view: "software-development", description: "Web apps & custom software" },
-        { label: "Digital Transformation", view: "digital-transformation", description: "Business process automation" },
-        { label: "Startup Support", view: "startup-support", description: "MVP development & scaling" },
-      ]
-    },
-    { 
-      label: "Products", 
-      hasDropdown: true,
-      icon: <Package className="h-3.5 w-3.5 shrink-0" />,
-      dropdownItems: [
-        { label: "xSender", view: "xsender", description: "WhatsApp Order Management" },
-        { label: "All Products", view: "products", description: "View our product portfolio" },
-      ]
-    },
-    { 
-      label: "Who We Help", 
-      hasDropdown: true,
-      icon: <Building2 className="h-3.5 w-3.5 shrink-0" />,
-      dropdownItems: [
-        { label: "Startups", view: "startups", description: "Early-stage to growth" },
-        { label: "E-commerce", view: "ecommerce", description: "Retail & D2C brands" },
-        { label: "Real Estate", view: "realestate", description: "PropTech solutions" },
-        { label: "Enterprise", view: "enterprise", description: "Scale-up businesses" },
-      ]
-    },
-    { label: "About", view: "about", icon: <Users className="h-3.5 w-3.5 shrink-0" /> },
-  ];
+  // Any navigation closes whatever is open.
+  useEffect(() => {
+    setOpenDropdown(null);
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
+
+  // Escape closes the open menu; click outside the nav does the same.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpenDropdown(null);
+        setMobileMenuOpen(false);
+      }
+    };
+    const onPointer = (e: PointerEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onPointer);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onPointer);
+    };
+  }, []);
+
+  const navLinks: NavLink[] = useMemo(
+    () => [
+      { label: "Home", view: "home" },
+      {
+        label: "What We Do",
+        icon: <Briefcase className="h-3.5 w-3.5 shrink-0" />,
+        dropdownItems: [
+          { label: "AI Solutions", view: "ai-solutions", description: "AI automation & intelligent systems" },
+          { label: "Software Development", view: "software-development", description: "Web apps & custom software" },
+          { label: "Digital Transformation", view: "digital-transformation", description: "Business process automation" },
+          { label: "Startup Support", view: "startup-support", description: "MVP development & scaling" },
+        ],
+      },
+      {
+        label: "Products",
+        icon: <Package className="h-3.5 w-3.5 shrink-0" />,
+        dropdownItems: [
+          { label: "xSender", view: "xsender", description: "WhatsApp Order Management" },
+          { label: "All Products", view: "products", description: "View our product portfolio" },
+        ],
+      },
+      {
+        label: "Who We Help",
+        icon: <Building2 className="h-3.5 w-3.5 shrink-0" />,
+        dropdownItems: [
+          { label: "Startups", view: "startups", description: "Early-stage to growth" },
+          { label: "E-commerce", view: "ecommerce", description: "Retail & D2C brands" },
+          { label: "Real Estate", view: "realestate", description: "PropTech solutions" },
+          { label: "Enterprise", view: "enterprise", description: "Scale-up businesses" },
+        ],
+      },
+      { label: "About", view: "about", icon: <Users className="h-3.5 w-3.5 shrink-0" /> },
+    ],
+    []
+  );
+
+  /**
+   * A top-level item is active when it IS the current view, or when the current
+   * view is one of its dropdown children — so "What We Do" stays lit while the
+   * user is on /services/ai-solutions.
+   */
+  const isActive = (link: NavLink) =>
+    link.view === activeView ||
+    !!link.dropdownItems?.some((i) => i.view === activeView);
 
   const handleNavClick = (view: ViewType) => {
     navigate(VIEW_PATHS[view]);
@@ -94,92 +129,134 @@ export default function Header({ activeView, setActiveView }: HeaderProps) {
     setOpenDropdown(null);
   };
 
-  const toggleDropdown = (label: string) => {
-    setOpenDropdown(openDropdown === label ? null : label);
+  const openNow = (label: string) => {
+    window.clearTimeout(closeTimer.current);
+    setOpenDropdown(label);
   };
 
-  const linkClass = (link: NavLink) => {
-    const base =
-      "nav-link group flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-semibold select-none relative";
-    if (link.isSpecial) {
-      return `${base} nav-link-special`;
-    }
-    return `${base}`;
+  // Small grace period so the pointer can cross the trigger→panel gap.
+  const closeSoon = () => {
+    window.clearTimeout(closeTimer.current);
+    closeTimer.current = window.setTimeout(() => setOpenDropdown(null), 140);
   };
+
+  const linkClass = (link: NavLink) =>
+    `nav-link group flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3 py-2 text-sm font-semibold select-none ${
+      isActive(link) ? "is-active" : ""
+    }`;
 
   return (
     <header
       className={`site-header sticky top-0 z-50 w-full ${scrolled ? "is-scrolled" : ""}`}
     >
-      <div className="mx-auto flex h-[4.25rem] max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+      <div
+        ref={navRef}
+        className="mx-auto flex h-[4.25rem] max-w-7xl items-center justify-between gap-3 px-4 sm:px-6 lg:px-8"
+      >
         {/* Logo */}
         <button
           type="button"
           onClick={() => handleNavClick("home")}
-          className="shrink-0 rounded-lg outline-none transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-cyan-500/50"
+          className="shrink-0 rounded-lg outline-none transition-opacity hover:opacity-90 focus-visible:ring-2 focus-visible:ring-[var(--promptly-border-active)]"
           id="header-logo-container"
-          aria-label="Go to home"
+          aria-label="Promptly — go to home"
         >
           <Logo size={34} />
         </button>
 
-        {/* Desktop nav — mega-menu style */}
+        {/* Desktop nav */}
         <nav
-          className="hidden items-center gap-1 md:flex"
+          className="hidden items-center gap-0.5 lg:flex"
           aria-label="Main navigation"
         >
-          {navLinks.map((link) => (
-            <div key={link.label} className="relative">
-              <button
-                type="button"
-                id={`nav-link-${link.view || link.label}`}
-                onClick={() => link.hasDropdown ? toggleDropdown(link.label) : link.view && handleNavClick(link.view)}
-                onMouseEnter={() => link.hasDropdown && setOpenDropdown(link.label)}
-                className={linkClass(link)}
+          {navLinks.map((link) => {
+            const hasDropdown = !!link.dropdownItems;
+            const isOpen = openDropdown === link.label;
+            return (
+              <div
+                key={link.label}
+                className="relative"
+                onMouseEnter={() => hasDropdown && openNow(link.label)}
+                onMouseLeave={() => hasDropdown && closeSoon()}
               >
-                {link.icon}
-                <span>{link.label}</span>
-                {link.hasDropdown && (
-                  <ChevronDown className={`h-3.5 w-3.5 transition-transform ${openDropdown === link.label ? 'rotate-180' : ''}`} />
-                )}
-              </button>
-              
-              {/* Mega-menu dropdown */}
-              {link.hasDropdown && openDropdown === link.label && (
-                <div 
-                  className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-80 rounded-2xl border border-slate-700/50 bg-slate-900/95 backdrop-blur-xl shadow-2xl p-4 z-50 animate-fadeIn"
-                  onMouseLeave={() => setOpenDropdown(null)}
+                <button
+                  type="button"
+                  id={`nav-link-${link.view || link.label}`}
+                  onClick={() =>
+                    hasDropdown
+                      ? setOpenDropdown(isOpen ? null : link.label)
+                      : link.view && handleNavClick(link.view)
+                  }
+                  className={linkClass(link)}
+                  aria-haspopup={hasDropdown || undefined}
+                  aria-expanded={hasDropdown ? isOpen : undefined}
+                  aria-current={link.view === activeView ? "page" : undefined}
                 >
-                  <div className="space-y-1">
-                    {link.dropdownItems?.map((item) => (
-                      <button
-                        key={item.label}
-                        onClick={() => handleNavClick(item.view)}
-                        className="w-full text-left rounded-xl px-3 py-2.5 hover:bg-slate-800/50 transition-colors group"
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="font-semibold text-slate-200 group-hover:text-cyan-400 transition-colors">{item.label}</span>
-                          <ArrowUpRight className="h-3.5 w-3.5 text-slate-500 group-hover:text-cyan-400 opacity-0 group-hover:opacity-100 transition-all" />
-                        </div>
-                        {item.description && (
-                          <p className="text-xs text-slate-500 mt-1">{item.description}</p>
-                        )}
-                      </button>
-                    ))}
+                  {link.icon}
+                  <span>{link.label}</span>
+                  {hasDropdown && (
+                    <ChevronDown
+                      aria-hidden
+                      className={`h-3.5 w-3.5 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                    />
+                  )}
+                </button>
+
+                {hasDropdown && isOpen && (
+                  /* pt-2 rather than mt-2: the padding bridges the gap so the
+                     pointer never leaves the hover target on the way down. */
+                  <div className="absolute left-1/2 top-full z-50 w-80 -translate-x-1/2 pt-2">
+                    <div
+                      className="animate-fadeIn rounded-2xl p-2 shadow-2xl backdrop-blur-xl"
+                      style={{
+                        background: "var(--bg-panel)",
+                        border: "1px solid var(--promptly-border)",
+                        boxShadow: "var(--card-shadow-hover)",
+                      }}
+                      role="menu"
+                    >
+                      {link.dropdownItems?.map((item) => {
+                        const itemActive = item.view === activeView;
+                        return (
+                          <button
+                            key={item.label}
+                            role="menuitem"
+                            onClick={() => handleNavClick(item.view)}
+                            className={`nav-dropdown-item ${itemActive ? "is-active" : ""}`}
+                            aria-current={itemActive ? "page" : undefined}
+                          >
+                            <span className="flex items-center justify-between gap-2">
+                              <span className="nav-dropdown-label">
+                                {item.label}
+                              </span>
+                              <ArrowUpRight className="nav-dropdown-arrow h-3.5 w-3.5 shrink-0" />
+                            </span>
+                            {item.description && (
+                              <span className="mt-0.5 block text-xs text-[var(--text-micro)]">
+                                {item.description}
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          ))}
+                )}
+              </div>
+            );
+          })}
         </nav>
 
-        {/* Desktop CTAs */}
-        <div className="hidden shrink-0 items-center gap-3 md:flex">
+        {/* Desktop actions */}
+        <div className="hidden shrink-0 items-center gap-2 lg:flex">
+          <ThemeToggle />
+          {/* Secondary CTA yields first on narrower desktops so the primary
+              CTA and the nav never collide. */}
           <button
             type="button"
             id="nav-btn-portfolio"
             onClick={() => handleNavClick("portfolio")}
-            className="btn-secondary group flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-semibold"
+            className="btn-secondary group hidden items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-semibold xl:flex"
           >
             <span>View Work</span>
             <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -188,69 +265,92 @@ export default function Header({ activeView, setActiveView }: HeaderProps) {
             type="button"
             id="nav-btn-contact"
             onClick={() => handleNavClick("contact")}
-            className="btn-primary group flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm font-semibold"
+            className="btn-primary group flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-semibold"
           >
-            <span>Let's Talk</span>
+            <span>Let&apos;s Talk</span>
             <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </button>
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          type="button"
-          id="mobile-menu-toggle"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="btn-secondary flex h-10 w-10 items-center justify-center rounded-xl p-0 md:hidden"
-          aria-expanded={mobileMenuOpen}
-          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-        >
-          {mobileMenuOpen ? (
-            <X className="h-5 w-5" />
-          ) : (
-            <Menu className="h-5 w-5" />
-          )}
-        </button>
+        {/* Mobile / tablet: theme switch stays visible, never buried in the drawer. */}
+        <div className="flex items-center gap-2 lg:hidden">
+          <ThemeToggle />
+          <button
+            type="button"
+            id="mobile-menu-toggle"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="btn-secondary flex h-10 w-10 items-center justify-center rounded-xl p-0"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-menu"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="animate-fadeIn border-t border-brand md:hidden">
+        <div id="mobile-menu" className="animate-fadeIn border-t border-brand lg:hidden">
           <div
-            className="mx-4 mb-4 mt-2 space-y-1 rounded-2xl p-2"
-            style={{ background: "var(--promptly-surface)", border: "1px solid var(--promptly-border)" }}
+            className="mx-4 mb-4 mt-2 max-h-[calc(100vh-6.5rem)] space-y-1 overflow-y-auto rounded-2xl p-2"
+            style={{
+              background: "var(--bg-panel)",
+              border: "1px solid var(--promptly-border)",
+            }}
           >
-            {navLinks.map((link) => (
-              <div key={link.label}>
-                <button
-                  type="button"
-                  id={`mobile-nav-${link.view || link.label}`}
-                  onClick={() => link.hasDropdown ? toggleDropdown(link.label) : link.view && handleNavClick(link.view)}
-                  className={`${linkClass(link)} w-full rounded-xl px-4 py-3 text-left text-base`}
-                >
-                  {link.icon}
-                  <span className="flex-1">{link.label}</span>
-                  {link.hasDropdown && (
-                    <ChevronDown className={`h-4 w-4 transition-transform ${openDropdown === link.label ? 'rotate-180' : ''}`} />
+            {navLinks.map((link) => {
+              const hasDropdown = !!link.dropdownItems;
+              const isOpen = openDropdown === link.label;
+              return (
+                <div key={link.label}>
+                  <button
+                    type="button"
+                    id={`mobile-nav-${link.view || link.label}`}
+                    onClick={() =>
+                      hasDropdown
+                        ? setOpenDropdown(isOpen ? null : link.label)
+                        : link.view && handleNavClick(link.view)
+                    }
+                    className={`${linkClass(link)} w-full rounded-xl px-4 py-3 text-left text-base`}
+                    aria-expanded={hasDropdown ? isOpen : undefined}
+                  >
+                    {link.icon}
+                    <span className="flex-1">{link.label}</span>
+                    {hasDropdown && (
+                      <ChevronDown
+                        aria-hidden
+                        className={`h-4 w-4 transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+                      />
+                    )}
+                  </button>
+
+                  {hasDropdown && isOpen && (
+                    <div className="ml-3 mt-1 animate-fadeIn space-y-0.5 border-l border-[var(--promptly-border)] pl-3">
+                      {link.dropdownItems?.map((item) => {
+                        const itemActive = item.view === activeView;
+                        return (
+                          <button
+                            key={item.label}
+                            onClick={() => handleNavClick(item.view)}
+                            className={`w-full rounded-lg px-4 py-2.5 text-left text-sm transition-colors ${
+                              itemActive
+                                ? "accent-text font-semibold"
+                                : "text-[var(--text-body-soft)] hover:text-[var(--text-heading)]"
+                            }`}
+                            aria-current={itemActive ? "page" : undefined}
+                          >
+                            {item.label}
+                          </button>
+                        );
+                      })}
+                    </div>
                   )}
-                </button>
-                
-                {/* Mobile dropdown */}
-                {link.hasDropdown && openDropdown === link.label && (
-                  <div className="ml-4 mt-1 space-y-1 animate-fadeIn">
-                    {link.dropdownItems?.map((item) => (
-                      <button
-                        key={item.label}
-                        onClick={() => handleNavClick(item.view)}
-                        className="w-full text-left rounded-lg px-4 py-2.5 text-sm text-slate-400 hover:text-cyan-400 hover:bg-slate-800/50 transition-colors"
-                      >
-                        {item.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-            <div className="grid grid-cols-2 gap-2 border-t border-brand pt-3 mt-3">
+                </div>
+              );
+            })}
+
+            <div className="mt-3 grid grid-cols-2 gap-2 border-t border-brand pt-3">
               <button
                 type="button"
                 id="mobile-nav-portfolio"
@@ -266,7 +366,7 @@ export default function Header({ activeView, setActiveView }: HeaderProps) {
                 onClick={() => handleNavClick("contact")}
                 className="btn-primary flex items-center justify-center gap-1.5 rounded-xl py-3 text-sm font-semibold"
               >
-                Let's Talk
+                Let&apos;s Talk
                 <ArrowUpRight className="h-4 w-4" />
               </button>
             </div>

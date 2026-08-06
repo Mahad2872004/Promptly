@@ -12,6 +12,8 @@ import {
 } from "lucide-react";
 
 import ScrollReveal from "./ui/ScrollReveal";
+import PageAtmosphere from "./ui/PageAtmosphere";
+import { accentVars } from "../theme/tokens";
 
 interface AIArchitectViewProps {
   initialPrompt: string;
@@ -106,16 +108,18 @@ export default function AIArchitectView({
   };
 
   return (
-    <div className="bg-slate-950 text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8">
+    <div className="bg-slate-950 text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 relative" style={accentVars("ai")}>
+      <PageAtmosphere module="ai" />
       <div className="mx-auto max-w-5xl space-y-12">
 
         {/* Header */}
         <ScrollReveal>
           <div className="text-center space-y-4 max-w-2xl mx-auto">
-            <span className="text-xs font-semibold text-cyan-400 uppercase tracking-widest font-mono">
+            <span className="eyebrow accent-text">
               Generative Cognitive Modeler
             </span>
-            <h1 className="text-4xl font-extrabold sm:text-5xl">
+            <p className="script-tagline mb-3">Describe it. We'll draw it.</p>
+            <h1 className="display-heading text-4xl font-extrabold sm:text-5xl">
               AI Project Architect
             </h1>
             <p className="text-sm text-slate-400">

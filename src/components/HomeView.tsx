@@ -26,8 +26,6 @@ import {
 
   TESTIMONIAL_AVATARS,
 
-  INDUSTRIES,
-
   PARTNERS,
 
   TECH_STACK,
@@ -36,7 +34,19 @@ import {
 
 import ScrollReveal from "./ui/ScrollReveal";
 
+import RevealGroup from "./ui/RevealGroup";
+
 import AnimatedCounter from "./ui/AnimatedCounter";
+
+import HeroScene from "./scenes/HeroScene";
+
+import SystemsScene from "./scenes/SystemsScene";
+
+import WorkflowScene from "./scenes/WorkflowScene";
+
+import AudienceScene from "./scenes/AudienceScene";
+
+import CtaScene from "./scenes/CtaScene";
 
 import {
 
@@ -260,309 +270,27 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
   return (
 
-    <div className="bg-[#0b1121] text-white selection:bg-cyan-500/30">
+    <div className="bg-transparent text-white selection:bg-cyan-500/30">
 
 
 
-      {/* ─── HERO ────────────────────────────────────────────────────────── */}
-
-      <section className="relative overflow-hidden px-4 sm:px-6 lg:px-8 py-20 md:py-32 pb-24 md:pb-32">
-
-        {/* Animated background */}
-
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-cyan-900/20 via-transparent to-indigo-900/20" />
-
-        <div className="absolute top-1/4 left-1/4 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/10 blur-3xl animate-pulse" />
-
-        <div className="absolute bottom-1/4 right-1/4 h-[28rem] w-[28rem] translate-x-1/3 translate-y-1/3 rounded-full bg-indigo-500/10 blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-violet-500/5 blur-[120px]" />
-
-
-
-        <div className="mx-auto max-w-7xl">
-
-          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-
-            {/* Left */}
-
-            <div className="space-y-10 text-center lg:text-left">
-
-              <ScrollReveal animation="slide-left-full" delay={0} threshold={0.05}>
-
-                <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/25 bg-cyan-500/10 px-5 py-2.5 text-xs font-bold uppercase tracking-widest text-cyan-400">
-
-                  <span className="relative flex h-2 w-2">
-
-                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
-
-                    <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
-
-                  </span>
-
-                  Premium Digital Agency
-
-                </div>
-
-              </ScrollReveal>
-
-
-
-              <ScrollReveal animation="slide-left-full" delay={100} threshold={0.05}>
-
-                <h1 className="font-sans text-[3.5rem] font-extrabold leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-[5rem] lg:leading-[1.02]">
-
-                  AI-Powered{" "}
-
-                  <span className="bg-gradient-to-r from-cyan-400 via-indigo-400 to-violet-400 bg-clip-text text-transparent">
-
-                    Digital Solutions
-
-                  </span>{" "}
-
-                  for Startups & Businesses<span className="text-cyan-400">.</span>
-
-                </h1>
-
-              </ScrollReveal>
-
-
-
-              <ScrollReveal animation="slide-left-full" delay={200} threshold={0.05}>
-
-                <p className="mx-auto text-lg leading-relaxed text-slate-400 sm:text-xl lg:mx-0 max-w-2xl">
-
-                  Promptly delivers AI-powered digital solutions for startups and businesses — and builds its own products to scale beyond services.
-
-                </p>
-
-              </ScrollReveal>
-
-
-
-              <ScrollReveal animation="slide-left-full" delay={300} threshold={0.05}>
-
-                <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center lg:justify-start">
-
-                  <button
-
-                    onClick={() => setActiveView("contact")}
-
-                    className="group magnetic-btn inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 px-8 py-4 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-all hover:scale-[1.02] hover:shadow-cyan-500/40"
-
-                  >
-
-                    Start Your Project
-
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-
-                  </button>
-
-                  <button
-
-                    onClick={() => setActiveView("portfolio")}
-
-                    className="group magnetic-btn inline-flex items-center gap-2 rounded-full border border-slate-700 bg-slate-900/50 px-7 py-4 text-sm font-semibold text-slate-200 backdrop-blur-sm transition-all hover:border-cyan-500/40 hover:bg-slate-900/70 hover:text-white"
-
-                  >
-
-                    <Play className="h-4 w-4 text-cyan-400" />
-
-                    View Our Work
-
-                  </button>
-
-                </div>
-
-              </ScrollReveal>
-
-
-
-              {/* Trust badges */}
-
-              <ScrollReveal animation="slide-left-full" delay={400} threshold={0.05}>
-
-                <div className="flex flex-wrap items-center justify-center gap-8 pt-6 lg:justify-start">
-
-                  <div className="flex items-center gap-2 text-xs text-slate-500">
-
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10">
-
-                      <ShieldCheck className="h-4 w-4 text-emerald-400" />
-
-                    </div>
-
-                    <span className="font-medium">Enterprise Security</span>
-
-                  </div>
-
-                  <div className="flex items-center gap-2 text-xs text-slate-500">
-
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/10">
-
-                      <Zap className="h-4 w-4 text-amber-400" />
-
-                    </div>
-
-                    <span className="font-medium">Fast Delivery</span>
-
-                  </div>
-
-                  <div className="flex items-center gap-2 text-xs text-slate-500">
-
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-500/10">
-
-                      <Users className="h-4 w-4 text-cyan-400" />
-
-                    </div>
-
-                    <span className="font-medium">Expert Team</span>
-
-                  </div>
-
-                </div>
-
-              </ScrollReveal>
-
-            </div>
-
-
-
-            {/* Right – Hero visual */}
-
-            <ScrollReveal animation="scale-in" delay={200} threshold={0.05} className="relative hidden lg:block">
-
-              <div className="relative mx-auto h-[600px] w-full max-w-2xl">
-
-                {/* Background glow effects */}
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 blur-3xl animate-pulse" />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[400px] rounded-full bg-violet-500/10 blur-[100px]" />
-
-                {/* Main floating card */}
-                <div className="relative h-full w-full rounded-3xl overflow-hidden shadow-2xl ring-1 ring-white/10 bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 card-3d">
-                  
-                  {/* Dashboard Interface */}
-                  <div className="h-full w-full bg-gradient-to-br from-slate-900 to-slate-950 p-8 flex flex-col">
-                    
-                    {/* Top bar */}
-                    <div className="flex items-center justify-between mb-8">
-                      <div className="flex items-center gap-3">
-                        <div className="flex h-14 w-14 items-center justify-center overflow-hidden">
-                          <img 
-                            src="/images/Dynamic Logo for Software Agency 'Promptly' (3).png" 
-                            alt="Promptly Logo" 
-                            className="h-12 w-12 object-contain"
-                          />
-                        </div>
-                        <div>
-                          <p className="text-sm font-bold text-white">Promptly Dashboard</p>
-                          <p className="text-[10px] text-slate-400">Real-time Analytics</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                        <span className="text-xs text-slate-400">Live</span>
-                      </div>
-                    </div>
-
-                    {/* Service cards */}
-                    <div className="grid grid-cols-3 gap-4 mb-6">
-                      <div className="rounded-xl bg-slate-800/50 border border-slate-700/50 p-4 hover:border-cyan-500/40 transition-colors">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Brain className="h-4 w-4 text-cyan-400" />
-                          <p className="text-[10px] text-slate-400 uppercase tracking-wider">AI Solutions</p>
-                        </div>
-                        <p className="text-xs font-semibold text-white">Automation & Intelligence</p>
-                      </div>
-                      <div className="rounded-xl bg-slate-800/50 border border-slate-700/50 p-4 hover:border-indigo-500/40 transition-colors">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Code className="h-4 w-4 text-indigo-400" />
-                          <p className="text-[10px] text-slate-400 uppercase tracking-wider">Development</p>
-                        </div>
-                        <p className="text-xs font-semibold text-white">Web & Mobile Apps</p>
-                      </div>
-                      <div className="rounded-xl bg-slate-800/50 border border-slate-700/50 p-4 hover:border-violet-500/40 transition-colors">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Sparkles className="h-4 w-4 text-violet-400" />
-                          <p className="text-[10px] text-slate-400 uppercase tracking-wider">Innovation</p>
-                        </div>
-                        <p className="text-xs font-semibold text-white">Cutting-edge Tech</p>
-                      </div>
-                    </div>
-
-                    {/* Chart area */}
-                    <div className="flex-1 rounded-xl bg-slate-800/30 border border-slate-700/50 p-4 relative overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-indigo-500/5" />
-                      <div className="relative h-full flex items-end justify-between gap-2">
-                        {[40, 65, 45, 80, 55, 90, 70, 85, 60, 95, 75, 88].map((height, i) => (
-                          <div
-                            key={i}
-                            className="flex-1 rounded-t bg-gradient-to-t from-cyan-500/60 to-indigo-500/60 transition-all hover:from-cyan-400 hover:to-indigo-400"
-                            style={{ height: `${height}%` }}
-                          />
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Bottom floating elements */}
-                    <div className="absolute bottom-6 left-6 right-6 flex justify-between">
-                      <div className="rounded-xl bg-slate-800/80 border border-slate-700/50 backdrop-blur-sm p-3 flex items-center gap-3">
-                        <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center">
-                          <Bot className="h-4 w-4 text-white" />
-                        </div>
-                        <div>
-                          <p className="text-xs font-semibold text-white">AI Assistant</p>
-                          <p className="text-[10px] text-slate-400">Active</p>
-                        </div>
-                      </div>
-                      <div className="rounded-xl bg-slate-800/80 border border-slate-700/50 backdrop-blur-sm p-3 flex items-center gap-3">
-                        <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-cyan-500 to-teal-500 flex items-center justify-center">
-                          <Sparkles className="h-4 w-4 text-white" />
-                        </div>
-                        <div>
-                          <p className="text-xs font-semibold text-white">Auto-Scaling</p>
-                          <p className="text-[10px] text-slate-400">Enabled</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Floating decorative elements */}
-                <div className="absolute -top-4 -right-4 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 backdrop-blur-sm border border-cyan-500/30 p-4 shadow-xl animate-float">
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-5 w-5 text-cyan-400" />
-                    <span className="text-xs font-semibold text-white">Project Complete</span>
-                  </div>
-                </div>
-
-                <div className="absolute -bottom-4 -left-4 rounded-2xl bg-gradient-to-br from-violet-500/20 to-purple-500/20 backdrop-blur-sm border border-violet-500/30 p-4 shadow-xl animate-float" style={{ animationDelay: '1s' }}>
-                  <div className="flex items-center gap-2">
-                    <Zap className="h-5 w-5 text-violet-400" />
-                    <span className="text-xs font-semibold text-white">99.9% Uptime</span>
-                  </div>
-                </div>
-              </div>
-            </ScrollReveal>
-
-          </div>
-        </div>
-      </section>
+      {/* ─── SCENE 1 — HERO ─────────────────────────────────────────────── */}
+      <HeroScene setActiveView={setActiveView} />
 
       {/* Mobile prompt */}
       <ScrollReveal animation="fade-up" delay={200} threshold={0.05} className="mt-12 lg:hidden">
-        <div className="mx-auto max-w-xl rounded-2xl border border-slate-800 bg-slate-900/60 p-5 shadow-2xl backdrop-blur-sm">
+        <div className="surface-card mx-auto max-w-xl rounded-2xl p-5">
           <form onSubmit={handlePromptSubmit} className="flex flex-col gap-3 sm:flex-row">
             <input
               type="text"
               value={draftPrompt}
               onChange={(e) => setDraftPrompt(e.target.value)}
               placeholder="Describe your product vision…"
-              className="flex-1 rounded-xl border border-slate-700 bg-[#020617]/80 px-4 py-3 text-sm outline-none transition focus:border-cyan-500 font-mono"
+              className="footer-input flex-1 rounded-xl px-4 py-3 text-sm outline-none font-mono"
             />
             <button
               type="submit"
-              className="rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-500 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-cyan-500/25"
+              className="btn-primary rounded-xl px-6 py-3 text-sm font-bold"
             >
               Blueprint
             </button>
@@ -787,7 +515,7 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
                   key={`${logo.name}-${i}`}
 
-                  className="flex shrink-0 items-center gap-3 rounded-xl border border-slate-800/50 bg-slate-900/30 px-6 py-3 backdrop-blur-sm transition hover:border-slate-700"
+                  className="flex shrink-0 items-center gap-3 rounded-xl surface-card px-6 py-3 backdrop-blur-sm transition hover:border-slate-700"
 
                 >
 
@@ -845,21 +573,21 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
                 {/* Benefit icons */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl mt-2">
-                  <div className="flex flex-col items-center gap-3 rounded-2xl border border-slate-800/60 bg-slate-900/40 p-5">
+                  <div className="flex flex-col items-center gap-3 rounded-2xl surface-card p-5">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 border border-emerald-500/20">
                       <MoveRight className="h-5 w-5 text-emerald-400" />
                     </div>
                     <p className="text-sm font-semibold text-white">Reduce Costs</p>
                     <p className="text-xs text-slate-500 text-center">Cut overhead by eliminating manual, repetitive work</p>
                   </div>
-                  <div className="flex flex-col items-center gap-3 rounded-2xl border border-slate-800/60 bg-slate-900/40 p-5">
+                  <div className="flex flex-col items-center gap-3 rounded-2xl surface-card p-5">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/10 border border-amber-500/20">
                       <Zap className="h-5 w-5 text-amber-400" />
                     </div>
                     <p className="text-sm font-semibold text-white">Save Time</p>
                     <p className="text-xs text-slate-500 text-center">Reclaim hours every day with intelligent automation</p>
                   </div>
-                  <div className="flex flex-col items-center gap-3 rounded-2xl border border-slate-800/60 bg-slate-900/40 p-5">
+                  <div className="flex flex-col items-center gap-3 rounded-2xl surface-card p-5">
                     <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/10 border border-cyan-500/20">
                       <Users className="h-5 w-5 text-cyan-400" />
                     </div>
@@ -882,119 +610,6 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
         </div>
       </section>
 
-      {/* ─── INDUSTRIES ─────────────────────────────────────────────────── */}
-
-      <section className="border-t border-slate-800/40 py-16 md:py-20 px-4 sm:px-6 lg:px-8 parallax-section">
-
-        <div className="mx-auto max-w-7xl space-y-12">
-
-          <SectionHeader
-
-            badgeLabel="Who We Help"
-
-            badgeColor="indigo"
-
-            title={
-
-              <>
-
-                Industries{" "}
-
-                <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
-
-                  We Serve
-
-                </span>
-
-              </>
-
-            }
-
-            subtitle="From startups to enterprises, we deliver tailored solutions across diverse sectors."
-
-            centered
-
-          />
-
-
-
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-
-            {INDUSTRIES.map((industry, i) => (
-
-              <div key={industry.id}>
-
-                <ScrollReveal animation="fade-up" staggerIndex={i} threshold={0.1}>
-
-                  <button
-
-                    onClick={() => setActiveView("portfolio")}
-
-                    className="group magnetic-btn relative flex h-full w-full flex-col justify-between rounded-3xl border border-slate-800/70 bg-slate-900/40 p-6 text-left backdrop-blur-sm transition-all hover:border-indigo-500/40 hover:bg-slate-800/40 hover:shadow-xl hover:shadow-indigo-500/10 hover:-translate-y-1 card-3d"
-
-                  >
-
-                    <div className="space-y-4">
-
-                      <div className="flex items-center gap-4">
-
-                        <span className="text-4xl">{industry.icon}</span>
-
-                        <div>
-
-                          <h3 className="text-lg font-bold text-slate-100 group-hover:text-indigo-400 transition-colors">
-
-                            {industry.name}
-
-                          </h3>
-
-                          <p className="text-xs text-slate-500">{industry.description}</p>
-
-                        </div>
-
-                      </div>
-
-                      <div className="flex flex-wrap gap-2">
-
-                        {industry.services.map((service) => (
-
-                          <span
-
-                            key={service}
-
-                            className="rounded-full border border-slate-700/60 bg-slate-800/80 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-slate-400 group-hover:border-indigo-500/40 group-hover:text-indigo-400 transition-colors"
-
-                          >
-
-                            {service}
-
-                          </span>
-
-                        ))}
-
-                      </div>
-
-                    </div>
-
-                    <div className="mt-6 flex items-center gap-1 text-xs font-semibold text-slate-500 transition-colors group-hover:text-indigo-400">
-
-                      View Projects <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-
-                    </div>
-
-                  </button>
-
-                </ScrollReveal>
-
-              </div>
-
-            ))}
-
-          </div>
-
-        </div>
-
-      </section>
 
 
 
@@ -1010,7 +625,7 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
           </p>
 
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-6">
+          <RevealGroup className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-6" itemClassName="h-full">
 
             {PARTNERS.map((partner) => (
 
@@ -1018,7 +633,7 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
                 key={partner.name}
 
-                className="flex items-center justify-center rounded-xl border border-slate-800/50 bg-slate-900/30 px-6 py-4 backdrop-blur-sm transition hover:border-slate-700 hover:bg-slate-900/50"
+                className="flex items-center justify-center rounded-xl surface-card px-6 py-4 backdrop-blur-sm transition hover:border-slate-700 hover:bg-slate-900/50"
 
               >
 
@@ -1028,7 +643,7 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
             ))}
 
-          </div>
+          </RevealGroup>
 
         </ScrollReveal>
 
@@ -1076,7 +691,7 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
             {Object.entries(TECH_STACK).map(([category, technologies], categoryIndex) => (
               <div key={category} className="h-full">
                 <ScrollReveal animation="fade-up" staggerIndex={categoryIndex} threshold={0.1} className="h-full">
-                  <div className="group magnetic-btn relative flex flex-col h-full overflow-hidden rounded-3xl border border-slate-800/70 bg-slate-900/40 p-6 backdrop-blur-sm transition-all hover:border-violet-500/40 hover:bg-slate-800/40 hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1 card-3d">
+                  <div className="group magnetic-btn relative flex flex-col h-full overflow-hidden rounded-3xl surface-card p-6 backdrop-blur-sm transition-all hover:border-violet-500/40 hover:bg-slate-800/40 hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1 card-3d">
                     <div className="absolute top-0 right-0 h-32 w-32 bg-gradient-to-br from-violet-500/10 to-transparent rounded-full blur-3xl group-hover:blur-2xl transition-all" />
 
                     
@@ -1187,7 +802,7 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
             <div className="max-w-4xl mx-auto">
 
-              <div className="group relative overflow-hidden rounded-3xl border border-slate-800/70 bg-slate-900/40 p-8 backdrop-blur-sm transition-all hover:border-cyan-500/40 hover:shadow-xl hover:shadow-cyan-500/10 card-3d">
+              <div className="group relative overflow-hidden rounded-3xl surface-card p-8 backdrop-blur-sm transition-all hover:border-cyan-500/40 hover:shadow-xl hover:shadow-cyan-500/10 card-3d">
 
                 <div className="flex flex-col md:flex-row items-center gap-8">
 
@@ -1492,241 +1107,8 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
 
 
-      {/* ─── SERVICES ───────────────────────────────────────────────────── */}
-
-      <section className="border-t border-slate-800/40 py-16 md:py-20 px-4 sm:px-6 lg:px-8 parallax-section">
-
-        <div className="mx-auto max-w-7xl space-y-12">
-
-          <SectionHeader
-
-            badgeLabel="Our Services"
-
-            badgeColor="cyan"
-
-            title={
-
-              <>
-
-                Whatever you need,{" "}
-
-                <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
-
-                  we'll build it
-
-                </span>
-
-              </>
-
-            }
-
-            subtitle="Web applications, AI automation, AI systems, and app development—every solution we ship is AI‑native, production‑ready, and built to scale."
-
-            centered
-
-          />
-
-
-
-          {/* Filter Bar */}
-
-          <ScrollReveal animation="fade-up" threshold={0.1}>
-
-            <div className="flex flex-wrap justify-center gap-2 mb-8">
-
-              <button
-
-                onClick={() => setSelectedServiceFilter("all")}
-
-                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
-
-                  selectedServiceFilter === "all"
-
-                    ? "bg-gradient-to-r from-cyan-500 to-indigo-500 text-white shadow-lg shadow-cyan-500/25"
-
-                    : "bg-slate-800/50 text-slate-400 border border-slate-700/60 hover:border-cyan-500/40 hover:text-cyan-400"
-
-                }`}
-
-              >
-
-                All
-
-              </button>
-
-              <button
-
-                onClick={() => setSelectedServiceFilter("AI & Automation")}
-
-                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
-
-                  selectedServiceFilter === "AI & Automation"
-
-                    ? "bg-gradient-to-r from-cyan-500 to-indigo-500 text-white shadow-lg shadow-cyan-500/25"
-
-                    : "bg-slate-800/50 text-slate-400 border border-slate-700/60 hover:border-cyan-500/40 hover:text-cyan-400"
-
-                }`}
-
-              >
-
-                AI & Automation
-
-              </button>
-
-              <button
-
-                onClick={() => setSelectedServiceFilter("Software Development")}
-
-                className={`px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider transition-all ${
-
-                  selectedServiceFilter === "Software Development"
-
-                    ? "bg-gradient-to-r from-cyan-500 to-indigo-500 text-white shadow-lg shadow-cyan-500/25"
-
-                    : "bg-slate-800/50 text-slate-400 border border-slate-700/60 hover:border-cyan-500/40 hover:text-cyan-400"
-
-                }`}
-
-              >
-
-                Software Development
-
-              </button>
-
-            </div>
-
-          </ScrollReveal>
-
-
-
-          {/* Unified Grid */}
-
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-
-            {AGENCY_SERVICES.filter(
-
-              serv => selectedServiceFilter === "all" || serv.category === selectedServiceFilter
-
-            ).map((serv, i) => {
-
-              const isAI = serv.category === "AI & Automation";
-
-              
-
-              return (
-
-                <div key={serv.id}>
-
-                  <ScrollReveal animation="fade-up" staggerIndex={i} threshold={0.1}>
-
-                    <button
-
-                      onClick={() => setActiveView("services")}
-
-                      className={`group magnetic-btn relative flex h-full w-full flex-col justify-between rounded-3xl border border-slate-800/70 bg-slate-900/40 p-6 text-left backdrop-blur-sm transition-all hover:bg-slate-800/40 hover:shadow-xl hover:-translate-y-1 card-3d ${
-
-                        isAI 
-
-                          ? 'hover:border-cyan-500/40 hover:shadow-cyan-500/10' 
-
-                          : 'hover:border-indigo-500/40 hover:shadow-indigo-500/10'
-
-                      }`}
-
-                      style={{ minHeight: "320px" }}
-
-                    >
-
-                      <div className={`absolute top-0 right-0 h-32 w-32 bg-gradient-to-br rounded-full blur-3xl group-hover:blur-2xl transition-all ${
-
-                        isAI ? 'from-cyan-500/10 to-transparent' : 'from-indigo-500/10 to-transparent'
-
-                      }`} />
-
-                      
-
-                      <div className="relative space-y-4">
-
-                        <div className="flex items-start justify-between">
-
-                          <div className={`inline-flex rounded-2xl p-4 transition-colors group-hover:scale-110 ${
-
-                            isAI 
-
-                              ? 'bg-gradient-to-br from-cyan-500/10 to-cyan-500/5 group-hover:from-cyan-500/20 group-hover:to-cyan-500/10' 
-
-                              : 'bg-gradient-to-br from-indigo-500/10 to-indigo-500/5 group-hover:from-indigo-500/20 group-hover:to-indigo-500/10'
-
-                          }`}>
-
-                            {serviceIcons[serv.id]}
-
-                          </div>
-
-                          <span className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${
-
-                            isAI 
-
-                              ? 'border-cyan-500/30 bg-cyan-500/10 text-cyan-400' 
-
-                              : 'border-indigo-500/30 bg-indigo-500/10 text-indigo-400'
-
-                          }`}>
-
-                            {serv.category}
-
-                          </span>
-
-                        </div>
-
-                        
-
-                        <h3 className={`text-lg font-bold text-slate-100 transition-colors ${
-
-                          isAI ? 'group-hover:text-cyan-400' : 'group-hover:text-indigo-400'
-
-                        }`}>
-
-                          {serv.title}
-
-                        </h3>
-
-                        <p className="line-clamp-3 text-sm leading-relaxed text-slate-400 group-hover:text-slate-300 transition-colors">
-
-                          {serv.description}
-
-                        </p>
-
-                      </div>
-
-                      
-
-                      <div className={`relative mt-auto pt-4 flex items-center gap-1 text-xs font-semibold text-slate-500 transition-colors ${
-
-                        isAI ? 'group-hover:text-cyan-400' : 'group-hover:text-indigo-400'
-
-                      }`}>
-
-                        Explore <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
-
-                      </div>
-
-                    </button>
-
-                  </ScrollReveal>
-
-                </div>
-
-              );
-
-            })}
-
-          </div>
-
-        </div>
-
-      </section>
+      {/* ─── SCENE 2 — SYSTEMS ──────────────────────────────────────────── */}
+      <SystemsScene setActiveView={setActiveView} />
 
 
 
@@ -1784,7 +1166,7 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
                   <article
 
-                    className="group magnetic-btn relative flex h-full flex-col overflow-hidden rounded-3xl border border-slate-800/70 bg-slate-900/40 backdrop-blur-sm transition-all hover:border-cyan-500/40 hover:bg-slate-800/40 hover:shadow-xl hover:shadow-cyan-500/10 hover:-translate-y-1 card-3d"
+                    className="group magnetic-btn relative flex h-full flex-col overflow-hidden rounded-3xl surface-card backdrop-blur-sm transition-all hover:border-cyan-500/40 hover:bg-slate-800/40 hover:shadow-xl hover:shadow-cyan-500/10 hover:-translate-y-1 card-3d"
 
                     onClick={() => setActiveView("portfolio")}
 
@@ -1940,66 +1322,8 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
 
         <div className="mx-auto max-w-7xl space-y-16">
 
-          <SectionHeader
-
-            badgeLabel="Why Promptly"
-
-            badgeColor="cyan"
-
-            title="Built differently. Built better."
-
-            subtitle="We combine deep technical expertise with a product‑first mindset to deliver solutions that outperform expectations."
-
-            centered
-
-          />
-
-
-
-          <div className="grid gap-8 md:grid-cols-3">
-
-            {PROCESS_STEPS.map((step, i) => (
-
-              <div key={step.id}>
-
-                <ScrollReveal animation="fade-up" staggerIndex={i}>
-
-                  <div className={`group relative rounded-3xl border p-8 text-center transition-all hover:-translate-y-1 hover:shadow-xl
-                    ${step.accent === 'cyan'   ? 'border-cyan-500/20   bg-gradient-to-b from-cyan-950/30   to-slate-900/30 hover:border-cyan-500/40   hover:shadow-cyan-500/10'   : ''}
-                    ${step.accent === 'indigo' ? 'border-indigo-500/20 bg-gradient-to-b from-indigo-950/30 to-slate-900/30 hover:border-indigo-500/40 hover:shadow-indigo-500/10' : ''}
-                    ${step.accent === 'violet' ? 'border-violet-500/20 bg-gradient-to-b from-violet-950/30 to-slate-900/30 hover:border-violet-500/40 hover:shadow-violet-500/10' : ''}
-                  `}>
-
-                    {/* Icon box */}
-                    <div className={`mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl
-                      ${step.accent === 'cyan'   ? 'bg-cyan-500/15   text-cyan-400'   : ''}
-                      ${step.accent === 'indigo' ? 'bg-indigo-500/15 text-indigo-400' : ''}
-                      ${step.accent === 'violet' ? 'bg-violet-500/15 text-violet-400' : ''}
-                    `}>
-                      <step.icon className="h-8 w-8" strokeWidth={1.6} />
-                    </div>
-
-                    <div className={`mb-3 inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-semibold
-                      ${step.accent === 'cyan'   ? 'bg-cyan-500/10   text-cyan-400'   : ''}
-                      ${step.accent === 'indigo' ? 'bg-indigo-500/10 text-indigo-400' : ''}
-                      ${step.accent === 'violet' ? 'bg-violet-500/10 text-violet-400' : ''}
-                    `}>
-                      <span className="font-mono">0{i + 1}</span>
-                    </div>
-
-                    <h3 className="text-xl font-bold text-white">{step.title}</h3>
-
-                    <p className="mt-3 text-sm leading-relaxed text-slate-400">{step.description}</p>
-
-                  </div>
-
-                </ScrollReveal>
-
-              </div>
-
-            ))}
-
-          </div>
+          {/* ─── SCENE 3 — WORKFLOW ─────────────────────────────────────── */}
+          <WorkflowScene />
 
 
 
@@ -2062,6 +1386,9 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
         </div>
 
       </section>
+
+      {/* ─── SCENE 4 — BUILT FOR YOUR WORLD ──────────────────────────── */}
+      <AudienceScene setActiveView={setActiveView} />
 
 
 
@@ -2195,6 +1522,9 @@ export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeView
         </div>
 
       </section>
+
+      {/* ─── SCENE 5 — CTA CLOSE ─────────────────────────────────────── */}
+      <CtaScene setActiveView={setActiveView} />
 
     </div>
 

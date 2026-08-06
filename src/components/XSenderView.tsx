@@ -2,6 +2,9 @@ import React from "react";
 import { ViewType } from "../types";
 import { MessageSquare, Zap, Shield, BarChart, ArrowRight, CheckCircle, Clock, Users, Smartphone } from "lucide-react";
 import ScrollReveal from "./ui/ScrollReveal";
+import RevealGroup from "./ui/RevealGroup";
+import PageAtmosphere from "./ui/PageAtmosphere";
+import { accentVars } from "../theme/tokens";
 
 interface XSenderViewProps {
   setActiveView: (view: ViewType) => void;
@@ -9,7 +12,8 @@ interface XSenderViewProps {
 
 export default function XSenderView({ setActiveView }: XSenderViewProps) {
   return (
-    <div className="min-h-screen bg-[#020617] text-white py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-transparent text-white py-16 px-4 sm:px-6 lg:px-8 relative" style={accentVars("product")}>
+      <PageAtmosphere module="product" />
       <div className="mx-auto max-w-7xl">
         {/* Hero Section */}
         <div className="text-center mb-16">
@@ -18,7 +22,8 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
               <MessageSquare className="h-3 w-3" />
               Flagship Product
             </div>
-            <h1 className="font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4">
+            <p className="script-tagline mb-3">WhatsApp, professionalised.</p>
+            <h1 className="display-heading font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4">
               xSender
             </h1>
             <p className="text-xl text-slate-400 max-w-2xl mx-auto">
@@ -29,13 +34,13 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
 
         {/* Key Features */}
         <ScrollReveal animation="fade-up" threshold={0.1} className="mb-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <RevealGroup className="grid grid-cols-1 md:grid-cols-3 gap-6" itemClassName="h-full">
             {[
               { icon: <Zap className="h-6 w-6" />, title: "Instant Order Processing", desc: "Automated order capture and processing via WhatsApp" },
               { icon: <Shield className="h-6 w-6" />, title: "Secure Payments", desc: "Integrated payment gateway with end-to-end encryption" },
               { icon: <BarChart className="h-6 w-6" />, title: "Real-time Analytics", desc: "Track orders, revenue, and customer insights in real-time" },
             ].map((feature, i) => (
-              <div key={feature.title} className="p-6 rounded-2xl border border-slate-800/70 bg-slate-900/40 hover:border-emerald-500/40 transition-all">
+              <div key={feature.title} className="p-6 rounded-2xl surface-card hover:border-emerald-500/40 transition-all">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-500/5">
                     <span className="text-emerald-400">{feature.icon}</span>
@@ -45,12 +50,12 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
                 <p className="text-sm text-slate-400">{feature.desc}</p>
               </div>
             ))}
-          </div>
+          </RevealGroup>
         </ScrollReveal>
 
         {/* Design Document Section */}
         <ScrollReveal animation="fade-up" threshold={0.1} className="mb-16">
-          <div className="rounded-3xl border border-slate-800/70 bg-slate-900/40 p-8">
+          <div className="rounded-3xl surface-card p-8">
             <h2 className="text-2xl font-bold text-white mb-6">Design Document</h2>
             
             <div className="space-y-6">
@@ -73,7 +78,7 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
               {/* Technical Architecture */}
               <div>
                 <h3 className="text-lg font-semibold text-emerald-400 mb-3">Technical Architecture</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <RevealGroup className="grid grid-cols-1 md:grid-cols-2 gap-4" itemClassName="h-full">
                   {[
                     "WhatsApp Business API Integration",
                     "Node.js Backend with Express",
@@ -87,7 +92,7 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
                       {tech}
                     </div>
                   ))}
-                </div>
+                </RevealGroup>
               </div>
 
               {/* User Flow */}
@@ -119,10 +124,10 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
 
         {/* Case Study Section */}
         <ScrollReveal animation="fade-up" threshold={0.1} className="mb-16">
-          <div className="rounded-3xl border border-slate-800/70 bg-slate-900/40 p-8">
+          <div className="rounded-3xl surface-card p-8">
             <h2 className="text-2xl font-bold text-white mb-6">Case Study: Fashion Retailer Implementation</h2>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <RevealGroup className="grid grid-cols-1 lg:grid-cols-2 gap-8" itemClassName="h-full">
               {/* Before */}
               <div>
                 <h3 className="text-lg font-semibold text-red-400 mb-4">Before xSender</h3>
@@ -160,10 +165,10 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
                   ))}
                 </ul>
               </div>
-            </div>
+            </RevealGroup>
 
             {/* Metrics */}
-            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+            <RevealGroup className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4" itemClassName="h-full">
               {[
                 { metric: "15x", label: "Faster Processing", icon: <Clock className="h-5 w-5" /> },
                 { metric: "95%", label: "Error Reduction", icon: <Shield className="h-5 w-5" /> },
@@ -176,7 +181,7 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
                   <p className="text-xs text-slate-400">{stat.label}</p>
                 </div>
               ))}
-            </div>
+            </RevealGroup>
           </div>
         </ScrollReveal>
 

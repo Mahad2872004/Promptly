@@ -2,6 +2,8 @@ import React from "react";
 import { ViewType } from "../types";
 import { Package, ArrowRight, Sparkles, Zap, Shield, BarChart } from "lucide-react";
 import ScrollReveal from "./ui/ScrollReveal";
+import PageAtmosphere from "./ui/PageAtmosphere";
+import { accentVars } from "../theme/tokens";
 
 interface ProductsViewProps {
   setActiveView: (view: ViewType) => void;
@@ -65,7 +67,8 @@ export default function ProductsView({ setActiveView }: ProductsViewProps) {
   };
 
   return (
-    <div className="min-h-screen bg-[#020617] text-white py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-transparent text-white py-16 px-4 sm:px-6 lg:px-8 relative" style={accentVars("product")}>
+      <PageAtmosphere module="product" />
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-16">
@@ -74,7 +77,8 @@ export default function ProductsView({ setActiveView }: ProductsViewProps) {
               <Package className="h-3 w-3" />
               Our Products
             </div>
-            <h1 className="font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4">
+            <p className="script-tagline mb-3">We build ours too.</p>
+            <h1 className="display-heading font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4">
               Built for{" "}
               <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
                 Business Growth
@@ -141,7 +145,7 @@ export default function ProductsView({ setActiveView }: ProductsViewProps) {
 
         {/* Development Roadmap */}
         <ScrollReveal animation="fade-up" threshold={0.1} className="mb-16">
-          <div className="rounded-3xl border border-slate-800/70 bg-slate-900/40 p-8">
+          <div className="rounded-3xl surface-card p-8">
             <h2 className="text-2xl font-bold text-white mb-6">Development Roadmap</h2>
             
             <div className="space-y-6">

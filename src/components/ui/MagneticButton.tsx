@@ -14,7 +14,7 @@ export default function MagneticButton({
   strength = 0.3,
   onClick 
 }: MagneticButtonProps) {
-  const { ref, position } = useMagnetic(strength);
+  const { ref, position } = useMagnetic<HTMLButtonElement>(strength);
 
   return (
     <button

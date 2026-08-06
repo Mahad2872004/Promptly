@@ -2,6 +2,8 @@ import React from "react";
 import { ViewType } from "../types";
 import { Code, Database, Globe, Smartphone, ArrowRight } from "lucide-react";
 import ScrollReveal from "./ui/ScrollReveal";
+import PageAtmosphere from "./ui/PageAtmosphere";
+import { accentVars } from "../theme/tokens";
 
 interface SoftwareDevelopmentViewProps {
   setActiveView: (view: ViewType) => void;
@@ -36,7 +38,8 @@ export default function SoftwareDevelopmentView({ setActiveView }: SoftwareDevel
   ];
 
   return (
-    <div className="min-h-screen bg-[#020617] text-white py-16 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-transparent text-white py-16 px-4 sm:px-6 lg:px-8 relative" style={accentVars("dev")}>
+      <PageAtmosphere module="dev" />
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-16">
@@ -44,7 +47,8 @@ export default function SoftwareDevelopmentView({ setActiveView }: SoftwareDevel
             <span className="text-xs font-semibold text-indigo-400 uppercase tracking-widest font-mono">
               Software Development
             </span>
-            <h1 className="font-sans text-4xl sm:text-5xl font-extrabold tracking-tight mt-4 mb-4">
+            <p className="script-tagline mb-3">Built to outlive the sprint.</p>
+            <h1 className="display-heading font-sans text-4xl sm:text-5xl font-extrabold tracking-tight mt-4 mb-4">
               Custom Software for{" "}
               <span className="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
                 Digital Excellence
@@ -61,7 +65,7 @@ export default function SoftwareDevelopmentView({ setActiveView }: SoftwareDevel
           {services.map((service, i) => (
             <div key={service.title}>
               <ScrollReveal animation="fade-up" staggerIndex={i} threshold={0.1}>
-                <div className="group relative p-6 rounded-2xl border border-slate-800/70 bg-slate-900/40 hover:border-indigo-500/40 transition-all hover:-translate-y-1">
+                <div className="group relative p-6 rounded-2xl surface-card hover:border-indigo-500/40 transition-all hover:-translate-y-1">
                   <div className="absolute top-0 right-0 h-32 w-32 bg-gradient-to-br from-indigo-500/10 to-transparent rounded-full blur-3xl group-hover:blur-2xl transition-all" />
                   
                   <div className="relative">

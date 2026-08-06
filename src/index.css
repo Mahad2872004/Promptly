@@ -1,71 +1,466 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Caveat:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
+/* Class-based dark mode. Tailwind v4 has no `darkMode` config key — the
+   variant is declared here instead. Media-only would defeat the toggle. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ═══════════════════════════════════════════════════════════════════════
+   THEME TOKENS
+   Every themed value routes through a CSS variable. Nothing below should
+   hardcode a colour that only works in one mode.
+   ═══════════════════════════════════════════════════════════════════════ */
+
 @theme {
-  --color-slate-950: #020617;
-  --color-brand-bg: #020617;
-  --color-brand-surface: #0f172a;
-  --color-brand-elevated: #1e293b;
-  --color-brand-cyan: #22d3ee;
-  --color-brand-indigo: #818cf8;
-  --color-brand-violet: #a78bfa;
-  --color-brand-border: rgba(51, 65, 85, 0.45);
-  --color-brand-border-hover: rgba(34, 211, 238, 0.35);
+  --color-brand-bg: var(--bg-base);
+  --color-brand-surface: var(--bg-panel);
+  --color-brand-elevated: var(--bg-elevated);
+  --color-brand-cyan: var(--mod-ai-core);
+  --color-brand-orange: var(--mod-product-core);
+  --color-brand-seam: var(--mod-dev-core);
+  --color-brand-border: var(--promptly-border);
+  --color-brand-border-hover: var(--promptly-border-active);
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-script: "Caveat", ui-serif, Georgia, cursive;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 }
 
 :root {
-  --promptly-bg: #020617;
-  --promptly-surface: rgba(15, 23, 42, 0.72);
-  --promptly-surface-hover: rgba(30, 41, 59, 0.65);
-  --promptly-border: rgba(51, 65, 85, 0.5);
-  --promptly-border-active: rgba(34, 211, 238, 0.4);
-  --promptly-cyan: #22d3ee;
-  --promptly-indigo: #818cf8;
-  --promptly-violet: #a78bfa;
-  --promptly-gradient: linear-gradient(135deg, #22d3ee 0%, #818cf8 55%, #a78bfa 100%);
+  /* ── Module accents ──────────────────────────────────────────────────
+     core/deep are identical in both themes — they drive glows, borders
+     and status dots, where only the surrounding context changes.
+     Mirrors src/theme/tokens.ts; keep the two in sync. */
+  --mod-ai-core: #2dd4bf;
+  --mod-ai-deep: #0e7490;
+  --mod-product-core: #fb923c;
+  --mod-product-deep: #ea580c;
+  --mod-dev-core: #155e75;
+  --mod-dev-deep: #0891b2;
+  --mod-startup-core: #334e68;
+  --mod-startup-deep: #475569;
+
+  /* ── LIGHT MODE (default) ───────────────────────────────────────── */
+  --bg-base: #f7f9fc;
+  --bg-panel: #ffffff;
+  --bg-elevated: #ffffff;
+
+  --text-heading: #0a0e17; /* 18.30:1 on --bg-base */
+  --text-body: #334155; /*  9.82:1 */
+  --text-body-soft: #475569; /*  7.18:1 */
+  --text-micro: #64748b; /*  4.51:1 — clears AA with no headroom */
+
+  /* Module text pointers: swapped in .dark because #155e75 and #334e68
+     are unreadable on navy (2.66:1 and 2.23:1). */
+  --mod-ai-text: #0e7490; /* 5.08:1 */
+  --mod-product-text: #c2410c; /* 4.91:1 — #ea580c is only 3.37:1 */
+  --mod-dev-text: #155e75; /* 6.89:1 */
+  --mod-startup-text: #334e68; /* 8.19:1 */
+
+  /* Script tagline. #0891b2 is 3.49:1 — AA-Large only, so the
+     .script-tagline rule below enforces a ≥24px floor. */
+  --accent-script: #0891b2;
+
+  --promptly-border: rgba(15, 23, 42, 0.1);
+  --promptly-border-active: rgba(8, 145, 178, 0.45);
+  --promptly-surface: rgba(255, 255, 255, 0.7);
+  --promptly-surface-hover: rgba(255, 255, 255, 0.92);
+
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --card-shadow: 0 8px 30px rgba(15, 23, 42, 0.08);
+  --card-shadow-hover: 0 16px 44px rgba(15, 23, 42, 0.12);
+  --card-border-opacity: 0.3;
+  --card-border-width: 1.5px;
+
+  /* Orbs: "coloured light through frosted glass", not glowing spheres. */
+  --orb-core-opacity: 0.15;
+  --orb-halo-opacity: 0.12;
+  --orb-core-center: #2dd4bf;
+  --orb-halo: #fb923c;
+
+  /* Particle drift layer */
+  --particle-color: 15, 23, 42;
+  --particle-alpha: 0.06;
+  --particle-alt: 8, 145, 178;
+
+  --header-bg: rgba(255, 255, 255, 0.78);
+  --header-bg-scrolled: rgba(255, 255, 255, 0.94);
+  --header-shadow: 0 8px 32px -12px rgba(15, 23, 42, 0.14);
+
+  --promptly-gradient: linear-gradient(135deg, #0891b2 0%, #14b8a6 45%, #ea580c 100%);
   --promptly-gradient-subtle: linear-gradient(
     135deg,
-    rgba(34, 211, 238, 0.15) 0%,
-    rgba(129, 140, 248, 0.12) 55%,
-    rgba(167, 139, 250, 0.08) 100%
+    rgba(45, 212, 191, 0.14) 0%,
+    rgba(8, 145, 178, 0.1) 50%,
+    rgba(251, 146, 60, 0.12) 100%
   );
-  --promptly-glow: 0 0 24px rgba(34, 211, 238, 0.25);
-  --promptly-text: #f1f5f9;
-  --promptly-text-muted: #94a3b8;
+  --promptly-glow: 0 4px 18px rgba(8, 145, 178, 0.18);
+
+  /* Legacy aliases — a lot of existing JSX still reads these. */
+  --promptly-bg: var(--bg-base);
+  --promptly-text: var(--text-heading);
+  --promptly-text-muted: var(--text-micro);
+  --promptly-cyan: var(--mod-ai-text);
+  --promptly-indigo: var(--mod-dev-text);
+  --promptly-violet: var(--mod-startup-text);
+}
+
+.dark {
+  /* ── DARK MODE ──────────────────────────────────────────────────── */
+  --bg-base: #0a0e17; /* the logo's own navy */
+  --bg-panel: #0f1523;
+  --bg-elevated: #161d2e;
+
+  --text-heading: #ffffff; /* 19.30:1 on --bg-base */
+  --text-body: #c3cedd; /* 11.4:1  */
+  --text-body-soft: #a3b1c4; /*  8.6:1  */
+  --text-micro: #8aa6c0; /*  7.62:1 */
+
+  --mod-ai-text: #2dd4bf; /* 10.37:1 */
+  --mod-product-text: #fb923c; /*  8.53:1 */
+  --mod-dev-text: #4bb8d6; /*  8.39:1 — #155e75 would be 2.66:1 */
+  --mod-startup-text: #8aa6c0; /*  7.62:1 — #334e68 would be 2.23:1 */
+
+  --accent-script: #2dd4bf; /* 10.37:1 */
+
+  --promptly-border: rgba(148, 163, 184, 0.14);
+  --promptly-border-active: rgba(45, 212, 191, 0.4);
+  --promptly-surface: rgba(255, 255, 255, 0.03);
+  --promptly-surface-hover: rgba(255, 255, 255, 0.06);
+
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-shadow: none;
+  --card-shadow-hover: none;
+  --card-border-opacity: 0.22;
+  --card-border-width: 1px;
+
+  --orb-core-opacity: 0.55;
+  --orb-halo-opacity: 0.3;
+  --orb-core-center: #e8fffb;
+  --orb-halo: #fb923c;
+
+  --particle-color: 255, 255, 255;
+  --particle-alpha: 0.55;
+  --particle-alt: 251, 191, 96;
+
+  --header-bg: rgba(10, 14, 23, 0.78);
+  --header-bg-scrolled: rgba(10, 14, 23, 0.94);
+  --header-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.6);
+
+  --promptly-gradient: linear-gradient(135deg, #2dd4bf 0%, #0891b2 50%, #fb923c 100%);
+  --promptly-gradient-subtle: linear-gradient(
+    135deg,
+    rgba(45, 212, 191, 0.16) 0%,
+    rgba(8, 145, 178, 0.12) 50%,
+    rgba(251, 146, 60, 0.1) 100%
+  );
+  --promptly-glow: 0 0 24px rgba(45, 212, 191, 0.28);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PALETTE REMAP
+   The site predates this theme system: ~8,300 lines of JSX hardcode
+   `text-slate-400`, `text-white`, `text-cyan-400` etc. Tailwind v4 compiles
+   those to `var(--color-*)`, so overriding the scales themselves themes the
+   entire site without touching the markup.
+
+   Two remaps happen here:
+   1. Hue — cyan/emerald/indigo/violet are re-pointed at the four logo-derived
+      module families, so no off-brand hue survives.
+   2. Value — in light mode the slate ramp is inverted, so a component written
+      as `bg-slate-900 text-white` reads as white-on-near-black in dark and
+      near-black-on-white in light, with no per-component edits.
+
+   `:root:not(.dark)` outranks the `:root` Tailwind emits, and does not match
+   under `.dark`, so dark mode simply keeps Tailwind's defaults.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Hue remap — applies in BOTH themes.
+     Covers EVERY decorative shade the codebase actually uses. `red` is the one
+     deliberate exception: it stays red because it carries meaning (form errors,
+     the "Before xSender" negative list), not decoration. */
+
+  /* ── cyan / teal / sky → AI-Powered Solutions (flagship) ── */
+  --color-cyan-300: #5eead4;
+  --color-cyan-400: #2dd4bf;
+  --color-cyan-500: #14b8a6;
+  --color-cyan-600: #0d9488;
+  --color-cyan-900: #134e4a;
+  --color-cyan-950: #0a2e2c;
+  --color-teal-300: #5eead4;
+  --color-teal-400: #2dd4bf;
+  --color-teal-500: #14b8a6;
+  --color-sky-300: #7dd3fc;
+  --color-sky-400: #22d3ee;
+
+  /* ── emerald / green / pink / rose / orange / amber / yellow
+        → Digital Transformation + xSender (orange) ──
+     pink and rose were the last genuinely off-brand hues on the site
+     (E-commerce used pink as its accent). */
+  --color-emerald-300: #fdba74;
+  --color-emerald-400: #fb923c;
+  --color-emerald-500: #f97316;
+  --color-emerald-600: #ea580c;
+  --color-emerald-700: #c2410c;
+  --color-emerald-800: #9a3412;
+  --color-emerald-900: #7c2d12;
+  --color-emerald-950: #431407;
+  --color-green-400: #fb923c;
+  --color-green-500: #f97316;
+  --color-pink-400: #fb923c;
+  --color-pink-500: #f97316;
+  --color-rose-400: #fb923c;
+  --color-rose-500: #f97316;
+  --color-orange-200: #fed7aa;
+  --color-orange-400: #fb923c;
+  --color-orange-500: #f97316;
+  --color-orange-600: #ea580c;
+  --color-orange-700: #c2410c;
+  --color-orange-900: #7c2d12;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-yellow-400: #fbbf24;
+
+  /* ── indigo / blue → Software Development (the seam) ── */
+  --color-indigo-300: #7dd3fc;
+  --color-indigo-400: #4bb8d6;
+  --color-indigo-500: #0891b2;
+  --color-indigo-600: #155e75;
+  --color-indigo-950: #082f3d;
+  --color-blue-300: #7dd3fc;
+  --color-blue-400: #4bb8d6;
+  --color-blue-500: #0891b2;
+
+  /* ── violet / purple → Startup Support (muted violet-teal, not purple) ── */
+  --color-violet-300: #b6c6d8;
+  --color-violet-400: #8aa6c0;
+  --color-violet-500: #5b7fa3;
+  --color-violet-600: #334e68;
+  --color-violet-950: #16212e;
+  --color-purple-300: #b6c6d8;
+  --color-purple-400: #8aa6c0;
+  --color-purple-500: #5b7fa3;
+}
+
+:root:not(.dark) {
+  /* Value inversion — light mode only. */
+  --color-white: #0a0e17; /* `text-white` headings → near-black */
+  --color-slate-50: #0a0e17;
+  --color-slate-100: #131c2e;
+  --color-slate-200: #1e293b;
+  --color-slate-300: #334155; /* body copy */
+  --color-slate-400: #475569; /* muted body copy */
+  --color-slate-500: #64748b; /* micro-copy — identical in both themes */
+  --color-slate-600: #94a3b8;
+  --color-slate-700: #cbd5e1; /* borders */
+  --color-slate-800: #e2e8f0;
+  --color-slate-900: #ffffff; /* panels */
+  --color-slate-950: #f7f9fc; /* page */
+
+  /* Accents need darker shades on white than they do on navy — inverting
+     the dark-mode values here would drop them below AA. */
+  --color-cyan-400: #0e7490; /* 5.08:1 vs 1.76:1 for #2dd4bf */
+  --color-cyan-300: #0891b2;
+  --color-teal-400: #0e7490;
+  --color-teal-300: #0891b2;
+  --color-sky-400: #0891b2;
+  --color-sky-300: #0891b2;
+
+  --color-emerald-400: #c2410c; /* 4.91:1 vs 2.15:1 for #fb923c */
+  --color-emerald-300: #ea580c;
+  --color-green-400: #c2410c;
+  --color-pink-400: #c2410c;
+  --color-pink-500: #ea580c;
+  --color-rose-400: #c2410c;
+  --color-rose-500: #ea580c;
+  --color-orange-400: #c2410c;
+  --color-amber-400: #b45309;
+  --color-yellow-400: #b45309;
+
+  --color-indigo-400: #155e75; /* 6.89:1 vs 2.25:1 for #4bb8d6 */
+  --color-indigo-300: #0891b2;
+  --color-blue-400: #155e75;
+  --color-blue-300: #0891b2;
+
+  --color-violet-400: #334e68; /* 8.19:1 vs 2.40:1 for #8aa6c0 */
+  --color-violet-300: #475569;
+  --color-purple-400: #334e68;
+  --color-purple-300: #475569;
+
+  /* Deep shades are used as dark gradient washes (`from-cyan-950/30`) and as
+     borders. On a white page they have to become pale tints of the same
+     family, or the panel reads as a dark bruise. */
+  --color-cyan-950: #ecfeff;
+  --color-cyan-900: #cffafe;
+  --color-emerald-950: #fff7ed;
+  --color-emerald-900: #ffedd5;
+  --color-emerald-800: #fdba74;
+  --color-emerald-700: #fb923c;
+  --color-orange-900: #ffedd5;
+  --color-orange-200: #7c2d12; /* only used as text on an orange chip */
+  --color-indigo-950: #ecfeff;
+  --color-violet-950: #f1f5f9;
+
+  /* Semantic red — kept as red, but darkened to clear AA on white. */
+  --color-red-400: #b91c1c; /* 6.24:1 on #f7f9fc */
+  --color-red-500: #b91c1c;
+  --color-red-600: #991b1b;
+  --color-red-900: #fecaca;
+  --color-red-950: #fef2f2;
+}
+
+/* Theme cross-fade. Scoped to colour properties on purpose — a blanket
+   `transition: all` would make every hover on the site feel sluggish. */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition-property: background-color, border-color, color, fill, stroke,
+    box-shadow, opacity;
+  transition-duration: 300ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @layer utilities {
   .elegant-blur-nav {
-    background-color: rgba(2, 6, 23, 0.72);
+    background-color: var(--header-bg);
     backdrop-filter: blur(16px);
-    border-color: rgba(51, 65, 85, 0.3);
+    border-color: var(--promptly-border);
   }
 
   .glass-panel {
-    background: rgba(15, 23, 42, 0.45);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(148, 163, 184, 0.12);
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--promptly-border);
+    box-shadow: var(--card-shadow);
   }
 
   .glass-panel-strong {
-    background: rgba(15, 23, 42, 0.65);
+    background: var(--promptly-surface-hover);
     backdrop-filter: blur(24px);
-    border: 1px solid rgba(148, 163, 184, 0.15);
+    border: 1px solid var(--promptly-border);
+    box-shadow: var(--card-shadow);
   }
 
   .text-gradient-hero {
     color: transparent;
     background-clip: text;
-    background-image: linear-gradient(135deg, #22d3ee 0%, #818cf8 50%, #a78bfa 100%);
+    background-image: var(--promptly-gradient);
   }
 
   .text-gradient-cyan-indigo {
     color: transparent;
     background-clip: text;
-    background-image: linear-gradient(to right, #22d3ee, #818cf8);
+    background-image: linear-gradient(
+      to right,
+      var(--mod-ai-text),
+      var(--mod-product-text)
+    );
   }
+
+  /* ── Typography roles ──────────────────────────────────────────── */
+
+  /* Short 3–6 word emotional taglines only — never body copy.
+     The size floor keeps the light-mode teal (3.49:1) inside AA-Large. */
+  .script-tagline {
+    font-family: var(--font-script);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 2.4vw, 2.25rem); /* ≥24px at every breakpoint */
+    line-height: 1.15;
+    color: var(--accent-script);
+  }
+
+  .eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--text-micro);
+  }
+
+  .display-heading {
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--text-heading);
+    line-height: 1.05;
+  }
+
+  .text-heading {
+    color: var(--text-heading);
+  }
+  .text-body {
+    color: var(--text-body);
+  }
+  .text-brand-muted {
+    color: var(--text-micro);
+  }
+
+  /* ── Cards & panels ───────────────────────────────────────────── */
+
+  .surface-card {
+    background: var(--card-bg);
+    border: 1px solid var(--promptly-border);
+    backdrop-filter: blur(16px);
+    box-shadow: var(--card-shadow);
+  }
+
+  .surface-card:hover {
+    border-color: var(--promptly-border-active);
+    box-shadow: var(--card-shadow-hover);
+  }
+
+  /*
+   * Accent-aware glass card. Scope with `style={accentVars(moduleId)}` so the
+   * border and hover glow pick up the module colour automatically.
+   * Light: drop shadow + 1.5px border at 30%. Dark: 1px border + outer glow.
+   */
+  .module-card {
+    position: relative;
+    background: var(--card-bg);
+    backdrop-filter: blur(16px);
+    border: var(--card-border-width) solid
+      color-mix(
+        in srgb,
+        var(--accent-core, var(--mod-ai-core)) calc(var(--card-border-opacity) * 100%),
+        transparent
+      );
+    box-shadow: var(--card-shadow);
+    transition: border-color 0.35s ease, box-shadow 0.35s ease,
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .module-card:hover,
+  .module-card:focus-visible {
+    border-color: var(--accent-core, var(--mod-ai-core));
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover),
+      0 0 0 1px
+        color-mix(in srgb, var(--accent-core, var(--mod-ai-core)) 22%, transparent),
+      0 12px 42px -10px
+        color-mix(in srgb, var(--accent-core, var(--mod-ai-core)) 45%, transparent);
+  }
+
+  .dark .module-card:hover,
+  .dark .module-card:focus-visible {
+    box-shadow: 0 0 34px -4px
+        color-mix(in srgb, var(--accent-core, var(--mod-ai-core)) 40%, transparent),
+      0 0 0 1px
+        color-mix(in srgb, var(--accent-core, var(--mod-ai-core)) 35%, transparent);
+  }
+
+  .accent-text {
+    color: var(--accent-text-light, var(--mod-ai-text));
+  }
+  .dark .accent-text {
+    color: var(--accent-text-dark, var(--mod-ai-text));
+  }
+
+  .accent-dot {
+    background: var(--accent-core, var(--mod-ai-core));
+    box-shadow: 0 0 10px -1px var(--accent-core, var(--mod-ai-core));
+  }
+
+  /* ── Buttons ──────────────────────────────────────────────────── */
 
   .btn-glow {
     position: relative;
@@ -78,7 +473,7 @@
     position: absolute;
     inset: -2px;
     border-radius: inherit;
-    background: linear-gradient(135deg, rgba(34, 211, 238, 0.5), rgba(129, 140, 248, 0.5));
+    background: var(--promptly-gradient);
     opacity: 0;
     transition: opacity 0.35s ease;
     z-index: -1;
@@ -86,52 +481,25 @@
   }
 
   .btn-glow:hover::before {
-    opacity: 1;
+    opacity: 0.55;
   }
 
   .btn-glow:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 40px -8px rgba(34, 211, 238, 0.35);
-  }
-
-  .card-lift {
-    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 0.35s ease,
-      border-color 0.35s ease;
-  }
-
-  .card-lift:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.5),
-      0 0 0 1px rgba(34, 211, 238, 0.15);
-  }
-
-  .content-width {
-    max-width: 65ch;
-  }
-
-  .section-pad {
-    @apply py-24 md:py-28 px-4 sm:px-6 lg:px-8;
-  }
-
-  /* ── Shared brand surfaces (all pages) ── */
-  .surface-card {
-    background: var(--promptly-surface);
-    border: 1px solid var(--promptly-border);
-    backdrop-filter: blur(16px);
-  }
-
-  .surface-card:hover {
-    border-color: var(--promptly-border-active);
+    box-shadow: var(--card-shadow-hover);
   }
 
   .btn-primary {
     position: relative;
     overflow: hidden;
     background: var(--promptly-gradient);
-    color: #020617;
+    color: #ffffff; /* literal: always sits on the saturated gradient */
     font-weight: 700;
     transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+  }
+
+  .dark .btn-primary {
+    color: #06131a; /* the dark gradient is bright enough to need dark ink */
   }
 
   .btn-primary::after {
@@ -145,8 +513,9 @@
 
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 32px -6px rgba(34, 211, 238, 0.45);
-    filter: brightness(1.08);
+    box-shadow: 0 12px 32px -6px
+      color-mix(in srgb, var(--mod-ai-core) 55%, transparent);
+    filter: brightness(1.06);
   }
 
   .btn-primary:hover::after {
@@ -156,7 +525,7 @@
   .btn-secondary {
     border: 1px solid var(--promptly-border);
     background: var(--promptly-surface);
-    color: var(--promptly-text);
+    color: var(--text-heading);
     backdrop-filter: blur(12px);
     transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease,
       transform 0.25s ease;
@@ -168,80 +537,129 @@
     transform: translateY(-1px);
   }
 
-  .text-brand-muted {
-    color: var(--promptly-text-muted);
-  }
-
   .border-brand {
     border-color: var(--promptly-border);
   }
 
-  /* ── Header ── */
+  .content-width {
+    max-width: 65ch;
+  }
+
+  .section-pad {
+    @apply py-24 md:py-28 px-4 sm:px-6 lg:px-8;
+  }
+
+  /* ── Header ───────────────────────────────────────────────────── */
+
   .site-header {
-    background: rgba(2, 6, 23, 0.78);
+    background: var(--header-bg);
     backdrop-filter: blur(20px) saturate(1.2);
     border-bottom: 1px solid var(--promptly-border);
-    transition: box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+    transition: box-shadow 0.35s ease, border-color 0.35s ease,
+      background 0.35s ease;
   }
 
   .site-header.is-scrolled {
-    background: rgba(2, 6, 23, 0.92);
+    background: var(--header-bg-scrolled);
     border-bottom-color: var(--promptly-border-active);
-    box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(34, 211, 238, 0.06);
+    box-shadow: var(--header-shadow);
   }
 
   .nav-pill-track {
-    background: rgba(15, 23, 42, 0.55);
+    background: var(--promptly-surface);
     border: 1px solid var(--promptly-border);
     backdrop-filter: blur(12px);
   }
 
   .nav-link {
     position: relative;
-    color: var(--promptly-text-muted);
+    color: var(--text-body-soft);
     transition: color 0.25s ease, background 0.25s ease;
   }
 
   .nav-link:hover {
-    color: var(--promptly-text);
-    background: rgba(30, 41, 59, 0.5);
+    color: var(--text-heading);
+    background: var(--promptly-surface-hover);
   }
 
   .nav-link.is-active {
-    color: var(--promptly-text);
+    color: var(--text-heading);
     background: var(--promptly-gradient-subtle);
     border: 1px solid var(--promptly-border-active);
     box-shadow: var(--promptly-glow);
   }
 
+  /* ── Nav dropdown items ────────────────────────────────────────── */
+
+  .nav-dropdown-item {
+    display: block;
+    width: 100%;
+    border-radius: 0.75rem;
+    padding: 0.625rem 0.75rem;
+    text-align: left;
+    transition: background-color 0.2s ease;
+  }
+
+  .nav-dropdown-item:hover,
+  .nav-dropdown-item:focus-visible {
+    background: var(--promptly-surface-hover);
+    outline: none;
+  }
+
+  .nav-dropdown-item.is-active {
+    background: var(--promptly-gradient-subtle);
+  }
+
+  .nav-dropdown-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-heading);
+    transition: color 0.2s ease;
+  }
+
+  .nav-dropdown-item:hover .nav-dropdown-label,
+  .nav-dropdown-item:focus-visible .nav-dropdown-label,
+  .nav-dropdown-item.is-active .nav-dropdown-label {
+    color: var(--mod-ai-text);
+  }
+
+  .nav-dropdown-arrow {
+    color: var(--text-micro);
+    opacity: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .nav-dropdown-item:hover .nav-dropdown-arrow,
+  .nav-dropdown-item:focus-visible .nav-dropdown-arrow {
+    opacity: 1;
+    transform: translate(2px, -2px);
+  }
+
   .nav-link-special {
-    color: var(--promptly-cyan);
+    color: var(--mod-ai-text);
   }
 
   .nav-link-special:hover {
-    color: #67e8f9;
-    background: rgba(34, 211, 238, 0.08);
-    border: 1px solid rgba(34, 211, 238, 0.25);
+    color: var(--mod-ai-text);
+    background: color-mix(in srgb, var(--mod-ai-core) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--mod-ai-core) 28%, transparent);
   }
 
   .nav-link-special.is-active {
-    background: linear-gradient(
-      135deg,
-      rgba(34, 211, 238, 0.18) 0%,
-      rgba(129, 140, 248, 0.12) 100%
-    );
-    border: 1px solid rgba(34, 211, 238, 0.45);
-    color: #a5f3fc;
-    box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
+    background: var(--promptly-gradient-subtle);
+    border: 1px solid var(--promptly-border-active);
+    color: var(--mod-ai-text);
+    box-shadow: var(--promptly-glow);
   }
 
-  /* ── Footer ── */
+  /* ── Footer ───────────────────────────────────────────────────── */
+
   .site-footer {
     background: linear-gradient(
       180deg,
-      rgba(2, 6, 23, 0.6) 0%,
-      rgba(2, 6, 23, 0.98) 24%,
-      #020617 100%
+      color-mix(in srgb, var(--bg-base) 60%, transparent) 0%,
+      var(--bg-base) 24%,
+      var(--bg-base) 100%
     );
     border-top: 1px solid var(--promptly-border);
   }
@@ -250,54 +668,54 @@
     background: var(--promptly-gradient-subtle);
     border: 1px solid var(--promptly-border-active);
     backdrop-filter: blur(20px);
-    box-shadow: 0 0 40px -12px rgba(34, 211, 238, 0.15);
+    box-shadow: var(--card-shadow);
   }
 
   .footer-link {
-    color: var(--promptly-text-muted);
+    color: var(--text-body-soft);
     transition: color 0.2s ease, transform 0.2s ease;
   }
 
   .footer-link:hover {
-    color: var(--promptly-cyan);
+    color: var(--mod-ai-text);
     transform: translateX(3px);
   }
 
   .footer-heading {
-    color: var(--promptly-text);
+    color: var(--text-heading);
     letter-spacing: 0.12em;
   }
 
   .footer-social {
     border: 1px solid var(--promptly-border);
     background: var(--promptly-surface);
-    color: var(--promptly-text-muted);
+    color: var(--text-body-soft);
     transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease,
       transform 0.25s ease;
   }
 
   .footer-social:hover {
     border-color: var(--promptly-border-active);
-    color: var(--promptly-cyan);
+    color: var(--mod-ai-text);
     box-shadow: var(--promptly-glow);
     transform: translateY(-2px);
   }
 
   .footer-input {
     border: 1px solid var(--promptly-border);
-    background: rgba(15, 23, 42, 0.8);
-    color: var(--promptly-text);
+    background: var(--bg-panel);
+    color: var(--text-heading);
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
   }
 
   .footer-input:focus {
     outline: none;
     border-color: var(--promptly-border-active);
-    box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.12);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--mod-ai-core) 18%, transparent);
   }
 
   .footer-input::placeholder {
-    color: #64748b;
+    color: var(--text-micro);
   }
 }
 
@@ -396,6 +814,23 @@
   100% { transform: translate(var(--mx, 0), var(--my, 0)); }
 }
 
+/* Scroll hint chevron */
+@keyframes scroll-hint {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50% { transform: translateY(7px); opacity: 1; }
+}
+
+/* Hero orb breathing */
+@keyframes orb-breathe {
+  0%, 100% { transform: scale(1) translate(0, 0); }
+  50% { transform: scale(1.06) translate(0, -12px); }
+}
+
+@keyframes orb-breathe-slow {
+  0%, 100% { transform: scale(1.04) translate(0, 0); }
+  50% { transform: scale(0.96) translate(10px, 10px); }
+}
+
 .animate-float {
   animation: float 5s ease-in-out infinite;
 }
@@ -412,7 +847,11 @@
   animation: marquee 32s linear infinite;
 }
 
-/* Ambient background orbs */
+.animate-scroll-hint {
+  animation: scroll-hint 2s ease-in-out infinite;
+}
+
+/* Ambient background orbs (legacy DOM layer, now token-driven) */
 .ambient-orb {
   position: absolute;
   border-radius: 50%;
@@ -425,7 +864,7 @@
   height: 480px;
   top: -10%;
   left: 10%;
-  background: rgba(34, 211, 238, 0.12);
+  background: color-mix(in srgb, var(--mod-ai-core) 14%, transparent);
 }
 
 .ambient-orb-2 {
@@ -433,7 +872,7 @@
   height: 400px;
   bottom: 10%;
   right: 5%;
-  background: rgba(99, 102, 241, 0.14);
+  background: color-mix(in srgb, var(--mod-product-core) 12%, transparent);
   animation-delay: -4s;
 }
 
@@ -442,32 +881,64 @@
   height: 320px;
   top: 40%;
   right: 30%;
-  background: rgba(167, 139, 250, 0.08);
+  background: color-mix(in srgb, var(--mod-dev-deep) 12%, transparent);
   animation-delay: -2s;
+}
+
+/* Pipeline travelling glow — a dot that runs the rail on a loop.
+   Transform-only so it stays on the compositor. */
+@keyframes pipeline-travel {
+  0% { transform: translateY(0) scale(0.6); opacity: 0; }
+  8% { opacity: 1; }
+  92% { opacity: 1; }
+  100% { transform: translateY(100%) scale(0.6); opacity: 0; }
+}
+
+.pipeline-pulse {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  height: 44px;
+  width: 3px;
+  margin-left: -1.5px;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--mod-ai-core) 40%,
+    #ffffff 55%,
+    var(--mod-product-core) 75%,
+    transparent
+  );
+  filter: blur(1px);
+  box-shadow: 0 0 14px 2px color-mix(in srgb, var(--mod-ai-core) 65%, transparent);
+  animation: pipeline-travel 3.6s cubic-bezier(0.5, 0, 0.5, 1) infinite;
 }
 
 /* Process step connector */
 .process-line {
   background: linear-gradient(
     180deg,
-    rgba(34, 211, 238, 0.5) 0%,
-    rgba(129, 140, 248, 0.5) 50%,
-    rgba(167, 139, 250, 0.5) 100%
+    var(--mod-ai-core) 0%,
+    var(--mod-dev-deep) 50%,
+    var(--mod-product-core) 100%
   );
+  opacity: 0.5;
 }
 
 ::selection {
-  background-color: rgba(34, 211, 238, 0.2);
-  color: #67e8f9;
+  background-color: color-mix(in srgb, var(--mod-ai-core) 25%, transparent);
+  color: var(--text-heading);
 }
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--bg-base);
 }
 
 body {
-  background-color: var(--promptly-bg);
-  color: var(--promptly-text);
+  background-color: var(--bg-base);
+  color: var(--text-body);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -497,16 +968,24 @@ body {
 }
 
 /* Enhanced card hover effects */
+.card-lift {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--card-shadow-hover);
+}
+
 .card-3d {
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.4s ease;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
   transform-style: preserve-3d;
 }
 
 .card-3d:hover {
   transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
-  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4),
-    0 0 0 1px rgba(34, 211, 238, 0.1);
+  box-shadow: var(--card-shadow-hover);
 }
 
 /* Stagger children animation */
@@ -527,7 +1006,50 @@ body {
   display: none;
 }
 .scrollbar-none {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════
+   REDUCED MOTION
+   Static background, no orb drift, no particle animation — in whichever
+   theme is active. Scroll-scene pinning is disabled in JS (SceneSection).
+   ═══════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .ambient-orb,
+  .animate-float,
+  .animate-float-slow,
+  .animate-marquee,
+  .animate-scroll-hint,
+  .stagger-children > * {
+    animation: none !important;
+  }
+
+  .reveal-base {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .card-lift:hover,
+  .card-3d:hover,
+  .module-card:hover,
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .btn-glow:hover {
+    transform: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
