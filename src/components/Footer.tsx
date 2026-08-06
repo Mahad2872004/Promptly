@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ViewType } from "../types";
 import Logo from "./Logo";
 import ScrollReveal from "./ui/ScrollReveal";
+import RevealGroup from "./ui/RevealGroup";
 import { useNavigate } from "react-router-dom";
 import { VIEW_PATHS } from "../routes";
 import {
@@ -103,7 +104,7 @@ export default function Footer({ setActiveView }: FooterProps) {
             <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
 
               {/* Brand */}
-              <div className="lg:col-span-4">
+              <ScrollReveal animation="fade-up" className="lg:col-span-4">
                 <button onClick={() => handleNav("home")}>
                   <Logo size={42} />
                 </button>
@@ -138,10 +139,10 @@ export default function Footer({ setActiveView }: FooterProps) {
                     Lahore, Pakistan
                   </p>
                 </div>
-              </div>
+              </ScrollReveal>
 
               {/* Navigation */}
-              <div className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-5">
+              <RevealGroup className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-5">
                 <div>
                   <h3 className="footer-heading text-xs font-bold uppercase">Solutions</h3>
                   <ul className="mt-4 space-y-2">
@@ -167,10 +168,10 @@ export default function Footer({ setActiveView }: FooterProps) {
                     ))}
                   </ul>
                 </div>
-              </div>
+              </RevealGroup>
 
               {/* Newsletter */}
-              <div className="lg:col-span-3">
+              <ScrollReveal animation="fade-up" delay={160} className="lg:col-span-3">
                 <div className="surface-card rounded-2xl p-5">
 
                   <h3 className="footer-heading text-xs font-bold uppercase">
@@ -202,7 +203,7 @@ export default function Footer({ setActiveView }: FooterProps) {
                   )}
 
                 </div>
-              </div>
+              </ScrollReveal>
 
             </div>
           </ScrollReveal>

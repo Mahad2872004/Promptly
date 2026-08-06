@@ -5,6 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Promptly — Premium Digital Agency</title>
     <meta name="description" content="Promptly engineers AI platforms, cloud-native SaaS, and bespoke digital products with premium craft and elite velocity." />
+    <meta name="theme-color" content="#f7f9fc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0e17" media="(prefers-color-scheme: dark)" />
+    <script>
+      // Applies the stored theme before first paint so a dark-mode user never
+      // sees a white flash. Light is the default when nothing is stored.
+      // Mirrors resolveInitialTheme() in src/theme/ThemeProvider.tsx.
+      (function () {
+        try {
+          var stored = localStorage.getItem('promptly-theme');
+          var theme =
+            stored === 'dark' || stored === 'light'
+              ? stored
+              : window.matchMedia('(prefers-color-scheme: dark)').matches
+              ? 'dark'
+              : 'light';
+          if (theme === 'dark') document.documentElement.classList.add('dark');
+          document.documentElement.style.colorScheme = theme;
+        } catch (e) {
+          /* storage blocked — fall through to the light default */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

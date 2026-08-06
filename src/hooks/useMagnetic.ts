@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 
-export function useMagnetic(strength: number = 0.3) {
-  const ref = useRef<HTMLDivElement>(null);
+/** Generic over the element type so callers aren't forced onto a div. */
+export function useMagnetic<T extends HTMLElement = HTMLDivElement>(
+  strength: number = 0.3
+) {
+  const ref = useRef<T>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {

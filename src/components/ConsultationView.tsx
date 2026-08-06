@@ -1,6 +1,9 @@
 import React from "react";
 import { ViewType } from "../types";
 import { Phone, MapPin, Zap, Target, Clock, Lock, CheckCircle, Calendar, ArrowRight } from "lucide-react";
+import RevealGroup from "./ui/RevealGroup";
+import PageAtmosphere from "./ui/PageAtmosphere";
+import { accentVars } from "../theme/tokens";
 
 interface ConsultationViewProps {
     setActiveView: (view: ViewType) => void;
@@ -10,18 +13,19 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
     const openCalendly = () => window.open("https://calendly.com/promptlypk/30min", "_blank");
 
     return (
-        <div className="relative text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="relative text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 overflow-hidden" style={accentVars("ai")}>
+      <PageAtmosphere module="ai" />
 
             {/* Background gradient blobs */}
             <div className="pointer-events-none absolute inset-0 -z-10">
-                <div className="absolute -top-32 -left-32 h-[520px] w-[520px] rounded-full opacity-20 blur-3xl" style={{ background: "radial-gradient(circle, #22d3ee 0%, transparent 70%)" }} />
-                <div className="absolute top-1/3 left-1/2 -translate-x-1/2 h-[400px] w-[600px] rounded-full opacity-15 blur-3xl" style={{ background: "radial-gradient(circle, #818cf8 0%, transparent 70%)" }} />
-                <div className="absolute -bottom-32 -right-32 h-[480px] w-[480px] rounded-full opacity-20 blur-3xl" style={{ background: "radial-gradient(circle, #a78bfa 0%, transparent 70%)" }} />
+                <div className="absolute -top-32 -left-32 h-[520px] w-[520px] rounded-full opacity-20 blur-3xl" style={{ background: "radial-gradient(circle, var(--mod-ai-core) 0%, transparent 70%)" }} />
+                <div className="absolute top-1/3 left-1/2 -translate-x-1/2 h-[400px] w-[600px] rounded-full opacity-15 blur-3xl" style={{ background: "radial-gradient(circle, var(--mod-dev-deep) 0%, transparent 70%)" }} />
+                <div className="absolute -bottom-32 -right-32 h-[480px] w-[480px] rounded-full opacity-20 blur-3xl" style={{ background: "radial-gradient(circle, var(--mod-product-core) 0%, transparent 70%)" }} />
             </div>
 
             <div className="mx-auto max-w-5xl">
-                <div className="rounded-2xl border border-slate-800 bg-slate-900/40 shadow-xl p-8 sm:p-12 backdrop-blur-sm">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+                <div className="rounded-2xl surface-card shadow-xl p-8 sm:p-12 backdrop-blur-sm">
+                    <RevealGroup className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start" itemClassName="h-full">
 
                         {/* Left — Content */}
                         <div>
@@ -34,12 +38,13 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                             </div>
 
                             {/* Heading */}
-                            <h1 className="font-sans text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-4">
+                            <p className="script-tagline mb-3">Thirty minutes, no deck.</p>
+                            <h1 className="display-heading font-sans text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-4">
                                 Book your<br />
                                 <span
                                     className="italic"
                                     style={{
-                                        background: "linear-gradient(135deg, #22d3ee 0%, #818cf8 55%, #a78bfa 100%)",
+                                        background: "linear-gradient(135deg, var(--mod-ai-core) 0%, var(--mod-dev-deep) 55%, var(--mod-product-core) 100%)",
                                         WebkitBackgroundClip: "text",
                                         WebkitTextFillColor: "transparent",
                                         backgroundClip: "text"
@@ -65,7 +70,7 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                                         <div
                                             className="text-3xl font-extrabold"
                                             style={{
-                                                background: "linear-gradient(135deg, #22d3ee 0%, #818cf8 55%, #a78bfa 100%)",
+                                                background: "linear-gradient(135deg, var(--mod-ai-core) 0%, var(--mod-dev-deep) 55%, var(--mod-product-core) 100%)",
                                                 WebkitBackgroundClip: "text",
                                                 WebkitTextFillColor: "transparent",
                                                 backgroundClip: "text"
@@ -101,13 +106,13 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                                         <div
                                             className="h-9 w-9 rounded-xl flex items-center justify-center flex-shrink-0"
                                             style={{
-                                                background: "linear-gradient(135deg, #22d3ee22 0%, #a78bfa22 100%)",
-                                                border: "1px solid #818cf840"
+                                                background: "linear-gradient(135deg, color-mix(in srgb, var(--mod-ai-core) 13%, transparent) 0%, var(--mod-product-core)22 100%)",
+                                                border: "1px solid color-mix(in srgb, var(--mod-dev-deep) 25%, transparent)"
                                             }}
                                         >
                                             <span
                                                 style={{
-                                                    background: "linear-gradient(135deg, #22d3ee 0%, #818cf8 55%, #a78bfa 100%)",
+                                                    background: "linear-gradient(135deg, var(--mod-ai-core) 0%, var(--mod-dev-deep) 55%, var(--mod-product-core) 100%)",
                                                     WebkitBackgroundClip: "text",
                                                     WebkitTextFillColor: "transparent",
                                                     backgroundClip: "text"
@@ -158,7 +163,7 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                                     className="absolute inset-0 rounded-full animate-ping"
                                     style={{
                                         border: "1.5px solid transparent",
-                                        background: "linear-gradient(#0f172a, #0f172a) padding-box, linear-gradient(135deg, #22d3ee, #818cf8, #a78bfa) border-box",
+                                        background: "linear-gradient(var(--bg-panel), var(--bg-panel)) padding-box, linear-gradient(135deg, var(--mod-ai-core), var(--mod-dev-deep), var(--mod-product-core)) border-box",
                                         animationDelay: "0s",
                                         animationDuration: "1.8s",
                                     }}
@@ -168,7 +173,7 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                                     className="absolute inset-0 rounded-full animate-ping"
                                     style={{
                                         border: "1.5px solid transparent",
-                                        background: "linear-gradient(#0f172a, #0f172a) padding-box, linear-gradient(135deg, #22d3ee, #818cf8, #a78bfa) border-box",
+                                        background: "linear-gradient(var(--bg-panel), var(--bg-panel)) padding-box, linear-gradient(135deg, var(--mod-ai-core), var(--mod-dev-deep), var(--mod-product-core)) border-box",
                                         animationDelay: "0.6s",
                                         animationDuration: "1.8s",
                                     }}
@@ -178,7 +183,7 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                                     className="absolute inset-0 rounded-full animate-ping"
                                     style={{
                                         border: "1.5px solid transparent",
-                                        background: "linear-gradient(#0f172a, #0f172a) padding-box, linear-gradient(135deg, #22d3ee, #818cf8, #a78bfa) border-box",
+                                        background: "linear-gradient(var(--bg-panel), var(--bg-panel)) padding-box, linear-gradient(135deg, var(--mod-ai-core), var(--mod-dev-deep), var(--mod-product-core)) border-box",
                                         animationDelay: "1.2s",
                                         animationDuration: "1.8s",
                                     }}
@@ -186,7 +191,7 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                                 {/* Phone circle */}
                                 <div
                                     className="relative z-10 h-30 w-30 rounded-full flex items-center justify-center transition-opacity hover:opacity-80"
-                                    style={{ background: "linear-gradient(135deg, #22d3ee 0%, #818cf8 55%, #a78bfa 100%)" }}
+                                    style={{ background: "linear-gradient(135deg, var(--mod-ai-core) 0%, var(--mod-dev-deep) 55%, var(--mod-product-core) 100%)" }}
                                 >
                                     <Phone className="w-14 h-14 text-white fill-white" />
                                 </div>
@@ -197,7 +202,7 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                                 <button
                                     onClick={openCalendly}
                                     className="w-full flex items-center justify-between text-white font-bold text-sm rounded-full px-5 py-3.5 cursor-pointer transition-opacity hover:opacity-90 my-10 border-0 outline-none"
-                                    style={{ background: "linear-gradient(135deg, #22d3ee 0%, #818cf8 55%, #a78bfa 100%)" }}
+                                    style={{ background: "linear-gradient(135deg, var(--mod-ai-core) 0%, var(--mod-dev-deep) 55%, var(--mod-product-core) 100%)" }}
                                 >
                                     <span>Book a free session</span>
                                     <span className="h-7 w-7 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
@@ -207,7 +212,7 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                             </div>
                         </div>
 
-                    </div>
+                    </RevealGroup>
                 </div>
             </div>
         </div>

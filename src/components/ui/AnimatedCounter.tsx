@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useReducedMotion } from "motion/react";
 import { useInView } from "../../hooks/useInView";
 
 interface AnimatedCounterProps {
@@ -19,26 +20,32 @@ export default function AnimatedCounter({
   className = "",
 }: AnimatedCounterProps) {
   const { ref, inView } = useInView<HTMLSpanElement>();
+  const reduced = useReducedMotion() ?? false;
   const [display, setDisplay] = useState(0);
 
   useEffect(() => {
     if (!inView) return;
 
-    let start = 0;
+    if (reduced) {
+      setDisplay(value);
+      return;
+    }
+
+    let raf = 0;
     const startTime = performance.now();
 
     const tick = (now: number) => {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const eased = 1 - Math.pow(1 - progress, 3);
-      start = eased * value;
-      setDisplay(start);
-      if (progress < 1) requestAnimationFrame(tick);
+      setDisplay(eased * value);
+      if (progress < 1) raf = requestAnimationFrame(tick);
       else setDisplay(value);
     };
 
-    requestAnimationFrame(tick);
-  }, [inView, value, duration]);
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [inView, reduced, value, duration]);
 
   const formatted =
     decimals > 0
