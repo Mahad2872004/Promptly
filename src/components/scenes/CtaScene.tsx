@@ -21,7 +21,7 @@ export default function CtaScene({ setActiveView }: CtaSceneProps) {
   return (
     <section
       id="scene-cta"
-      className="relative overflow-hidden border-t border-slate-800/40 px-4 py-24 sm:px-6 md:py-32 lg:px-8"
+      className="relative overflow-hidden border-t border-slate-200 dark:border-slate-800/40 px-4 py-24 sm:px-6 md:py-32 lg:px-8"
     >
       {/* The hero orb, returning — the bookend. */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center">

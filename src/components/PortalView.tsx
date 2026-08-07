@@ -75,7 +75,7 @@ export default function PortalView() {
   };
 
   return (
-    <div className="bg-transparent text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 selection:bg-cyan-500/20 relative" style={accentVars("dev")}>
+    <div className="bg-transparent text-slate-900 dark:text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 selection:bg-cyan-500/20 relative transition-colors duration-300" style={accentVars("dev")}>
       <PageAtmosphere module="dev" />
       <div className="mx-auto max-w-7xl space-y-12">
 
@@ -86,49 +86,47 @@ export default function PortalView() {
           </ScrollReveal>
           <ScrollReveal animation="fade-up" delay={80}>
             <p className="script-tagline mb-3">Absolute clarity, always.</p>
-            <h1 className="display-heading font-sans text-4xl font-extrabold tracking-tight sm:text-5xl">
+            <h1 className="display-heading font-sans text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
               Client Hub
             </h1>
           </ScrollReveal>
           <ScrollReveal animation="fade-up" delay={160}>
-            <p className="text-sm text-slate-400 leading-relaxed font-sans">
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
               Welcome to your interactive simulator hub! We give our clients absolute clarity. Click on active tasks to simulate status updates, or chat directly with your principal engineer below.
             </p>
           </ScrollReveal>
         </div>
 
-        {/* Dashboard Grid — stays a plain grid: its children carry col-span,
-            which must remain on the grid item itself. Each column reveals via
-            its own ScrollReveal instead. */}
+        {/* Dashboard Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8" id="client-dashboard-hub">
           
           {/* Left Block - Interactive Sprint Tasks & Invoices (Col 7) */}
           <ScrollReveal animation="fade-up" className="lg:col-span-7 space-y-6">
             
             {/* Direct Project Health Stats Row */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-xl border border-slate-905 bg-slate-900/30">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/30 shadow-md dark:shadow-none">
               <div className="space-y-0.5">
                 <span className="text-[9px] text-slate-500 font-mono block">PROJECT IDENTIFIER</span>
-                <span className="text-xs font-bold font-mono">PR_SaaS_09</span>
+                <span className="text-xs font-bold font-mono text-slate-900 dark:text-white">PR_SaaS_09</span>
               </div>
               <div className="space-y-0.5">
                 <span className="text-[9px] text-slate-500 font-mono block">COMPLETION</span>
-                <span className="text-xs font-bold text-cyan-400 font-mono">68% Total</span>
+                <span className="text-xs font-bold text-cyan-600 dark:text-cyan-400 font-mono">68% Total</span>
               </div>
               <div className="space-y-0.5">
                 <span className="text-[9px] text-slate-500 font-mono block">ACTIVE BUILD STRAY</span>
-                <span className="text-xs font-bold text-teal-400 font-mono">All Green</span>
+                <span className="text-xs font-bold text-teal-600 dark:text-teal-400 font-mono">All Green</span>
               </div>
               <div className="space-y-0.5">
                 <span className="text-[9px] text-slate-500 font-mono block">DUE FOR HANDOVER</span>
-                <span className="text-xs font-bold text-slate-300 font-mono">16 Days</span>
+                <span className="text-xs font-bold text-slate-700 dark:text-slate-300 font-mono">16 Days</span>
               </div>
             </div>
 
             {/* Task Tracker Block */}
-            <div className="p-5 rounded-2xl surface-card space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-900 pb-3">
-                <h3 className="font-sans font-extrabold text-sm uppercase tracking-wider text-slate-300">Milestone Task Registry</h3>
+            <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/40 shadow-md dark:shadow-none space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-900 pb-3">
+                <h3 className="font-sans font-extrabold text-sm uppercase tracking-wider text-slate-900 dark:text-slate-300">Milestone Task Registry</h3>
                 <span className="text-[10px] font-mono text-slate-500">CLICK ROW TO TOGGLE STATUS</span>
               </div>
 
@@ -138,19 +136,19 @@ export default function PortalView() {
                     key={task.id}
                     id={`portal-task-${task.id}`}
                     onClick={() => toggleTaskStatus(task.id)}
-                    className="flex items-start gap-3 p-3 rounded-lg bg-slate-900/40 border border-transparent hover:border-slate-800 transition-colors cursor-pointer select-none"
+                    className="flex items-start gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-transparent hover:border-slate-300 dark:hover:border-slate-800 transition-colors cursor-pointer select-none"
                   >
                     <div className="shrink-0 mt-0.5" id={`task-check-${task.id}`}>
-                      {task.status === "completed" && <CheckSquare className="w-4.5 h-4.5 text-cyan-400" />}
-                      {task.status === "in-progress" && <span className="h-4.5 w-4.5 rounded border border-cyan-400 inline-flex items-center justify-center text-[10px] font-bold text-cyan-400 animate-pulse font-mono">/</span>}
-                      {task.status === "pending" && <Square className="w-4.5 h-4.5 text-slate-600" />}
+                      {task.status === "completed" && <CheckSquare className="w-4.5 h-4.5 text-cyan-600 dark:text-cyan-400" />}
+                      {task.status === "in-progress" && <span className="h-4.5 w-4.5 rounded border border-cyan-500 inline-flex items-center justify-center text-[10px] font-bold text-cyan-600 dark:text-cyan-400 animate-pulse font-mono">/</span>}
+                      {task.status === "pending" && <Square className="w-4.5 h-4.5 text-slate-400 dark:text-slate-600" />}
                     </div>
                     <div className="flex-1 space-y-0.5 text-left">
-                      <p className={`text-xs sm:text-sm leading-normal font-sans ${task.status === "completed" ? "line-through text-slate-500" : "text-slate-300"}`}>
+                      <p className={`text-xs sm:text-sm leading-normal font-sans ${task.status === "completed" ? "line-through text-slate-400 dark:text-slate-500" : "text-slate-800 dark:text-slate-300"}`}>
                         {task.title}
                       </p>
                       <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500">
-                        <span className="uppercase text-slate-400">ASSIGNED: {task.id === "task-4" ? "MEERA" : task.id === "task-2" ? "ETHAN" : "KAMIL"}</span>
+                        <span className="uppercase text-slate-600 dark:text-slate-400">ASSIGNED: {task.id === "task-4" ? "MEERA" : task.id === "task-2" ? "ETHAN" : "KAMIL"}</span>
                         <span>•</span>
                         <span>{task.phase}</span>
                       </div>
@@ -161,26 +159,26 @@ export default function PortalView() {
             </div>
 
             {/* Invoices Block */}
-            <div className="p-5 rounded-2xl surface-card space-y-4">
-              <h3 className="font-sans font-extrabold text-sm uppercase tracking-wider text-slate-300 border-b border-slate-900 pb-3">Financial Disclosures (Simulated)</h3>
+            <div className="p-5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/40 shadow-md dark:shadow-none space-y-4">
+              <h3 className="font-sans font-extrabold text-sm uppercase tracking-wider text-slate-900 dark:text-slate-300 border-b border-slate-200 dark:border-slate-900 pb-3">Financial Disclosures (Simulated)</h3>
               
               <div className="space-y-3">
                 {invoices.map((inv) => (
-                  <div key={inv.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3.5 rounded bg-slate-950 border border-slate-900 text-xs font-sans">
+                  <div key={inv.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3.5 rounded bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-900 text-xs font-sans">
                     <div className="space-y-1 text-left">
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-slate-200">{inv.item}</span>
+                        <span className="font-bold text-slate-900 dark:text-slate-200">{inv.item}</span>
                         <span className="font-mono text-[9px] text-slate-500">({inv.id})</span>
                       </div>
                       <p className="text-[10px] text-slate-500 font-mono">ISSUED: {inv.date}</p>
                     </div>
 
-                    <div className="flex items-center justify-between sm:justify-end gap-3.5 pt-2 sm:pt-0 border-t sm:border-0 border-slate-900">
-                      <p className="font-mono font-bold text-slate-200">{inv.amount}</p>
+                    <div className="flex items-center justify-between sm:justify-end gap-3.5 pt-2 sm:pt-0 border-t sm:border-0 border-slate-200 dark:border-slate-900">
+                      <p className="font-mono font-bold text-slate-900 dark:text-slate-200">{inv.amount}</p>
                       <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide
-                        ${inv.status === "paid" ? "bg-cyan-900/20 border border-cyan-900 text-cyan-400" : ""}
-                        ${inv.status === "sent" ? "bg-orange-900/20 border border-orange-900 text-orange-400 animate-pulse" : ""}
-                        ${inv.status === "draft" ? "bg-slate-900 border border-slate-800 text-slate-500" : ""}
+                        ${inv.status === "paid" ? "bg-cyan-500/10 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400" : ""}
+                        ${inv.status === "sent" ? "bg-orange-500/10 border border-orange-500/30 text-orange-600 dark:text-orange-400 animate-pulse" : ""}
+                        ${inv.status === "draft" ? "bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800 text-slate-600 dark:text-slate-500" : ""}
                       `}>
                         {inv.status}
                       </span>
@@ -193,16 +191,16 @@ export default function PortalView() {
           </ScrollReveal>
 
           {/* Right Block - Simulated Real-Time Specialist Developer Chat (Col 5) */}
-          <ScrollReveal animation="fade-up" delay={120} className="lg:col-span-5 flex flex-col h-[580px] rounded-2xl surface-card shadow-xl overflow-hidden">
+          <ScrollReveal animation="fade-up" delay={120} className="lg:col-span-5 flex flex-col h-[580px] rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/40 shadow-xl overflow-hidden">
             
             {/* Chat Head */}
-            <div className="p-4 bg-slate-950 border-b border-slate-900 flex items-center gap-3">
-              <div className="h-9 w-9 rounded-full bg-cyan-950 border border-cyan-900 text-cyan-400 font-mono font-bold text-sm flex items-center justify-center shrink-0">
+            <div className="p-4 bg-slate-100 dark:bg-slate-950 border-b border-slate-200 dark:border-slate-900 flex items-center gap-3">
+              <div className="h-9 w-9 rounded-full bg-cyan-500/20 border border-cyan-500/30 text-cyan-600 dark:text-cyan-400 font-mono font-bold text-sm flex items-center justify-center shrink-0">
                 KV
               </div>
               <div className="text-left space-y-0.5">
-                <p className="font-sans font-bold text-xs text-slate-200 leading-none">Kamil Vance</p>
-                <div className="flex items-center gap-1.5 text-[10px] text-slate-400 font-mono">
+                <p className="font-sans font-bold text-xs text-slate-900 dark:text-slate-200 leading-none">Kamil Vance</p>
+                <div className="flex items-center gap-1.5 text-[10px] text-slate-500 font-mono">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
                   <span>Your Assigned Specialist (Online)</span>
                 </div>
@@ -219,13 +217,13 @@ export default function PortalView() {
                     className={`max-w-[85%] rounded-xl p-3 text-xs leading-relaxed flex flex-col space-y-1 text-left
                       ${isClient 
                         ? "bg-gradient-to-r from-orange-500 to-orange-700 text-white self-end rounded-tr-none" 
-                        : "bg-slate-950 border border-slate-850 text-slate-300 self-start rounded-tl-none"
+                        : "bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-800 dark:text-slate-300 self-start rounded-tl-none"
                       }
                     `}
                   >
                     <p className="font-sans">{msg.text}</p>
                     <span className={`text-[9px] font-mono block text-right mt-1
-                      ${isClient ? "text-orange-200" : "text-slate-500"}
+                      ${isClient ? "text-orange-200" : "text-slate-400 dark:text-slate-500"}
                     `}>
                       {msg.timestamp}
                     </span>
@@ -235,18 +233,18 @@ export default function PortalView() {
             </div>
 
             {/* Chat Input */}
-            <form onSubmit={handleSendMessage} className="p-3 bg-slate-950/80 border-t border-slate-900 flex gap-2" id="portal-chat-form">
+            <form onSubmit={handleSendMessage} className="p-3 bg-slate-100 dark:bg-slate-950/80 border-t border-slate-200 dark:border-slate-900 flex gap-2" id="portal-chat-form">
               <input
                 type="text"
                 required
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
                 placeholder="Ask kamil about 'database', 'stripe', or 'timeline'..."
-                className="flex-1 rounded border border-slate-800 bg-slate-900/60 px-3 py-2 text-xs text-white placeholder-slate-500 outline-none focus:border-cyan-500"
+                className="flex-1 rounded border border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 px-3 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 outline-none focus:border-cyan-500"
               />
               <button
                 type="submit"
-                className="p-2 rounded bg-cyan-500 hover:bg-cyan-600 text-slate-950 transition-colors flex items-center justify-center"
+                className="p-2 rounded bg-cyan-500 hover:bg-cyan-600 text-slate-950 transition-colors flex items-center justify-center cursor-pointer"
               >
                 <Send className="w-4 h-4" />
               </button>

@@ -12,21 +12,21 @@ interface XSenderViewProps {
 
 export default function XSenderView({ setActiveView }: XSenderViewProps) {
   return (
-    <div className="min-h-screen bg-transparent text-white py-16 px-4 sm:px-6 lg:px-8 relative" style={accentVars("product")}>
+    <div className="min-h-screen bg-transparent text-slate-900 dark:text-white py-16 px-4 sm:px-6 lg:px-8 relative transition-colors duration-300" style={accentVars("product")}>
       <PageAtmosphere module="product" />
       <div className="mx-auto max-w-7xl">
         {/* Hero Section */}
         <div className="text-center mb-16">
           <ScrollReveal animation="fade-up" threshold={0.1}>
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-emerald-400 mb-6">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-6">
               <MessageSquare className="h-3 w-3" />
               Flagship Product
             </div>
             <p className="script-tagline mb-3">WhatsApp, professionalised.</p>
-            <h1 className="display-heading font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4">
+            <h1 className="display-heading font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
               xSender
             </h1>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
               WhatsApp Order Management System for E-commerce Businesses
             </p>
           </ScrollReveal>
@@ -40,14 +40,14 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
               { icon: <Shield className="h-6 w-6" />, title: "Secure Payments", desc: "Integrated payment gateway with end-to-end encryption" },
               { icon: <BarChart className="h-6 w-6" />, title: "Real-time Analytics", desc: "Track orders, revenue, and customer insights in real-time" },
             ].map((feature, i) => (
-              <div key={feature.title} className="p-6 rounded-2xl surface-card hover:border-emerald-500/40 transition-all">
+              <div key={feature.title} className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/40 hover:border-emerald-500/40 transition-all shadow-md dark:shadow-none">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-500/5">
-                    <span className="text-emerald-400">{feature.icon}</span>
+                    <span className="text-emerald-600 dark:text-emerald-400">{feature.icon}</span>
                   </div>
-                  <h3 className="text-lg font-bold text-white">{feature.title}</h3>
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white">{feature.title}</h3>
                 </div>
-                <p className="text-sm text-slate-400">{feature.desc}</p>
+                <p className="text-sm text-slate-600 dark:text-slate-400">{feature.desc}</p>
               </div>
             ))}
           </RevealGroup>
@@ -55,29 +55,29 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
 
         {/* Design Document Section */}
         <ScrollReveal animation="fade-up" threshold={0.1} className="mb-16">
-          <div className="rounded-3xl surface-card p-8">
-            <h2 className="text-2xl font-bold text-white mb-6">Design Document</h2>
+          <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/40 p-8 shadow-md dark:shadow-none">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Design Document</h2>
             
             <div className="space-y-6">
               {/* Problem Statement */}
               <div>
-                <h3 className="text-lg font-semibold text-emerald-400 mb-3">Problem Statement</h3>
-                <p className="text-slate-300 leading-relaxed">
+                <h3 className="text-lg font-semibold text-emerald-600 dark:text-emerald-400 mb-3">Problem Statement</h3>
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                   E-commerce businesses struggle with manual order processing, leading to delays, errors, and poor customer experience. Traditional order management systems are complex and expensive for small businesses.
                 </p>
               </div>
 
               {/* Solution */}
               <div>
-                <h3 className="text-lg font-semibold text-emerald-400 mb-3">Solution</h3>
-                <p className="text-slate-300 leading-relaxed">
+                <h3 className="text-lg font-semibold text-emerald-600 dark:text-emerald-400 mb-3">Solution</h3>
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                   xSender leverages WhatsApp's massive user base to provide a simple, intuitive order management system. Customers can place orders via WhatsApp, and businesses can manage them through a unified dashboard.
                 </p>
               </div>
 
               {/* Technical Architecture */}
               <div>
-                <h3 className="text-lg font-semibold text-emerald-400 mb-3">Technical Architecture</h3>
+                <h3 className="text-lg font-semibold text-emerald-600 dark:text-emerald-400 mb-3">Technical Architecture</h3>
                 <RevealGroup className="grid grid-cols-1 md:grid-cols-2 gap-4" itemClassName="h-full">
                   {[
                     "WhatsApp Business API Integration",
@@ -87,8 +87,8 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
                     "Stripe Payment Integration",
                     "Real-time WebSocket Updates"
                   ].map((tech) => (
-                    <div key={tech} className="flex items-center gap-2 text-sm text-slate-300">
-                      <CheckCircle className="h-4 w-4 text-emerald-400" />
+                    <div key={tech} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+                      <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                       {tech}
                     </div>
                   ))}
@@ -97,7 +97,7 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
 
               {/* User Flow */}
               <div>
-                <h3 className="text-lg font-semibold text-emerald-400 mb-3">User Flow</h3>
+                <h3 className="text-lg font-semibold text-emerald-600 dark:text-emerald-400 mb-3">User Flow</h3>
                 <div className="space-y-3">
                   {[
                     { step: 1, title: "Customer browses products", desc: "Via WhatsApp catalog or website" },
@@ -106,13 +106,13 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
                     { step: 4, title: "Payment", desc: "Secure payment link sent via WhatsApp" },
                     { step: 5, title: "Confirmation", desc: "Order confirmation and tracking updates" }
                   ].map((flow) => (
-                    <div key={flow.step} className="flex items-start gap-4 p-4 rounded-xl bg-slate-800/30">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold text-sm">
+                    <div key={flow.step} className="flex items-start gap-4 p-4 rounded-xl bg-slate-100 dark:bg-slate-800/30">
+                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-600 dark:text-emerald-400 font-bold text-sm">
                         {flow.step}
                       </div>
                       <div>
-                        <h4 className="font-semibold text-white">{flow.title}</h4>
-                        <p className="text-sm text-slate-400">{flow.desc}</p>
+                        <h4 className="font-semibold text-slate-900 dark:text-white">{flow.title}</h4>
+                        <p className="text-sm text-slate-600 dark:text-slate-400">{flow.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -124,13 +124,13 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
 
         {/* Case Study Section */}
         <ScrollReveal animation="fade-up" threshold={0.1} className="mb-16">
-          <div className="rounded-3xl surface-card p-8">
-            <h2 className="text-2xl font-bold text-white mb-6">Case Study: Fashion Retailer Implementation</h2>
+          <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/40 p-8 shadow-md dark:shadow-none">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Case Study: Fashion Retailer Implementation</h2>
             
             <RevealGroup className="grid grid-cols-1 lg:grid-cols-2 gap-8" itemClassName="h-full">
               {/* Before */}
               <div>
-                <h3 className="text-lg font-semibold text-red-400 mb-4">Before xSender</h3>
+                <h3 className="text-lg font-semibold text-red-600 dark:text-red-400 mb-4">Before xSender</h3>
                 <ul className="space-y-3">
                   {[
                     "Manual order entry via phone/email",
@@ -139,8 +139,8 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
                     "No real-time inventory tracking",
                     "Poor customer experience"
                   ].map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-slate-300">
-                      <span className="text-red-400 mt-1">✗</span>
+                    <li key={item} className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-300">
+                      <span className="text-red-600 dark:text-red-400 mt-1">✗</span>
                       {item}
                     </li>
                   ))}
@@ -149,7 +149,7 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
 
               {/* After */}
               <div>
-                <h3 className="text-lg font-semibold text-emerald-400 mb-4">After xSender</h3>
+                <h3 className="text-lg font-semibold text-emerald-600 dark:text-emerald-400 mb-4">After xSender</h3>
                 <ul className="space-y-3">
                   {[
                     "Automated WhatsApp order capture",
@@ -158,8 +158,8 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
                     "Real-time inventory sync",
                     "Enhanced customer satisfaction"
                   ].map((item) => (
-                    <li key={item} className="flex items-start gap-2 text-sm text-slate-300">
-                      <CheckCircle className="h-4 w-4 text-emerald-400 mt-1 flex-shrink-0" />
+                    <li key={item} className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-300">
+                      <CheckCircle className="h-4 w-4 text-emerald-600 dark:text-emerald-400 mt-1 flex-shrink-0" />
                       {item}
                     </li>
                   ))}
@@ -175,10 +175,10 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
                 { metric: "3x", label: "Revenue Growth", icon: <BarChart className="h-5 w-5" /> },
                 { metric: "4.8", label: "Customer Rating", icon: <Users className="h-5 w-5" /> }
               ].map((stat) => (
-                <div key={stat.label} className="p-4 rounded-xl bg-slate-800/30 text-center">
-                  <div className="flex justify-center mb-2 text-emerald-400">{stat.icon}</div>
-                  <p className="text-2xl font-bold text-white">{stat.metric}</p>
-                  <p className="text-xs text-slate-400">{stat.label}</p>
+                <div key={stat.label} className="p-4 rounded-xl bg-slate-100 dark:bg-slate-800/30 text-center">
+                  <div className="flex justify-center mb-2 text-emerald-600 dark:text-emerald-400">{stat.icon}</div>
+                  <p className="text-2xl font-bold text-slate-900 dark:text-white">{stat.metric}</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">{stat.label}</p>
                 </div>
               ))}
             </RevealGroup>
@@ -189,7 +189,7 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
         <ScrollReveal animation="fade-up" threshold={0.1} className="text-center">
           <button
             onClick={() => setActiveView("contact")}
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 transition-all hover:scale-[1.02] hover:shadow-emerald-500/40"
+            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-500 dark:to-teal-500 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 transition-all hover:scale-[1.02] hover:shadow-emerald-500/40"
           >
             Get Started with xSender
             <ArrowRight className="w-4 h-4" />

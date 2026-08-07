@@ -20,7 +20,7 @@ export default function AudienceScene({ setActiveView }: AudienceSceneProps) {
   return (
     <section
       id="scene-audience"
-      className="relative overflow-hidden border-t border-slate-800/40 px-4 py-20 sm:px-6 md:py-28 lg:px-8"
+      className="relative overflow-hidden border-t border-slate-200 dark:border-slate-800/40 px-4 py-20 sm:px-6 md:py-28 lg:px-8"
     >
       <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2">
         <GlowOrb color="dev" size={560} halo />

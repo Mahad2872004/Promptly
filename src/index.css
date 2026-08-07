@@ -243,20 +243,6 @@
 }
 
 :root:not(.dark) {
-  /* Value inversion — light mode only. */
-  --color-white: #0a0e17; /* `text-white` headings → near-black */
-  --color-slate-50: #0a0e17;
-  --color-slate-100: #131c2e;
-  --color-slate-200: #1e293b;
-  --color-slate-300: #334155; /* body copy */
-  --color-slate-400: #475569; /* muted body copy */
-  --color-slate-500: #64748b; /* micro-copy — identical in both themes */
-  --color-slate-600: #94a3b8;
-  --color-slate-700: #cbd5e1; /* borders */
-  --color-slate-800: #e2e8f0;
-  --color-slate-900: #ffffff; /* panels */
-  --color-slate-950: #f7f9fc; /* page */
-
   /* Accents need darker shades on white than they do on navy — inverting
      the dark-mode values here would drop them below AA. */
   --color-cyan-400: #0e7490; /* 5.08:1 vs 1.76:1 for #2dd4bf */

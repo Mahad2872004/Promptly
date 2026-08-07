@@ -54,37 +54,37 @@ export default function ProductsView({ setActiveView }: ProductsViewProps) {
   ];
 
   const colorClasses = {
-    emerald: "border-emerald-500/40 hover:border-emerald-500/60 bg-emerald-500/10",
-    cyan: "border-cyan-500/40 hover:border-cyan-500/60 bg-cyan-500/10",
-    indigo: "border-indigo-500/40 hover:border-indigo-500/60 bg-indigo-500/10",
-    violet: "border-violet-500/40 hover:border-violet-500/60 bg-violet-500/10"
+    emerald: "border-emerald-500/40 hover:border-emerald-500/60 bg-white/90 dark:bg-emerald-500/10 shadow-md dark:shadow-none",
+    cyan: "border-cyan-500/40 hover:border-cyan-500/60 bg-white/90 dark:bg-cyan-500/10 shadow-md dark:shadow-none",
+    indigo: "border-indigo-500/40 hover:border-indigo-500/60 bg-white/90 dark:bg-indigo-500/10 shadow-md dark:shadow-none",
+    violet: "border-violet-500/40 hover:border-violet-500/60 bg-white/90 dark:bg-violet-500/10 shadow-md dark:shadow-none"
   };
 
   const statusColors = {
-    "Live": "bg-emerald-500/20 text-emerald-400",
-    "Coming Soon": "bg-amber-500/20 text-amber-400",
-    "In Development": "bg-blue-500/20 text-blue-400"
+    "Live": "bg-emerald-500/20 text-emerald-600 dark:text-emerald-400",
+    "Coming Soon": "bg-amber-500/20 text-amber-600 dark:text-amber-400",
+    "In Development": "bg-blue-500/20 text-blue-600 dark:text-blue-400"
   };
 
   return (
-    <div className="min-h-screen bg-transparent text-white py-16 px-4 sm:px-6 lg:px-8 relative" style={accentVars("product")}>
+    <div className="min-h-screen bg-transparent text-slate-900 dark:text-white py-16 px-4 sm:px-6 lg:px-8 relative transition-colors duration-300" style={accentVars("product")}>
       <PageAtmosphere module="product" />
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <div className="text-center mb-16">
           <ScrollReveal animation="fade-up" threshold={0.1}>
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-emerald-400 mb-6">
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-6">
               <Package className="h-3 w-3" />
               Our Products
             </div>
             <p className="script-tagline mb-3">We build ours too.</p>
-            <h1 className="display-heading font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-4">
+            <h1 className="display-heading font-sans text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-4">
               Built for{" "}
-              <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400 bg-clip-text text-transparent">
                 Business Growth
               </span>
             </h1>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
+            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
               Production-ready products designed to solve real business challenges and drive digital transformation.
             </p>
           </ScrollReveal>
@@ -108,31 +108,31 @@ export default function ProductsView({ setActiveView }: ProductsViewProps) {
                     </div>
 
                     {/* Icon */}
-                    <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-slate-900/50 mb-6 group-hover:scale-110 transition-transform">
+                    <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-slate-100 dark:bg-slate-900/50 mb-6 group-hover:scale-110 transition-transform text-slate-800 dark:text-white">
                       <span className="text-2xl">{product.icon}</span>
                     </div>
 
                     {/* Content */}
-                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors">
+                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                       {product.name}
                     </h3>
                     
-                    <p className="text-slate-300 mb-6 leading-relaxed">
+                    <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
                       {product.description}
                     </p>
 
                     {/* Features */}
                     <div className="space-y-2 mb-6">
                       {product.features.map((feature) => (
-                        <div key={feature} className="flex items-center gap-2 text-sm text-slate-400">
-                          <Zap className="h-4 w-4 text-emerald-400" />
+                        <div key={feature} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+                          <Zap className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                           {feature}
                         </div>
                       ))}
                     </div>
 
                     {/* CTA */}
-                    <div className="flex items-center gap-2 text-emerald-400 font-semibold group-hover:gap-3 transition-all">
+                    <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold group-hover:gap-3 transition-all">
                       <span>Learn More</span>
                       <ArrowRight className="w-4 h-4" />
                     </div>
@@ -145,8 +145,8 @@ export default function ProductsView({ setActiveView }: ProductsViewProps) {
 
         {/* Development Roadmap */}
         <ScrollReveal animation="fade-up" threshold={0.1} className="mb-16">
-          <div className="rounded-3xl surface-card p-8">
-            <h2 className="text-2xl font-bold text-white mb-6">Development Roadmap</h2>
+          <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/40 p-8 shadow-md dark:shadow-none">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">Development Roadmap</h2>
             
             <div className="space-y-6">
               {[
@@ -157,15 +157,15 @@ export default function ProductsView({ setActiveView }: ProductsViewProps) {
                 <div key={quarter.phase} className="flex gap-4">
                   <div className="flex-shrink-0">
                     <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-500/30 flex items-center justify-center">
-                      <span className="text-emerald-400 font-bold text-sm">Q{i + 3}</span>
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold text-sm">Q{i + 3}</span>
                     </div>
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-white mb-2">{quarter.phase}</h3>
+                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">{quarter.phase}</h3>
                     <ul className="space-y-2">
                       {quarter.items.map((item) => (
-                        <li key={item} className="flex items-center gap-2 text-sm text-slate-300">
-                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                        <li key={item} className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+                          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                           {item}
                         </li>
                       ))}
@@ -179,14 +179,14 @@ export default function ProductsView({ setActiveView }: ProductsViewProps) {
 
         {/* CTA */}
         <ScrollReveal animation="fade-up" threshold={0.1} className="text-center">
-          <div className="p-8 rounded-3xl border border-slate-800/70 bg-gradient-to-br from-emerald-500/10 to-teal-500/10">
-            <h3 className="text-2xl font-bold text-white mb-4">Interested in Our Products?</h3>
-            <p className="text-slate-400 mb-6 max-w-xl mx-auto">
+          <div className="p-8 rounded-3xl border border-slate-200 dark:border-slate-800/70 bg-emerald-500/5 dark:bg-gradient-to-br dark:from-emerald-500/10 dark:to-teal-500/10 shadow-md dark:shadow-none">
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">Interested in Our Products?</h3>
+            <p className="text-slate-600 dark:text-slate-400 mb-6 max-w-xl mx-auto">
               Get early access to our upcoming products or schedule a demo for our existing solutions.
             </p>
             <button
               onClick={() => setActiveView("contact")}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 transition-all hover:scale-[1.02] hover:shadow-emerald-500/40"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-500 dark:to-teal-500 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 transition-all hover:scale-[1.02] hover:shadow-emerald-500/40"
             >
               Get in Touch
               <ArrowRight className="w-4 h-4" />

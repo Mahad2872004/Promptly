@@ -83,7 +83,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
   };
 
   return (
-    <div className="bg-transparent text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 selection:bg-cyan-500/20 relative" style={accentVars("dev")}>
+    <div className="bg-transparent text-slate-900 dark:text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 selection:bg-cyan-500/20 relative transition-colors duration-300" style={accentVars("dev")}>
       <PageAtmosphere module="dev" />
       <div className="mx-auto max-w-6xl space-y-20">
 
@@ -94,13 +94,13 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
               About Promptly
             </span>
             <p className="script-tagline mb-3">People before process.</p>
-            <h1 className="display-heading font-sans text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">
+            <h1 className="display-heading font-sans text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl text-slate-900 dark:text-white">
               AI-Powered Digital Solutions for{" "}
-              <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-cyan-600 to-indigo-600 dark:from-cyan-400 dark:to-indigo-400 bg-clip-text text-transparent">
                 Startups & Businesses
               </span>
             </h1>
-            <p className="text-base sm:text-lg text-slate-400 leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
               Promptly is a software agency delivering AI-powered digital solutions for startups and businesses — and building its own products to scale beyond services.
             </p>
           </div>
@@ -113,10 +113,10 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
               <span className="eyebrow accent-text">
                 How We Work
               </span>
-              <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl">
+              <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl text-slate-900 dark:text-white">
                 Our Core Principles
               </h2>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-slate-600 dark:text-slate-400">
                 These principles guide how every person at Promptly thinks, works, and makes decisions.
               </p>
             </div>
@@ -125,15 +125,15 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
               {corePrinciples.map((principle, idx) => (
                 <div
                   key={idx}
-                  className="p-6 rounded-2xl border border-slate-800/80 bg-slate-900/40 space-y-4 hover:border-cyan-500/30 transition-all"
+                  className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-white/90 dark:bg-slate-900/40 space-y-4 hover:border-cyan-500/30 transition-all shadow-md dark:shadow-none"
                 >
-                  <div className="p-3 rounded-xl bg-slate-950 inline-block border border-slate-800">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-950 inline-block border border-slate-200 dark:border-slate-800">
                     {principle.icon}
                   </div>
-                  <h3 className="font-sans font-bold text-slate-100">
+                  <h3 className="font-sans font-bold text-slate-900 dark:text-slate-100">
                     {principle.title}
                   </h3>
-                  <p className="text-sm text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                     {principle.desc}
                   </p>
                 </div>
@@ -146,13 +146,13 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
         <ScrollReveal>
           <div className="space-y-8">
             <div className="text-center max-w-xl mx-auto space-y-2">
-              <span className="text-xs font-semibold text-emerald-400 uppercase tracking-widest font-mono">
+              <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest font-mono">
                 Why Choose Us
               </span>
-              <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl">
+              <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl text-slate-900 dark:text-white">
                 Why Promptly?
               </h2>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-slate-600 dark:text-slate-400">
                 There are many agencies out there. Here is why clients and partners choose Promptly.
               </p>
             </div>
@@ -161,15 +161,15 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
               {differentiators.map((diff, idx) => (
                 <div
                   key={idx}
-                  className="p-6 rounded-2xl border border-slate-800/80 bg-slate-900/40 space-y-4 hover:border-emerald-500/30 transition-all"
+                  className="p-6 rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-white/90 dark:bg-slate-900/40 space-y-4 hover:border-emerald-500/30 transition-all shadow-md dark:shadow-none"
                 >
-                  <div className="p-3 rounded-xl bg-slate-950 inline-block border border-slate-800">
+                  <div className="p-3 rounded-xl bg-slate-100 dark:bg-slate-950 inline-block border border-slate-200 dark:border-slate-800">
                     {diff.icon}
                   </div>
-                  <h3 className="font-sans font-bold text-slate-100">
+                  <h3 className="font-sans font-bold text-slate-900 dark:text-slate-100">
                     {diff.title}
                   </h3>
-                  <p className="text-sm text-slate-400 leading-relaxed">
+                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                     {diff.desc}
                   </p>
                 </div>
@@ -178,26 +178,23 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
           </div>
         </ScrollReveal>
 
-        {/* Leadership Section */}
+        {/* Founder Spotlight */}
         <ScrollReveal animation="fade-up" threshold={0.1}>
-          <div className="border-t border-slate-800/40 pt-16 space-y-8">
+          <div className="space-y-6">
             <div className="text-center max-w-xl mx-auto space-y-2">
-              <span className="eyebrow accent-text">
+              <span className="text-xs font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-mono">
                 Leadership
               </span>
-              <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl">
+              <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl text-slate-900 dark:text-white">
                 Meet the{" "}
-                <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
-                  Founder & CEO
+                <span className="bg-gradient-to-r from-cyan-600 to-indigo-600 dark:from-cyan-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                  Founder
                 </span>
               </h2>
-              <p className="text-sm text-slate-400">
-                Full Stack Developer & AI Consultant driving Promptly's vision.
-              </p>
             </div>
 
             <div className="max-w-4xl mx-auto">
-              <div className="group relative overflow-hidden rounded-3xl surface-card p-8 backdrop-blur-sm transition-all hover:border-cyan-500/40 hover:shadow-xl hover:shadow-cyan-500/10 card-3d">
+              <div className="group relative overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800/70 bg-white/90 dark:bg-slate-900/60 p-8 backdrop-blur-sm transition-all hover:border-cyan-500/40 hover:shadow-xl hover:shadow-cyan-500/10 shadow-md dark:shadow-none card-3d">
                 <div className="flex flex-col md:flex-row items-center gap-8">
                   <div className="relative shrink-0">
                     <div className="h-48 w-48 md:h-56 md:w-56 rounded-2xl overflow-hidden border-2 border-cyan-500/30 shadow-xl">
@@ -213,11 +210,11 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
                   </div>
 
                   <div className="flex-1 text-center md:text-left">
-                    <h3 className="text-3xl font-bold text-white mb-1">Mahad Mateen Butt</h3>
-                    <p className="text-base text-cyan-400 font-semibold mb-1">Founder &amp; CEO</p>
-                    <p className="text-xs text-slate-500 font-medium mb-4 uppercase tracking-widest">Full Stack Developer &amp; AI Consultant</p>
+                    <h3 className="text-3xl font-bold text-slate-900 dark:text-white mb-1">Mahad Mateen Butt</h3>
+                    <p className="text-base text-cyan-600 dark:text-cyan-400 font-semibold mb-1">Founder &amp; CEO</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mb-4 uppercase tracking-widest">Full Stack Developer &amp; AI Consultant</p>
 
-                    <p className="text-slate-400 text-base leading-relaxed mb-6">
+                    <p className="text-slate-600 dark:text-slate-400 text-base leading-relaxed mb-6">
                       Driving Promptly's business strategy, product vision, and AI &amp; automation architecture. Mahad leads client consulting and strategic partnerships — the final decision maker behind every major move the agency makes.
                     </p>
 
@@ -226,7 +223,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
                         setActiveView("consultation");
                         window.scrollTo({ top: 0, behavior: "smooth" });
                       }}
-                      className="magnetic-btn inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 px-6 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.02]"
+                      className="magnetic-btn inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-600 to-indigo-600 dark:from-cyan-500 dark:to-indigo-500 px-6 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.02]"
                     >
                       Get in Touch
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
@@ -240,18 +237,18 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
 
         {/* Team Section */}
         <ScrollReveal animation="fade-up" threshold={0.1}>
-          <div className="border-t border-slate-800/40 pt-16 space-y-8">
+          <div className="border-t border-slate-200 dark:border-slate-800/40 pt-16 space-y-8">
             <div className="text-center max-w-xl mx-auto space-y-2">
-              <span className="text-xs font-semibold text-violet-400 uppercase tracking-widest font-mono">
+              <span className="text-xs font-semibold text-violet-600 dark:text-violet-400 uppercase tracking-widest font-mono">
                 The Team
               </span>
-              <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl">
+              <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl text-slate-900 dark:text-white">
                 Senior specialists,{" "}
-                <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-cyan-600 to-indigo-600 dark:from-cyan-400 dark:to-indigo-400 bg-clip-text text-transparent">
                   one cohesive squad
                 </span>
               </h2>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-slate-600 dark:text-slate-400">
                 Architects, designers, and AI engineers working in tight collaboration—not handoffs between siloed vendors.
               </p>
             </div>
@@ -265,7 +262,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
                     {/* Circular photo with violet→indigo gradient ring */}
                     <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-10">
                       <div className="h-32 w-32 rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 p-[3px] shadow-xl group-hover:shadow-violet-500/40 transition-shadow">
-                        <div className="h-full w-full rounded-full overflow-hidden ring-4 ring-slate-900">
+                        <div className="h-full w-full rounded-full overflow-hidden ring-4 ring-white dark:ring-slate-900">
                           <img
                             src={advisor.image}
                             alt={advisor.name}
@@ -278,21 +275,21 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
                       </div>
                     </div>
 
-                    {/* Dark card body - in sync with other cards but slightly larger text and violet theme */}
-                    <div className="rounded-3xl border border-violet-500/30 bg-slate-900/60 backdrop-blur-sm shadow-xl hover:shadow-violet-500/10 hover:border-violet-500/50 transition-all hover:-translate-y-1 px-8 pt-16 pb-7 flex flex-col h-full">
-                      <h3 className="text-2xl font-extrabold text-white mb-0.5">{advisor.name}</h3>
-                      <p className="text-sm font-semibold text-violet-400 mb-4">{advisor.role}</p>
+                    {/* Card body */}
+                    <div className="rounded-3xl border border-slate-200 dark:border-violet-500/30 bg-white/90 dark:bg-slate-900/60 backdrop-blur-sm shadow-xl hover:shadow-violet-500/10 hover:border-violet-500/50 transition-all hover:-translate-y-1 px-8 pt-16 pb-7 flex flex-col h-full">
+                      <h3 className="text-2xl font-extrabold text-slate-900 dark:text-white mb-0.5">{advisor.name}</h3>
+                      <p className="text-sm font-semibold text-violet-600 dark:text-violet-400 mb-4">{advisor.role}</p>
 
-                      <p className="text-sm text-slate-400 leading-relaxed mb-5 max-w-xl mx-auto">{advisor.bio}</p>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-5 max-w-xl mx-auto">{advisor.bio}</p>
 
-                      <div className="border-t border-slate-700/50 mb-4" />
+                      <div className="border-t border-slate-200 dark:border-slate-700/50 mb-4" />
 
-                      <p className="text-sm font-bold text-slate-200 mb-3">⭐ Expert in</p>
+                      <p className="text-sm font-bold text-slate-800 dark:text-slate-200 mb-3">⭐ Expert in</p>
                       <div className="flex flex-wrap justify-center gap-2 mb-5">
                         {advisor.specialties.map((specialty) => (
                           <span
                             key={specialty}
-                            className="rounded-full bg-violet-500/10 border border-violet-500/20 px-3 py-1 text-xs font-medium text-violet-300 group-hover:bg-violet-500/20 transition-colors"
+                            className="rounded-full bg-violet-100 dark:bg-violet-500/10 border border-violet-200 dark:border-violet-500/20 px-3 py-1 text-xs font-medium text-violet-700 dark:text-violet-300 group-hover:bg-violet-200 dark:group-hover:bg-violet-500/20 transition-colors"
                           >
                             {specialty}
                           </span>
@@ -315,7 +312,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
                       {/* Circular photo with cyan→violet gradient ring */}
                       <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-10">
                         <div className="h-28 w-28 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 p-[3px] shadow-xl group-hover:shadow-cyan-500/40 transition-shadow">
-                          <div className="h-full w-full rounded-full overflow-hidden ring-4 ring-slate-900">
+                          <div className="h-full w-full rounded-full overflow-hidden ring-4 ring-white dark:ring-slate-900">
                             <img
                               src={member.image}
                               alt={member.name}
@@ -325,21 +322,21 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
                         </div>
                       </div>
 
-                      {/* Dark card body */}
-                      <div className="rounded-3xl border border-slate-800/70 bg-slate-900/60 backdrop-blur-sm shadow-xl hover:shadow-cyan-500/10 hover:border-cyan-500/30 transition-all hover:-translate-y-1 px-6 pt-16 pb-7 flex flex-col h-full">
-                        <h3 className="text-xl font-extrabold text-white mb-0.5">{member.name}</h3>
-                        <p className="text-sm font-semibold text-cyan-400 mb-4">{member.role}</p>
+                      {/* Card body */}
+                      <div className="rounded-3xl border border-slate-200 dark:border-slate-800/70 bg-white/90 dark:bg-slate-900/60 backdrop-blur-sm shadow-xl hover:shadow-cyan-500/10 hover:border-cyan-500/30 transition-all hover:-translate-y-1 px-6 pt-16 pb-7 flex flex-col h-full">
+                        <h3 className="text-xl font-extrabold text-slate-900 dark:text-white mb-0.5">{member.name}</h3>
+                        <p className="text-sm font-semibold text-cyan-600 dark:text-cyan-400 mb-4">{member.role}</p>
 
-                        <p className="text-sm text-slate-400 leading-relaxed mb-5">{member.bio}</p>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-5">{member.bio}</p>
 
-                        <div className="border-t border-slate-700/50 mb-4" />
+                        <div className="border-t border-slate-200 dark:border-slate-700/50 mb-4" />
 
-                        <p className="text-sm font-bold text-slate-200 mb-3">⭐ Expert in</p>
+                        <p className="text-sm font-bold text-slate-800 dark:text-slate-200 mb-3">⭐ Expert in</p>
                         <div className="flex flex-wrap justify-center gap-2 mb-5">
                           {member.specialties.map((specialty) => (
                             <span
                               key={specialty}
-                              className="rounded-full bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 text-xs font-medium text-cyan-300 group-hover:bg-cyan-500/20 transition-colors"
+                              className="rounded-full bg-cyan-100 dark:bg-cyan-500/10 border border-cyan-200 dark:border-cyan-500/20 px-3 py-1 text-xs font-medium text-cyan-700 dark:text-cyan-300 group-hover:bg-cyan-200 dark:group-hover:bg-cyan-500/20 transition-colors"
                             >
                               {specialty}
                             </span>
@@ -357,12 +354,12 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
 
         {/* CTA Section */}
         <ScrollReveal>
-          <div className="border-t border-slate-800/40 pt-16 text-center">
+          <div className="border-t border-slate-200 dark:border-slate-800/40 pt-16 text-center">
             <div className="max-w-2xl mx-auto space-y-6">
-              <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl">
+              <h2 className="font-sans text-2xl font-extrabold tracking-tight sm:text-3xl text-slate-900 dark:text-white">
                 Ready to Build Something Great?
               </h2>
-              <p className="text-sm text-slate-400">
+              <p className="text-sm text-slate-600 dark:text-slate-400">
                 Let's discuss how Promptly can help your startup or business with AI-powered digital solutions.
               </p>
               <button

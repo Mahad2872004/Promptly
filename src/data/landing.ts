@@ -175,20 +175,20 @@ export const STAT_CARD_STYLES: Record<
   { card: string; bar: string }
 > = {
   cyan: {
-    card: "border-cyan-500/30 bg-gradient-to-br from-cyan-950/55 via-slate-900/40 to-slate-900/20",
-    bar: "from-cyan-400 to-teal-500",
+    card: "border-cyan-500/30 bg-white/90 dark:bg-slate-900 dark:bg-gradient-to-br dark:from-cyan-950/80 dark:via-slate-900/80 dark:to-slate-950/80 shadow-md dark:shadow-none",
+    bar: "from-cyan-600 to-teal-600 dark:from-cyan-400 dark:to-teal-500",
   },
   indigo: {
-    card: "border-indigo-500/30 bg-gradient-to-br from-indigo-950/55 via-slate-900/40 to-slate-900/20",
-    bar: "from-indigo-400 to-blue-500",
+    card: "border-indigo-500/30 bg-white/90 dark:bg-slate-900 dark:bg-gradient-to-br dark:from-indigo-950/80 dark:via-slate-900/80 dark:to-slate-950/80 shadow-md dark:shadow-none",
+    bar: "from-indigo-600 to-blue-600 dark:from-indigo-400 dark:to-blue-500",
   },
   violet: {
-    card: "border-violet-500/30 bg-gradient-to-br from-violet-950/55 via-slate-900/40 to-slate-900/20",
-    bar: "from-violet-400 to-purple-500",
+    card: "border-violet-500/30 bg-white/90 dark:bg-slate-900 dark:bg-gradient-to-br dark:from-violet-950/80 dark:via-slate-900/80 dark:to-slate-950/80 shadow-md dark:shadow-none",
+    bar: "from-violet-600 to-purple-600 dark:from-violet-400 dark:to-purple-500",
   },
   emerald: {
-    card: "border-emerald-500/30 bg-gradient-to-br from-emerald-950/55 via-slate-900/40 to-slate-900/20",
-    bar: "from-emerald-400 to-teal-500",
+    card: "border-emerald-500/30 bg-white/90 dark:bg-slate-900 dark:bg-gradient-to-br dark:from-emerald-950/80 dark:via-slate-900/80 dark:to-slate-950/80 shadow-md dark:shadow-none",
+    bar: "from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-500",
   },
 };
 

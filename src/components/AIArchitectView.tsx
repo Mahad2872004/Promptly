@@ -108,7 +108,7 @@ export default function AIArchitectView({
   };
 
   return (
-    <div className="bg-slate-950 text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 relative" style={accentVars("ai")}>
+    <div className="bg-transparent text-slate-900 dark:text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 relative transition-colors duration-300" style={accentVars("ai")}>
       <PageAtmosphere module="ai" />
       <div className="mx-auto max-w-5xl space-y-12">
 
@@ -119,10 +119,10 @@ export default function AIArchitectView({
               Generative Cognitive Modeler
             </span>
             <p className="script-tagline mb-3">Describe it. We'll draw it.</p>
-            <h1 className="display-heading text-4xl font-extrabold sm:text-5xl">
+            <h1 className="display-heading text-4xl font-extrabold sm:text-5xl text-slate-900 dark:text-white">
               AI Project Architect
             </h1>
-            <p className="text-sm text-slate-400">
+            <p className="text-sm text-slate-600 dark:text-slate-400">
               Submit a prompt and get full system architecture instantly.
             </p>
           </div>
@@ -131,9 +131,9 @@ export default function AIArchitectView({
         {/* Input */}
         {!architectResult && !loading && (
           <ScrollReveal delay={0.1}>
-            <div className="p-6 rounded-2xl border border-slate-900 bg-slate-900/50 space-y-6">
-              <div className="flex items-center gap-2 text-xs font-mono text-slate-500">
-                <Terminal className="w-4 h-4 text-cyan-400" />
+            <div className="p-6 rounded-2xl border border-slate-200 dark:border-slate-900 bg-white/90 dark:bg-slate-900/50 space-y-6 shadow-md dark:shadow-none">
+              <div className="flex items-center gap-2 text-xs font-mono text-slate-600 dark:text-slate-500">
+                <Terminal className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
                 <span>root@promptly:~# _ system_planner</span>
               </div>
 
@@ -142,14 +142,14 @@ export default function AIArchitectView({
                   rows={4}
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
-                  className="w-full rounded-md border border-slate-800 bg-slate-950 p-4 text-sm"
+                  className="w-full rounded-md border border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 p-4 text-sm text-slate-900 dark:text-white"
                 />
 
                 {errorText && (
-                  <p className="text-xs text-red-500">{errorText}</p>
+                  <p className="text-xs text-red-600 dark:text-red-500">{errorText}</p>
                 )}
 
-                <button className="bg-cyan-500 text-black px-6 py-3 text-xs font-bold rounded">
+                <button className="bg-cyan-500 text-black px-6 py-3 text-xs font-bold rounded cursor-pointer hover:bg-cyan-400 transition-colors">
                   Generate Blueprint <Sparkles className="inline w-4 h-4" />
                 </button>
               </form>
@@ -160,7 +160,7 @@ export default function AIArchitectView({
         {/* Loading */}
         {loading && (
           <ScrollReveal>
-            <div className="p-6 border border-cyan-900 text-cyan-400 font-mono text-xs space-y-2">
+            <div className="p-6 border border-cyan-500/40 text-cyan-600 dark:text-cyan-400 font-mono text-xs space-y-2 bg-cyan-500/5 rounded-xl">
               {loadingSequence.slice(0, loadingStep + 1).map((l, i) => (
                 <div key={i}>▶ {l}</div>
               ))}
@@ -174,10 +174,10 @@ export default function AIArchitectView({
 
             {/* Summary */}
             <ScrollReveal>
-              <div className="grid md:grid-cols-3 gap-4 p-5 border border-slate-900 bg-slate-900/30 rounded-xl">
+              <div className="grid md:grid-cols-3 gap-4 p-5 border border-slate-200 dark:border-slate-900 bg-white/90 dark:bg-slate-900/30 rounded-xl shadow-md dark:shadow-none">
                 <div>
-                  <CalendarRange className="text-cyan-400" />
-                  <p className="text-xs text-slate-500">Timeline</p>
+                  <CalendarRange className="text-cyan-600 dark:text-cyan-400" />
+                  <p className="text-xs text-slate-600 dark:text-slate-500">Timeline</p>
                   <p>{architectResult.timeline}</p>
                 </div>
 

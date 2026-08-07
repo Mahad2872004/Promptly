@@ -13,7 +13,7 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
     const openCalendly = () => window.open("https://calendly.com/promptlypk/30min", "_blank");
 
     return (
-        <div className="relative text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 overflow-hidden" style={accentVars("ai")}>
+        <div className="relative text-slate-900 dark:text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 overflow-hidden transition-colors duration-300" style={accentVars("ai")}>
       <PageAtmosphere module="ai" />
 
             {/* Background gradient blobs */}
@@ -24,7 +24,7 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
             </div>
 
             <div className="mx-auto max-w-5xl">
-                <div className="rounded-2xl surface-card shadow-xl p-8 sm:p-12 backdrop-blur-sm">
+                <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/40 shadow-xl p-8 sm:p-12 backdrop-blur-sm">
                     <RevealGroup className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start" itemClassName="h-full">
 
                         {/* Left — Content */}
@@ -32,14 +32,14 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                             {/* Badge */}
                             <div className="inline-flex items-center gap-2 border border-cyan-500/40 rounded-full px-3 py-1.5 mb-6">
                                 <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                                <span className="text-[10px] font-semibold text-cyan-400 uppercase tracking-widest font-mono">
+                                <span className="text-[10px] font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-widest font-mono">
                                     Free strategy session
                                 </span>
                             </div>
 
                             {/* Heading */}
                             <p className="script-tagline mb-3">Thirty minutes, no deck.</p>
-                            <h1 className="display-heading font-sans text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-4">
+                            <h1 className="display-heading font-sans text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight text-slate-900 dark:text-white mb-4">
                                 Book your<br />
                                 <span
                                     className="italic"
@@ -54,13 +54,13 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                                 </span>
                             </h1>
 
-                            <p className="text-sm text-slate-400 leading-relaxed mb-8">
+                            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed mb-8">
                                 Reserve a focused 30-minute strategy session with our lead engineer.
                                 Walk away with a clear software roadmap tailored to your goals.
                             </p>
 
                             {/* Stats */}
-                            <div className="flex gap-8 pb-8 border-b border-slate-800 mb-8">
+                            <div className="flex gap-8 pb-8 border-b border-slate-200 dark:border-slate-800 mb-8">
                                 {[
                                     { num: "30", label: "Minutes focused" },
                                     { num: "0", label: "Cost, free" },
@@ -78,7 +78,7 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                                         >
                                             {s.num}
                                         </div>
-                                        <div className="text-xs text-slate-500 mt-0.5">{s.label}</div>
+                                        <div className="text-xs text-slate-600 dark:text-slate-500 mt-0.5">{s.label}</div>
                                     </div>
                                 ))}
                             </div>
@@ -122,15 +122,15 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                                             </span>
                                         </div>
                                         <div>
-                                            <div className="text-sm font-bold text-slate-200 mb-0.5">{f.title}</div>
-                                            <div className="text-xs text-slate-500 leading-relaxed">{f.desc}</div>
+                                            <div className="text-sm font-bold text-slate-900 dark:text-slate-200 mb-0.5">{f.title}</div>
+                                            <div className="text-xs text-slate-600 dark:text-slate-500 leading-relaxed">{f.desc}</div>
                                         </div>
                                     </div>
                                 ))}
                             </div>
 
                             {/* Person */}
-                            <div className="flex items-center justify-between pt-6 border-t border-slate-800">
+                            <div className="flex items-center justify-between pt-6 border-t border-slate-200 dark:border-slate-800">
                                 <div className="flex items-center gap-3">
                                     <img
                                         src="/images/212.png"
@@ -138,11 +138,11 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
                                         className="h-14 w-14 rounded-full object-cover"
                                     />
                                     <div>
-                                        <div className="text-sm font-bold text-slate-200">Mahad Mateen</div>
-                                        <div className="text-xs text-slate-500">CEO & Founder</div>
+                                        <div className="text-sm font-bold text-slate-900 dark:text-slate-200">Mahad Mateen</div>
+                                        <div className="text-xs text-slate-600 dark:text-slate-500">CEO & Founder</div>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-1.5 text-xs text-slate-400 border border-slate-700 rounded-full px-3 py-1.5">
+                                <div className="flex items-center gap-1.5 text-xs text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-700 rounded-full px-3 py-1.5">
                                     <Clock className="w-3 h-3" />
                                     <span>30 min</span>
                                 </div>

@@ -82,7 +82,7 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
   };
 
   return (
-    <div className="bg-transparent text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 relative" style={accentVars("ai")}>
+    <div className="bg-transparent text-slate-900 dark:text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 relative transition-colors duration-300" style={accentVars("ai")}>
       <PageAtmosphere module="ai" />
       <div className="mx-auto max-w-2xl space-y-10">
 
@@ -95,12 +95,12 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
           </ScrollReveal>
           <ScrollReveal animation="fade-up" delay={80}>
             <p className="script-tagline mb-3">One business day.</p>
-            <h1 className="display-heading font-sans text-4xl font-extrabold tracking-tight sm:text-5xl">
+            <h1 className="display-heading font-sans text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-5xl">
               Start a project with us
             </h1>
           </ScrollReveal>
           <ScrollReveal animation="fade-up" delay={160}>
-            <p className="text-sm text-slate-400 leading-relaxed font-sans">
+            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed font-sans">
               Tell us about your software needs and we'll get back to you within one business
               day to discuss your project scope and timeline.
             </p>
@@ -108,9 +108,9 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
         </div>
 
         {/* Form card */}
-        <ScrollReveal animation="fade-up" delay={240} className="p-6 sm:p-8 rounded-2xl surface-card shadow-xl space-y-6">
+        <ScrollReveal animation="fade-up" delay={240} className="p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/40 shadow-xl space-y-6">
 
-          <div className="flex items-center gap-2 pb-3.5 border-b border-slate-800 text-xs font-mono text-slate-500">
+          <div className="flex items-center gap-2 pb-3.5 border-b border-slate-200 dark:border-slate-800 text-xs font-mono text-slate-600 dark:text-slate-500">
             <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
             <span>Accepting new projects</span>
           </div>
@@ -120,8 +120,8 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
               <div className="h-12 w-12 rounded-full bg-emerald-900/60 border border-emerald-700 text-emerald-400 flex items-center justify-center mx-auto">
                 <Check className="w-6 h-6 stroke-[3]" />
               </div>
-              <h3 className="font-sans font-extrabold text-lg">Brief received!</h3>
-              <p className="text-xs text-slate-400 leading-relaxed font-sans max-w-md mx-auto">
+              <h3 className="font-sans font-extrabold text-lg text-slate-900 dark:text-white">Brief received!</h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-sans max-w-md mx-auto">
                 {successMsg} We'll review your project details and be in touch shortly.
               </p>
               <button
@@ -137,34 +137,34 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
               {/* Name & Email */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-[10px] sm:text-xs font-bold text-slate-300 uppercase tracking-wider block">
+                  <label className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider block">
                     Full name *
                   </label>
                   <div className="relative">
-                    <User className="absolute left-3 top-2.5 h-4 w-4 text-slate-600" />
+                    <User className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
                     <input
                       type="text"
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="Sarah Jenkins"
-                      className="w-full rounded border border-slate-800 bg-transparent pl-9 pr-3 py-2 text-sm text-white focus:border-cyan-500 focus:outline-none transition-colors"
+                      className="w-full rounded border border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-transparent pl-9 pr-3 py-2 text-sm text-slate-900 dark:text-white focus:border-cyan-500 focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-[10px] sm:text-xs font-bold text-slate-300 uppercase tracking-wider block">
+                  <label className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider block">
                     Work email *
                   </label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-slate-600" />
+                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
                     <input
                       type="email"
                       required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="sarah@company.com"
-                      className="w-full rounded border border-slate-800 bg-transparent pl-9 pr-3 py-2 text-sm text-white focus:border-cyan-500 focus:outline-none transition-colors"
+                      className="w-full rounded border border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-transparent pl-9 pr-3 py-2 text-sm text-slate-900 dark:text-white focus:border-cyan-500 focus:outline-none transition-colors"
                     />
                   </div>
                 </div>
@@ -174,13 +174,13 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
               {/* Project type & Budget */}
               <RevealGroup className="grid grid-cols-1 sm:grid-cols-2 gap-4" itemClassName="h-full">
                 <div className="space-y-1.5">
-                  <label className="text-[10px] sm:text-xs font-bold text-slate-300 uppercase tracking-wider block">
+                  <label className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider block">
                     Project type
                   </label>
                   <select
                     value={projectType}
                     onChange={(e) => setProjectType(e.target.value)}
-                    className="w-full rounded border border-slate-800 bg-transparent p-2 text-xs sm:text-sm text-slate-300 outline-none focus:border-cyan-500 transition-colors"
+                    className="w-full rounded border border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-2 text-xs sm:text-sm text-slate-900 dark:text-slate-300 outline-none focus:border-cyan-500 transition-colors"
                   >
                     {projectTemplates.map((t) => (
                       <option key={t} value={t}>{t}</option>
@@ -188,13 +188,13 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
                   </select>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-[10px] sm:text-xs font-bold text-slate-300 uppercase tracking-wider block">
+                  <label className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider block">
                     Estimated budget
                   </label>
                   <select
                     value={budget}
                     onChange={(e) => setBudget(e.target.value)}
-                    className="w-full rounded border border-slate-800 bg-transparent p-2 text-xs sm:text-sm text-slate-300 outline-none focus:border-cyan-500 transition-colors"
+                    className="w-full rounded border border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-2 text-xs sm:text-sm text-slate-900 dark:text-slate-300 outline-none focus:border-cyan-500 transition-colors"
                   >
                     {budgetRanges.map((b) => (
                       <option key={b} value={b}>{b}</option>
@@ -205,7 +205,7 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
 
               {/* Message */}
               <div className="space-y-1.5">
-                <label className="text-[10px] sm:text-xs font-bold text-slate-300 uppercase tracking-wider block">
+                <label className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider block">
                   Tell us about your project *
                 </label>
                 <textarea
@@ -214,12 +214,12 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Describe your core requirements — user roles, integrations, key features, or any technical constraints..."
-                  className="w-full rounded border border-slate-800 bg-transparent p-3 text-sm text-white focus:border-cyan-500 focus:outline-none transition-colors leading-relaxed"
+                  className="w-full rounded border border-slate-300 dark:border-slate-800 bg-slate-50 dark:bg-transparent p-3 text-sm text-slate-900 dark:text-white focus:border-cyan-500 focus:outline-none transition-colors leading-relaxed"
                 />
               </div>
 
               {errorMsg && (
-                <div className="flex items-start gap-2 text-xs text-red-400 bg-red-950/20 border border-red-900/40 p-3 rounded">
+                <div className="flex items-start gap-2 text-xs text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-950/20 border border-red-200 dark:border-red-900/40 p-3 rounded">
                   <AlertCircle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
                   <span>{errorMsg}</span>
                 </div>

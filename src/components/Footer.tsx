@@ -73,11 +73,11 @@ export default function Footer({ setActiveView }: FooterProps) {
                 Free consultation
               </span>
 
-              <h3 className="mt-4 text-2xl font-extrabold text-white sm:text-3xl">
+              <h3 className="mt-4 text-2xl font-extrabold text-slate-900 dark:text-white sm:text-3xl">
                 Let&apos;s build something <span className="text-gradient-cyan-indigo">exceptional</span>
               </h3>
 
-              <p className="mt-3 max-w-md text-sm text-slate-400">
+              <p className="mt-3 max-w-md text-sm text-slate-600 dark:text-slate-400">
                 Book a 30-minute architecture session with our principal team.
               </p>
             </div>
