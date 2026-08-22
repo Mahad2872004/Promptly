@@ -13,3 +13,7 @@ temp_interactive_push.bat
 
 # Browser-verification artifacts
 shots/
+
+# Browser-verification artifacts
+shots/
+.gitignore
