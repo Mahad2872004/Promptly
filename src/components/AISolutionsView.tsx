@@ -1,112 +1,77 @@
 import React from "react";
 import { ViewType } from "../types";
-import { Brain, Zap, Target, Sparkles, ArrowRight } from "lucide-react";
-import ScrollReveal from "./ui/ScrollReveal";
-import PageAtmosphere from "./ui/PageAtmosphere";
-import { accentVars } from "../theme/tokens";
+import { Brain, Zap, Target, Layers } from "lucide-react";
+import ServiceDetailPage from "./ui/ServiceDetailPage";
 
 interface AISolutionsViewProps {
   setActiveView: (view: ViewType) => void;
 }
 
 export default function AISolutionsView({ setActiveView }: AISolutionsViewProps) {
-  const services = [
-    {
-      icon: <Brain className="w-6 h-6" />,
-      title: "AI Automation",
-      description: "Intelligent process automation to reduce manual work and increase efficiency",
-      features: ["Workflow automation", "Process optimization", "Cost reduction"]
-    },
-    {
-      icon: <Zap className="w-6 h-6" />,
-      title: "LLM Integration", 
-      description: "Custom large language model solutions tailored to your business needs",
-      features: ["Custom model training", "API integration", "Fine-tuning"]
-    },
-    {
-      icon: <Target className="w-6 h-6" />,
-      title: "Predictive Analytics",
-      description: "Data-driven insights and forecasting to power better decision making",
-      features: ["Data modeling", "Trend analysis", "Real-time predictions"]
-    },
-    {
-      icon: <Sparkles className="w-6 h-6" />,
-      title: "Intelligent Systems",
-      description: "Smart systems that learn and adapt to improve over time",
-      features: ["Machine learning", "Neural networks", "Adaptive algorithms"]
-    }
-  ];
-
   return (
-    <div className="min-h-screen bg-transparent text-white py-16 px-4 sm:px-6 lg:px-8 relative" style={accentVars("ai")}>
-      <PageAtmosphere module="ai" />
-      <div className="mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <ScrollReveal animation="fade-up" threshold={0.1}>
-            <span className="eyebrow accent-text">
-              AI Solutions
-            </span>
-            <p className="script-tagline mb-3">Intelligence, not gimmicks.</p>
-            <h1 className="display-heading font-sans text-4xl sm:text-5xl font-extrabold tracking-tight mt-4 mb-4">
-              Intelligent Automation for{" "}
-              <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
-                Modern Business
-              </span>
-            </h1>
-            <p className="text-sm text-slate-400 leading-relaxed max-w-2xl mx-auto">
-              Leverage cutting-edge AI technology to automate processes, gain insights, and stay ahead of the competition.
-            </p>
-          </ScrollReveal>
-        </div>
-
-        {/* Services Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-          {services.map((service, i) => (
-            <div key={service.title}>
-              <ScrollReveal animation="fade-up" staggerIndex={i} threshold={0.1}>
-                <div className="group relative p-6 rounded-2xl surface-card hover:border-cyan-500/40 transition-all hover:-translate-y-1">
-                  <div className="absolute top-0 right-0 h-32 w-32 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-full blur-3xl group-hover:blur-2xl transition-all" />
-                  
-                  <div className="relative">
-                    <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-500/10 to-cyan-500/5 group-hover:from-cyan-500/20 group-hover:to-cyan-500/10 mb-4 transition-colors">
-                      <span className="text-cyan-400">{service.icon}</span>
-                    </div>
-                    
-                    <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
-                      {service.title}
-                    </h3>
-                    
-                    <p className="text-sm text-slate-400 mb-4 leading-relaxed">
-                      {service.description}
-                    </p>
-                    
-                    <ul className="space-y-2">
-                      {service.features.map((feature) => (
-                        <li key={feature} className="text-xs text-slate-500 flex items-center gap-2">
-                          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </ScrollReveal>
-            </div>
-          ))}
-        </div>
-
-        {/* CTA */}
-        <ScrollReveal animation="fade-up" threshold={0.1} className="text-center">
-          <button
-            onClick={() => setActiveView("contact")}
-            className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-all hover:scale-[1.02] hover:shadow-cyan-500/40"
-          >
-            Discuss AI Solutions
-            <ArrowRight className="w-4 h-4" />
-          </button>
-        </ScrollReveal>
-      </div>
-    </div>
+    <ServiceDetailPage
+      setActiveView={setActiveView}
+      eyebrow="AI Solutions"
+      title="Intelligent automation for modern business"
+      lead="Automate the processes that consume your team's day, and put a model behind the decisions that need one — built on your data, running in your infrastructure."
+      capabilities={[
+        {
+          icon: <Brain className="h-5 w-5" />,
+          title: "AI Automation",
+          description:
+            "Intelligent process automation that removes manual handling from high-volume, repetitive operations work.",
+          features: ["Workflow automation", "Process optimisation", "Cost reduction"],
+        },
+        {
+          icon: <Zap className="h-5 w-5" />,
+          title: "LLM Integration",
+          description:
+            "Large language models wired into your own systems and data, with guardrails and evaluation in place before launch.",
+          features: ["Retrieval over your data", "API integration", "Fine-tuning & evals"],
+        },
+        {
+          icon: <Target className="h-5 w-5" />,
+          title: "Predictive Analytics",
+          description:
+            "Forecasting and scoring models that turn historical data into decisions your team can act on daily.",
+          features: ["Data modelling", "Trend analysis", "Real-time predictions"],
+        },
+        {
+          icon: <Layers className="h-5 w-5" />,
+          title: "Intelligent Systems",
+          description:
+            "Systems that keep improving after launch, with monitoring so you can see when accuracy moves.",
+          features: ["Machine learning", "Adaptive pipelines", "Accuracy monitoring"],
+        },
+      ]}
+      engagement={[
+        {
+          title: "Process audit",
+          description:
+            "We map the workflow as it runs today, measure where the hours actually go, and identify what is worth automating.",
+        },
+        {
+          title: "Pilot build",
+          description:
+            "One workflow, built end to end and measured against the manual baseline, so the value is proven before the rollout.",
+        },
+        {
+          title: "Rollout & monitoring",
+          description:
+            "Remaining workflows are shipped in sequence with dashboards, alerting, and an agreed accuracy target per use case.",
+        },
+      ]}
+      stats={[
+        { value: "60%", label: "Typical manual-work reduction" },
+        { value: "4 wks", label: "To first pilot in production" },
+        { value: "100%", label: "Runs in your own cloud" },
+        { value: "24/7", label: "Monitoring & alerting" },
+      ]}
+      cta={{
+        title: "Have a process worth automating?",
+        body: "Send us the workflow. We will tell you whether AI is the right tool for it — including when it is not.",
+        primaryLabel: "Discuss AI Solutions",
+      }}
+    />
   );
 }
