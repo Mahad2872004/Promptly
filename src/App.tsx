@@ -4,7 +4,6 @@ import { ViewType } from "./types";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BackgroundLayer from "./components/background/BackgroundLayer";
-import CursorGlow from "./components/CursorGlow";
 import PageLoader from "./components/PageLoader";
 import HomeView from "./components/HomeView";
 import ServicesView from "./components/ServicesView";
@@ -69,7 +68,6 @@ function AppContent() {
     <div className="min-h-screen bg-[var(--bg-base)] font-sans text-[var(--text-body)] flex flex-col justify-between relative overflow-x-clip">
       <PageLoader />
       <BackgroundLayer />
-      <CursorGlow />
 
       {/*
         Content MOUNTS after the boot overlay clears, rather than sitting behind
