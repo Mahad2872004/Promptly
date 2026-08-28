@@ -106,7 +106,7 @@ export default function PortalView() {
           <ScrollReveal animation="fade-up" className="lg:col-span-7 space-y-6">
             
             {/* Direct Project Health Stats Row */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-xl border border-slate-905 bg-slate-900/30">
+            <div className="surface-card grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-xl">
               <div className="space-y-0.5">
                 <span className="text-[9px] text-slate-500 font-mono block">PROJECT IDENTIFIER</span>
                 <span className="text-xs font-bold font-mono">PR_SaaS_09</span>
@@ -138,7 +138,7 @@ export default function PortalView() {
                     key={task.id}
                     id={`portal-task-${task.id}`}
                     onClick={() => toggleTaskStatus(task.id)}
-                    className="flex items-start gap-3 p-3 rounded-lg bg-slate-900/40 border border-transparent hover:border-slate-800 transition-colors cursor-pointer select-none"
+                    className="surface-card flex items-start gap-3 p-3 rounded-lg border-transparent hover: transition-colors cursor-pointer select-none"
                   >
                     <div className="shrink-0 mt-0.5" id={`task-check-${task.id}`}>
                       {task.status === "completed" && <CheckSquare className="w-4.5 h-4.5 text-cyan-400" />}
@@ -193,7 +193,7 @@ export default function PortalView() {
           </ScrollReveal>
 
           {/* Right Block - Simulated Real-Time Specialist Developer Chat (Col 5) */}
-          <ScrollReveal animation="fade-up" delay={120} className="lg:col-span-5 flex flex-col h-[580px] rounded-2xl surface-card shadow-xl overflow-hidden">
+          <ScrollReveal animation="fade-up" delay={120} className="lg:col-span-5 flex flex-col h-[580px] rounded-2xl surface-card overflow-hidden">
             
             {/* Chat Head */}
             <div className="p-4 bg-slate-950 border-b border-slate-900 flex items-center gap-3">
@@ -242,7 +242,7 @@ export default function PortalView() {
                 value={chatInput}
                 onChange={(e) => setChatInput(e.target.value)}
                 placeholder="Ask kamil about 'database', 'stripe', or 'timeline'..."
-                className="flex-1 rounded border border-slate-800 bg-slate-900/60 px-3 py-2 text-xs text-white placeholder-slate-500 outline-none focus:border-cyan-500"
+                className="surface-card flex-1 rounded px-3 py-2 text-xs text-white placeholder-slate-500 outline-none focus:border-cyan-500"
               />
               <button
                 type="submit"
