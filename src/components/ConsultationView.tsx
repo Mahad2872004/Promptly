@@ -24,7 +24,7 @@ export default function ConsultationView({ setActiveView }: ConsultationViewProp
             </div>
 
             <div className="mx-auto max-w-5xl">
-                <div className="rounded-2xl surface-card shadow-xl p-8 sm:p-12 backdrop-blur-sm">
+                <div className="rounded-2xl surface-card p-8 sm:p-12">
                     <RevealGroup className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start" itemClassName="h-full">
 
                         {/* Left — Content */}
