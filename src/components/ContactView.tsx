@@ -1,45 +1,72 @@
 import React, { useState } from "react";
-import { Mail, User, Building, Check, Send, AlertCircle } from "lucide-react";
+import {
+  Mail,
+  MapPin,
+  Check,
+  Send,
+  AlertCircle,
+  Clock,
+  Linkedin,
+} from "lucide-react";
 import { supabase } from "../lib/supabase";
 import ScrollReveal from "./ui/ScrollReveal";
-import RevealGroup from "./ui/RevealGroup";
-import PageAtmosphere from "./ui/PageAtmosphere";
-import { accentVars } from "../theme/tokens";
+import PageHero from "./ui/PageHero";
 
 interface ContactViewProps {
   setActiveView: (view: any) => void;
+}
+
+const PROJECT_TYPES = [
+  "Enterprise SaaS",
+  "AI / LLM Integration",
+  "Cloud Architecture",
+  "Mobile App",
+  "Prototyping Sprint",
+];
+
+const BUDGET_RANGES = [
+  "Under $20,000",
+  "$20,000 – $40,000",
+  "$40,000 – $60,000",
+  "$60,000+",
+];
+
+/** Small labelled field wrapper — one label style across the whole form. */
+function Field({
+  label,
+  required,
+  children,
+}: {
+  label: string;
+  required?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <label className="block">
+      <span className="mb-1.5 block text-xs font-semibold text-[var(--text-heading)]">
+        {label}
+        {required && <span className="text-[var(--accent)]"> *</span>}
+      </span>
+      {children}
+    </label>
+  );
 }
 
 export default function ContactView({ setActiveView }: ContactViewProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
-  const [projectType, setProjectType] = useState("Enterprise SaaS");
-  const [budget, setBudget] = useState("$20,000 – $40,000");
+  const [projectType, setProjectType] = useState(PROJECT_TYPES[0]);
+  const [budget, setBudget] = useState(BUDGET_RANGES[1]);
   const [message, setMessage] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
-  const projectTemplates = [
-    "Enterprise SaaS",
-    "AI / LLM Integration",
-    "Cloud Architecture",
-    "Mobile App",
-    "Prototyping Sprint",
-  ];
-
-  const budgetRanges = [
-    "Under $20,000",
-    "$20,000 – $40,000",
-    "$40,000 – $60,000",
-    "$60,000+",
-  ];
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!supabase) {
       setErrorMsg("Contact form is not configured. Please add Supabase credentials.");
       return;
@@ -55,21 +82,19 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
     setErrorMsg("");
 
     try {
-      const { error } = await supabase
-        .from('contact_submissions')
-        .insert({
-          name: name.trim(),
-          email: email.trim(),
-          company: company.trim(),
-          project_type: projectType,
-          budget: budget,
-          message: message.trim(),
-          created_at: new Date().toISOString()
-        });
+      const { error } = await supabase.from("contact_submissions").insert({
+        name: name.trim(),
+        email: email.trim(),
+        company: company.trim(),
+        project_type: projectType,
+        budget,
+        message: message.trim(),
+        created_at: new Date().toISOString(),
+      });
 
       if (error) throw error;
 
-      setSuccessMsg("Thanks for reaching out! We've received your project brief.");
+      setSuccessMsg("Thanks for reaching out — we have received your project brief.");
       setName("");
       setEmail("");
       setCompany("");
@@ -82,163 +107,242 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
   };
 
   return (
-    <div className="bg-transparent text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 relative" style={accentVars("ai")}>
-      <PageAtmosphere module="ai" />
-      <div className="mx-auto max-w-2xl space-y-10">
+    <div>
+      <PageHero
+        eyebrow="Contact"
+        title="Start a project with us"
+        lead="Tell us about the software you need. We reply within one business day with a view on scope, timeline and whether we are the right team for it."
+      />
 
-        {/* Header */}
-        <div className="text-center space-y-4">
-          <ScrollReveal animation="fade-up">
-            <span className="eyebrow accent-text">
-              Get in touch
-            </span>
-          </ScrollReveal>
-          <ScrollReveal animation="fade-up" delay={80}>
-            <p className="script-tagline mb-3">One business day.</p>
-            <h1 className="display-heading font-sans text-4xl font-extrabold tracking-tight sm:text-5xl">
-              Start a project with us
-            </h1>
-          </ScrollReveal>
-          <ScrollReveal animation="fade-up" delay={160}>
-            <p className="text-sm text-slate-400 leading-relaxed font-sans">
-              Tell us about your software needs and we'll get back to you within one business
-              day to discuss your project scope and timeline.
+      <section className="section">
+        <div className="container-page grid gap-10 lg:grid-cols-12 lg:gap-12">
+          {/* ── Details column ──────────────────────────────────────── */}
+          <div className="lg:col-span-4">
+            <h2 className="text-lg font-semibold tracking-tight text-[var(--text-heading)]">
+              Reach us directly
+            </h2>
+            <p className="mt-2.5 text-sm leading-relaxed text-[var(--text-body)]">
+              Prefer email? Write to us and include whatever detail you already
+              have — a spec, a screenshot, or two sentences.
             </p>
-          </ScrollReveal>
-        </div>
 
-        {/* Form card */}
-        <ScrollReveal animation="fade-up" delay={240} className="p-6 sm:p-8 rounded-2xl surface-card shadow-xl space-y-6">
-
-          <div className="flex items-center gap-2 pb-3.5 border-b border-slate-800 text-xs font-mono text-slate-500">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
-            <span>Accepting new projects</span>
-          </div>
-
-          {successMsg ? (
-            <div className="p-6 rounded-2xl border border-emerald-900/30 bg-emerald-950/10 text-center space-y-4">
-              <div className="h-12 w-12 rounded-full bg-emerald-900/60 border border-emerald-700 text-emerald-400 flex items-center justify-center mx-auto">
-                <Check className="w-6 h-6 stroke-[3]" />
+            <dl className="mt-8 space-y-6 border-t border-[var(--border)] pt-8">
+              <div className="flex gap-4">
+                <span className="icon-tile icon-tile-sm">
+                  <Mail className="h-4 w-4" aria-hidden />
+                </span>
+                <div>
+                  <dt className="mono-label uppercase">Email</dt>
+                  <dd className="mt-1">
+                    <a
+                      href="mailto:promptlypk@gmail.com"
+                      className="text-sm font-medium text-[var(--text-heading)] hover:text-[var(--accent)]"
+                    >
+                      promptlypk@gmail.com
+                    </a>
+                  </dd>
+                </div>
               </div>
-              <h3 className="font-sans font-extrabold text-lg">Brief received!</h3>
-              <p className="text-xs text-slate-400 leading-relaxed font-sans max-w-md mx-auto">
-                {successMsg} We'll review your project details and be in touch shortly.
+
+              <div className="flex gap-4">
+                <span className="icon-tile icon-tile-sm">
+                  <MapPin className="h-4 w-4" aria-hidden />
+                </span>
+                <div>
+                  <dt className="mono-label uppercase">Office</dt>
+                  <dd className="mt-1 text-sm font-medium text-[var(--text-heading)]">
+                    Lahore, Pakistan
+                  </dd>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <span className="icon-tile icon-tile-sm">
+                  <Clock className="h-4 w-4" aria-hidden />
+                </span>
+                <div>
+                  <dt className="mono-label uppercase">Response time</dt>
+                  <dd className="mt-1 text-sm font-medium text-[var(--text-heading)]">
+                    Within one business day
+                  </dd>
+                </div>
+              </div>
+
+              <div className="flex gap-4">
+                <span className="icon-tile icon-tile-sm">
+                  <Linkedin className="h-4 w-4" aria-hidden />
+                </span>
+                <div>
+                  <dt className="mono-label uppercase">LinkedIn</dt>
+                  <dd className="mt-1">
+                    <a
+                      href="https://www.linkedin.com/company/promptlypk/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium text-[var(--text-heading)] hover:text-[var(--accent)]"
+                    >
+                      /company/promptlypk
+                    </a>
+                  </dd>
+                </div>
+              </div>
+            </dl>
+
+            <div className="card-inset mt-8 p-5">
+              <p className="text-sm font-semibold text-[var(--text-heading)]">
+                Would rather talk it through?
+              </p>
+              <p className="mt-1.5 text-sm text-[var(--text-body)]">
+                Book a 30-minute technical session instead.
               </p>
               <button
-                onClick={() => setSuccessMsg("")}
-                className="rounded-full border border-emerald-800 hover:bg-emerald-950/25 px-5 py-2 text-xs font-semibold text-emerald-400 transition-colors cursor-pointer"
+                type="button"
+                onClick={() => setActiveView("consultation")}
+                className="link-arrow mt-3"
               >
-                Submit another brief
+                Book a Consultation
               </button>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-4 font-sans text-left">
+          </div>
 
-              {/* Name & Email */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="space-y-1.5">
-                  <label className="text-[10px] sm:text-xs font-bold text-slate-300 uppercase tracking-wider block">
-                    Full name *
-                  </label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-2.5 h-4 w-4 text-slate-600" />
+          {/* ── Form column ─────────────────────────────────────────── */}
+          <ScrollReveal animation="fade-up" className="lg:col-span-8">
+            <div className="surface-card p-7 md:p-9">
+              <div className="flex items-center gap-2.5 border-b border-[var(--border)] pb-5">
+                <span
+                  className="h-1.5 w-1.5 rounded-full bg-[var(--accent)]"
+                  aria-hidden
+                />
+                <span className="mono-label uppercase">
+                  Currently accepting new projects
+                </span>
+              </div>
+
+              {successMsg ? (
+                <div className="py-10 text-center">
+                  <span className="icon-tile mx-auto">
+                    <Check className="h-5 w-5" strokeWidth={2.5} />
+                  </span>
+                  <h3 className="mt-5 text-lg font-semibold tracking-tight text-[var(--text-heading)]">
+                    Brief received
+                  </h3>
+                  <p className="mx-auto mt-2.5 max-w-md text-sm leading-relaxed text-[var(--text-body)]">
+                    {successMsg} We will review the details and be in touch within
+                    one business day.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setSuccessMsg("")}
+                    className="btn btn-secondary mt-6 px-5"
+                  >
+                    Submit another brief
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="mt-6 space-y-5">
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <Field label="Full name" required>
+                      <input
+                        type="text"
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Sarah Jenkins"
+                        className="field"
+                      />
+                    </Field>
+
+                    <Field label="Work email" required>
+                      <input
+                        type="email"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="sarah@company.com"
+                        className="field"
+                      />
+                    </Field>
+                  </div>
+
+                  <Field label="Company">
                     <input
                       type="text"
-                      required
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Sarah Jenkins"
-                      className="w-full rounded border border-slate-800 bg-transparent pl-9 pr-3 py-2 text-sm text-white focus:border-cyan-500 focus:outline-none transition-colors"
+                      value={company}
+                      onChange={(e) => setCompany(e.target.value)}
+                      placeholder="Company name"
+                      className="field"
                     />
+                  </Field>
+
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <Field label="Project type">
+                      <select
+                        value={projectType}
+                        onChange={(e) => setProjectType(e.target.value)}
+                        className="field"
+                      >
+                        {PROJECT_TYPES.map((t) => (
+                          <option key={t} value={t}>
+                            {t}
+                          </option>
+                        ))}
+                      </select>
+                    </Field>
+
+                    <Field label="Estimated budget">
+                      <select
+                        value={budget}
+                        onChange={(e) => setBudget(e.target.value)}
+                        className="field"
+                      >
+                        {BUDGET_RANGES.map((b) => (
+                          <option key={b} value={b}>
+                            {b}
+                          </option>
+                        ))}
+                      </select>
+                    </Field>
                   </div>
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-[10px] sm:text-xs font-bold text-slate-300 uppercase tracking-wider block">
-                    Work email *
-                  </label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-slate-600" />
-                    <input
-                      type="email"
+
+                  <Field label="Tell us about your project" required>
+                    <textarea
                       required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="sarah@company.com"
-                      className="w-full rounded border border-slate-800 bg-transparent pl-9 pr-3 py-2 text-sm text-white focus:border-cyan-500 focus:outline-none transition-colors"
+                      rows={5}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="Core requirements — user roles, integrations, key features, technical constraints…"
+                      className="field leading-relaxed"
                     />
-                  </div>
-                </div>
-              </div>
+                  </Field>
 
+                  {errorMsg && (
+                    <div
+                      role="alert"
+                      className="flex items-start gap-2.5 rounded-[var(--r-md)] border border-red-500/30 bg-red-500/5 p-3.5 text-sm text-red-500"
+                    >
+                      <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+                      <span>{errorMsg}</span>
+                    </div>
+                  )}
 
-              {/* Project type & Budget */}
-              <RevealGroup className="grid grid-cols-1 sm:grid-cols-2 gap-4" itemClassName="h-full">
-                <div className="space-y-1.5">
-                  <label className="text-[10px] sm:text-xs font-bold text-slate-300 uppercase tracking-wider block">
-                    Project type
-                  </label>
-                  <select
-                    value={projectType}
-                    onChange={(e) => setProjectType(e.target.value)}
-                    className="w-full rounded border border-slate-800 bg-transparent p-2 text-xs sm:text-sm text-slate-300 outline-none focus:border-cyan-500 transition-colors"
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="btn btn-primary w-full py-3.5 disabled:opacity-60"
                   >
-                    {projectTemplates.map((t) => (
-                      <option key={t} value={t}>{t}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-[10px] sm:text-xs font-bold text-slate-300 uppercase tracking-wider block">
-                    Estimated budget
-                  </label>
-                  <select
-                    value={budget}
-                    onChange={(e) => setBudget(e.target.value)}
-                    className="w-full rounded border border-slate-800 bg-transparent p-2 text-xs sm:text-sm text-slate-300 outline-none focus:border-cyan-500 transition-colors"
-                  >
-                    {budgetRanges.map((b) => (
-                      <option key={b} value={b}>{b}</option>
-                    ))}
-                  </select>
-                </div>
-              </RevealGroup>
+                    {loading ? "Sending…" : "Send Project Brief"}
+                    {!loading && <Send className="h-4 w-4" aria-hidden />}
+                  </button>
 
-              {/* Message */}
-              <div className="space-y-1.5">
-                <label className="text-[10px] sm:text-xs font-bold text-slate-300 uppercase tracking-wider block">
-                  Tell us about your project *
-                </label>
-                <textarea
-                  required
-                  rows={4}
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Describe your core requirements — user roles, integrations, key features, or any technical constraints..."
-                  className="w-full rounded border border-slate-800 bg-transparent p-3 text-sm text-white focus:border-cyan-500 focus:outline-none transition-colors leading-relaxed"
-                />
-              </div>
-
-              {errorMsg && (
-                <div className="flex items-start gap-2 text-xs text-red-400 bg-red-950/20 border border-red-900/40 p-3 rounded">
-                  <AlertCircle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />
-                  <span>{errorMsg}</span>
-                </div>
+                  <p className="text-center text-xs text-[var(--text-micro)]">
+                    We only use these details to reply to your enquiry.
+                  </p>
+                </form>
               )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="btn-primary flex w-full cursor-pointer items-center justify-center gap-1.5 rounded-full py-3.5 text-xs uppercase tracking-widest select-none disabled:opacity-60"
-              >
-                {loading ? "Sending..." : "Send project brief"}
-                <Send className="w-3.5 h-3.5 text-slate-950" />
-              </button>
-
-            </form>
-          )}
-        </ScrollReveal>
-
-      </div>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
     </div>
   );
 }
