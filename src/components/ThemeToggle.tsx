@@ -20,7 +20,7 @@ export default function ThemeToggle({ className = "", label }: ThemeToggleProps)
   return (
     <div className={`flex items-center gap-2.5 ${className}`}>
       {label && (
-        <span className="eyebrow hidden lg:inline-block whitespace-nowrap">
+        <span className="mono-label hidden whitespace-nowrap uppercase lg:inline-block">
           {label}
         </span>
       )}
@@ -32,25 +32,19 @@ export default function ThemeToggle({ className = "", label }: ThemeToggleProps)
         aria-checked={isDark}
         aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
         title={isDark ? "Switch to light mode" : "Switch to dark mode"}
-        className="btn-secondary relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full p-0 outline-none focus-visible:ring-2 focus-visible:ring-[var(--promptly-border-active)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg-base)]"
+        className="btn btn-secondary relative h-9 w-9 shrink-0 p-0"
       >
         <Sun
           aria-hidden
-          className={`absolute h-[1.05rem] w-[1.05rem] transition-all duration-300 ${
-            isDark
-              ? "scale-50 rotate-90 opacity-0"
-              : "scale-100 rotate-0 opacity-100"
+          className={`absolute h-[1.05rem] w-[1.05rem] text-[var(--text-body)] transition-all duration-200 ${
+            isDark ? "scale-75 opacity-0" : "scale-100 opacity-100"
           }`}
-          style={{ color: "var(--mod-product-text)" }}
         />
         <Moon
           aria-hidden
-          className={`absolute h-[1.05rem] w-[1.05rem] transition-all duration-300 ${
-            isDark
-              ? "scale-100 rotate-0 opacity-100"
-              : "scale-50 -rotate-90 opacity-0"
+          className={`absolute h-[1.05rem] w-[1.05rem] text-[var(--text-body)] transition-all duration-200 ${
+            isDark ? "scale-100 opacity-100" : "scale-75 opacity-0"
           }`}
-          style={{ color: "var(--mod-ai-text)" }}
         />
       </button>
     </div>

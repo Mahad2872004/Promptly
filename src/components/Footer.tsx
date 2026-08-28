@@ -2,24 +2,21 @@ import React, { useState } from "react";
 import { ViewType } from "../types";
 import Logo from "./Logo";
 import ScrollReveal from "./ui/ScrollReveal";
-import RevealGroup from "./ui/RevealGroup";
 import { useNavigate } from "react-router-dom";
 import { VIEW_PATHS } from "../routes";
-import {
-  Send,
-  Linkedin,
-  Sparkles,
-  Check,
-  ArrowRight,
-  Mail,
-  MapPin,
-  Terminal,
-} from "lucide-react";
+import { Send, Linkedin, Check, ArrowRight, Mail, MapPin } from "lucide-react";
 
 interface FooterProps {
   setActiveView: (view: ViewType) => void;
 }
 
+/**
+ * Site footer.
+ *
+ * Dark in both themes — a light footer under a light page gives the document
+ * nothing to close on. Two bands: a full-width CTA, then a four-column link
+ * grid over a legal bar. No gradient panel, no glow, no glass.
+ */
 export default function Footer({ setActiveView }: FooterProps) {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -37,194 +34,192 @@ export default function Footer({ setActiveView }: FooterProps) {
     navigate(VIEW_PATHS[view]);
   };
 
-  const nav = {
-    solutions: [
-      { label: "Web Applications", view: "services" as ViewType },
-      { label: "AI Automation", view: "services" as ViewType },
-      { label: "AI Systems", view: "services" as ViewType },
-      { label: "App Development", view: "services" as ViewType },
-    ],
-    company: [
-      { label: "About", view: "about" as ViewType },
-      { label: "Case Studies", view: "portfolio" as ViewType },
-      { label: "AI Architect", view: "ai-architect" as ViewType },
-      { label: "Client Portal", view: "client-portal" as ViewType },
-    ],
-  };
-
-  const socials = [
-    { Icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/company/promptlypk/" },
+  const columns: { heading: string; links: { label: string; view: ViewType }[] }[] = [
+    {
+      heading: "Services",
+      links: [
+        { label: "AI Solutions", view: "ai-solutions" },
+        { label: "Software Development", view: "software-development" },
+        { label: "Digital Transformation", view: "digital-transformation" },
+        { label: "Startup Support", view: "startup-support" },
+        { label: "All Services", view: "services" },
+      ],
+    },
+    {
+      heading: "Products",
+      links: [
+        { label: "xSender", view: "xsender" },
+        { label: "All Products", view: "products" },
+        { label: "AI Architect", view: "ai-architect" },
+        { label: "Client Portal", view: "client-portal" },
+      ],
+    },
+    {
+      heading: "Industries",
+      links: [
+        { label: "Startups", view: "startups" },
+        { label: "E-commerce", view: "ecommerce" },
+        { label: "Real Estate", view: "realestate" },
+        { label: "Enterprise", view: "enterprise" },
+      ],
+    },
+    {
+      heading: "Company",
+      links: [
+        { label: "About Us", view: "about" },
+        { label: "Case Studies", view: "portfolio" },
+        { label: "Contact", view: "contact" },
+        { label: "Book a Consultation", view: "consultation" },
+      ],
+    },
   ];
 
   return (
-    <footer className="site-footer relative text-brand-muted">
-
-      {/* Gradient line */}
-      <div className="h-px w-full" style={{ background: "var(--promptly-gradient)" }} />
-
-      {/* CTA */}
+    <footer className="site-footer">
+      {/* ── CTA band ──────────────────────────────────────────────────── */}
       <ScrollReveal>
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-          <div className="footer-cta-card flex flex-col items-center justify-between gap-8 rounded-2xl p-8 md:flex-row md:p-10 lg:rounded-3xl">
-
-            <div className="text-center md:text-left">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan-500/25 bg-cyan-500/10 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-cyan-400">
-                <Sparkles className="h-3 w-3" />
-                Free consultation
-              </span>
-
-              <h3 className="mt-4 text-2xl font-extrabold text-white sm:text-3xl">
-                Let&apos;s build something <span className="text-gradient-cyan-indigo">exceptional</span>
-              </h3>
-
-              <p className="mt-3 max-w-md text-sm text-slate-400">
-                Book a 30-minute architecture session with our principal team.
+        <div className="border-b border-white/10">
+          <div className="container-page flex flex-col items-start justify-between gap-6 py-12 md:flex-row md:items-center md:py-14">
+            <div>
+              <h2 className="text-2xl font-bold tracking-tight text-white sm:text-3xl">
+                Have a project in mind?
+              </h2>
+              <p className="mt-2 max-w-xl text-sm text-white/60">
+                Book a 30-minute technical session with our engineering team. No deck,
+                no pitch — we scope the problem and tell you what it takes to build.
               </p>
             </div>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
               <button
                 onClick={() => handleNav("consultation")}
-                className="btn-primary flex items-center gap-2 rounded-full px-7 py-3.5 text-sm"
+                className="btn btn-on-inverse group px-6"
               >
                 Book a Consultation
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+              </button>
+              <button
+                onClick={() => handleNav("contact")}
+                className="btn btn-outline-inverse px-6"
+              >
+                Send a Brief
               </button>
             </div>
-
           </div>
         </div>
       </ScrollReveal>
 
-      {/* Main grid */}
-      <div className="border-t border-brand">
-        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+      {/* ── Link grid ─────────────────────────────────────────────────── */}
+      <div className="container-page py-14">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
+          {/* Brand + contact */}
+          <div className="lg:col-span-3">
+            <button onClick={() => handleNav("home")} aria-label="Promptly — go to home">
+              <Logo size={32} onInverse />
+            </button>
 
-          <ScrollReveal delay={0.1}>
-            <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/60">
+              Promptly is a software engineering company building AI-powered
+              platforms, custom business software, and its own products.
+            </p>
 
-              {/* Brand */}
-              <ScrollReveal animation="fade-up" className="lg:col-span-4">
-                <button onClick={() => handleNav("home")}>
-                  <Logo size={42} />
-                </button>
-
-                <p className="mt-5 text-sm text-slate-400">
-                  Promptly delivers AI-powered digital solutions for startups and businesses — and builds its own products to scale beyond services.
-                </p>
-
-                <div className="mt-6 flex gap-2.5">
-                  {socials.map(({ Icon, label, href }) => (
-                    <a
-                      key={label}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="footer-social flex h-10 w-10 items-center justify-center rounded-xl"
-                    >
-                      <Icon className="h-4 w-4" />
-                    </a>
-                  ))}
-                </div>
-
-                <div className="surface-card mt-6 space-y-2.5 rounded-xl p-4">
-                  <p className="flex items-center gap-2.5 text-xs text-slate-400">
-                    <Mail className="h-3.5 w-3.5 text-cyan-400" />
-                    <a href="mailto:promptlypk@gmail.com" className="hover:text-cyan-300 transition-colors">
-                      promptlypk@gmail.com
-                    </a>
-                  </p>
-                  <p className="flex items-center gap-2.5 text-xs text-slate-400">
-                    <MapPin className="h-3.5 w-3.5 text-indigo-400" />
-                    Lahore, Pakistan
-                  </p>
-                </div>
-              </ScrollReveal>
-
-              {/* Navigation */}
-              <RevealGroup className="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:col-span-5">
-                <div>
-                  <h3 className="footer-heading text-xs font-bold uppercase">Solutions</h3>
-                  <ul className="mt-4 space-y-2">
-                    {nav.solutions.map((link) => (
-                      <li key={link.label}>
-                        <button onClick={() => handleNav(link.view)} className="footer-link text-sm">
-                          {link.label}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div>
-                  <h3 className="footer-heading text-xs font-bold uppercase">Company</h3>
-                  <ul className="mt-4 space-y-2">
-                    {nav.company.map((link) => (
-                      <li key={link.label}>
-                        <button onClick={() => handleNav(link.view)} className="footer-link text-sm">
-                          {link.label}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </RevealGroup>
-
-              {/* Newsletter */}
-              <ScrollReveal animation="fade-up" delay={160} className="lg:col-span-3">
-                <div className="surface-card rounded-2xl p-5">
-
-                  <h3 className="footer-heading text-xs font-bold uppercase">
-                    Promptly Gazette
-                  </h3>
-
-                  <p className="mt-3 text-sm text-slate-400">
-                    Monthly engineering insights.
-                  </p>
-
-                  <form onSubmit={handleSubscribe} className="mt-4 flex gap-2">
-                    <input
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="footer-input flex-1 rounded-xl px-3.5 py-2.5 text-sm"
-                      placeholder="you@company.com"
-                    />
-
-                    <button className="btn-primary flex h-[42px] w-[42px] items-center justify-center rounded-xl">
-                      {subscribed ? <Check /> : <Send />}
-                    </button>
-                  </form>
-
-                  {subscribed && (
-                    <p className="mt-3 text-xs text-emerald-400 flex items-center gap-1.5">
-                      <Sparkles className="h-3 w-3" />
-                      Welcome aboard!
-                    </p>
-                  )}
-
-                </div>
-              </ScrollReveal>
-
-            </div>
-          </ScrollReveal>
-
-          {/* Bottom bar */}
-          <ScrollReveal delay={0.2}>
-            <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-brand pt-8 md:flex-row">
-              <p className="text-xs text-slate-500">
-                © 2026 Promptly. AI-powered digital solutions for startups and businesses.
+            <div className="mt-6 space-y-2.5 text-sm">
+              <a
+                href="mailto:promptlypk@gmail.com"
+                className="flex items-center gap-2.5 text-white/60 transition-colors hover:text-white"
+              >
+                <Mail className="h-4 w-4 shrink-0" aria-hidden />
+                promptlypk@gmail.com
+              </a>
+              <p className="flex items-center gap-2.5 text-white/60">
+                <MapPin className="h-4 w-4 shrink-0" aria-hidden />
+                Lahore, Pakistan
               </p>
-
-              <div className="flex gap-6">
-                {["Privacy", "Terms", "SLA"].map((item) => (
-                  <a key={item} href="#" className="footer-link text-xs">
-                    {item}
-                  </a>
-                ))}
-              </div>
             </div>
-          </ScrollReveal>
 
+            <div className="mt-6 flex gap-2.5">
+              <a
+                href="https://www.linkedin.com/company/promptlypk/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-social h-9 w-9"
+                aria-label="Promptly on LinkedIn"
+              >
+                <Linkedin className="h-4 w-4" />
+              </a>
+            </div>
+          </div>
+
+          {/* Navigation columns */}
+          <div className="grid grid-cols-2 gap-8 sm:grid-cols-4 lg:col-span-6">
+            {columns.map((col) => (
+              <div key={col.heading}>
+                <h3 className="footer-heading">{col.heading}</h3>
+                <ul className="mt-4 space-y-2.5">
+                  {col.links.map((link) => (
+                    <li key={link.label}>
+                      <button
+                        onClick={() => handleNav(link.view)}
+                        className="footer-link text-left"
+                      >
+                        {link.label}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          {/* Newsletter */}
+          <div className="lg:col-span-3">
+            <h3 className="footer-heading">Newsletter</h3>
+            <p className="mt-4 text-sm text-white/60">
+              Monthly engineering notes. No sales email.
+            </p>
+
+            <form onSubmit={handleSubscribe} className="mt-4 flex gap-2">
+              <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                aria-label="Email address"
+                className="footer-input min-w-0 flex-1 px-3.5 py-2.5 text-sm"
+                placeholder="you@company.com"
+              />
+              <button
+                type="submit"
+                aria-label="Subscribe"
+                className="btn btn-on-inverse h-[42px] w-[42px] shrink-0 p-0 text-[#0b111a]"
+              >
+                {subscribed ? (
+                  <Check className="h-4 w-4" strokeWidth={2.25} />
+                ) : (
+                  <Send className="h-4 w-4" strokeWidth={2.25} />
+                )}
+              </button>
+            </form>
+
+            {subscribed && (
+              <p className="mt-3 text-xs text-[var(--brand-400)]">
+                Subscribed — check your inbox.
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Legal bar ─────────────────────────────────────────────────── */}
+      <div className="border-t border-white/10">
+        <div className="container-page flex flex-col items-center justify-between gap-3 py-6 text-xs text-white/45 md:flex-row">
+          <p>© {new Date().getFullYear()} Promptly. All rights reserved.</p>
+          <div className="flex gap-6">
+            {["Privacy Policy", "Terms of Service", "Security"].map((item) => (
+              <a key={item} href="#" className="transition-colors hover:text-white">
+                {item}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </footer>

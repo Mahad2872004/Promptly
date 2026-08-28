@@ -1,1533 +1,811 @@
-import React, { useState } from "react";
-
+import React from "react";
 import { ViewType } from "../types";
-
 import {
-
   AGENCY_SERVICES,
-
   CASE_STUDIES,
-
   CLIENT_TESTIMONIALS,
-
   TEAM_MEMBERS,
-
 } from "../data";
-
 import {
-
   CLIENT_LOGOS,
-
   AGENCY_STATS,
-
-  STAT_CARD_STYLES,
-
   PROCESS_STEPS,
-
-  TESTIMONIAL_AVATARS,
-
   PARTNERS,
-
   TECH_STACK,
-
+  INDUSTRIES,
 } from "../data/landing";
-
 import ScrollReveal from "./ui/ScrollReveal";
-
-import RevealGroup from "./ui/RevealGroup";
-
 import AnimatedCounter from "./ui/AnimatedCounter";
-
-import HeroScene from "./scenes/HeroScene";
-
-import SystemsScene from "./scenes/SystemsScene";
-
-import WorkflowScene from "./scenes/WorkflowScene";
-
-import AudienceScene from "./scenes/AudienceScene";
-
-import CtaScene from "./scenes/CtaScene";
-
+import HeroPanel from "./ui/HeroPanel";
+import SectionHeading from "./ui/SectionHeading";
 import {
-
-  Cpu,
-
   Bot,
-
-  Smartphone,
-
   Monitor,
-
+  Cpu,
+  Smartphone,
   ArrowRight,
-
-  ShieldCheck,
-
-  Sparkles,
-
+  ArrowUpRight,
+  Check,
+  Quote,
   Star,
-
-  Users,
-
-  Zap,
-
-  ChevronRight,
-
-  Play,
-
-  CheckCircle,
-
-  MoveRight,
-
-  Brain,
-
-  Code,
-
+  ShieldCheck,
+  Clock,
+  Headphones,
   Award,
-
 } from "lucide-react";
 
-
-
 interface HomeViewProps {
-
   setActiveView: (view: ViewType) => void;
-
   setUserDraftPrompt: (prompt: string) => void;
-
 }
 
-
-
-// ─── Helpers ──────────────────────────────────────────────────────────────
-
-const BADGE_STYLES: Record<string, string> = {
-
-  cyan: "border-cyan-500/25 bg-cyan-500/10 text-cyan-400",
-
-  orange: "border-orange-500/25 bg-orange-500/10 text-orange-400",
-
-  violet: "border-violet-500/25 bg-violet-500/10 text-violet-400",
-
-  indigo: "border-indigo-500/25 bg-indigo-500/10 text-indigo-400",
-
+/** Service id → icon. One icon set, one colour — the tile supplies the accent. */
+const SERVICE_ICONS: Record<string, React.ReactNode> = {
+  "ai-powered-solutions": <Bot className="h-5 w-5" />,
+  "software-development": <Monitor className="h-5 w-5" />,
+  "digital-transformation": <Cpu className="h-5 w-5" />,
+  "startup-support": <Smartphone className="h-5 w-5" />,
 };
 
-
-
-const serviceIcons: Record<string, React.ReactNode> = {
-
-  "ai-powered-solutions": <Bot className="h-5 w-5 text-cyan-400" />,
-
-  "software-development": <Monitor className="h-5 w-5 text-indigo-400" />,
-
-  "digital-transformation": <Cpu className="h-5 w-5 text-emerald-400" />,
-
-  "startup-support": <Smartphone className="h-5 w-5 text-violet-400" />,
-
+/** Service id → its dedicated route. */
+const SERVICE_ROUTES: Record<string, ViewType> = {
+  "ai-powered-solutions": "ai-solutions",
+  "software-development": "software-development",
+  "digital-transformation": "digital-transformation",
+  "startup-support": "startup-support",
 };
 
+const INDUSTRY_ROUTES: Record<string, ViewType> = {
+  startups: "startups",
+  ecommerce: "ecommerce",
+  realestate: "realestate",
+  enterprise: "enterprise",
+};
 
+const ASSURANCES = [
+  { icon: ShieldCheck, stat: "100%", label: "Security compliant" },
+  { icon: Clock, stat: "< 8 wks", label: "Average delivery" },
+  { icon: Headphones, stat: "24/7", label: "Support available" },
+  { icon: Award, stat: "4.9 / 5", label: "Client rating" },
+];
 
-// ─── Sub‑components ──────────────────────────────────────────────────────
+const TECH_CATEGORY_LABELS: Record<string, string> = {
+  frontend: "Frontend",
+  backend: "Backend & Data",
+  ai: "AI & Machine Learning",
+  devops: "Cloud & DevOps",
+};
 
-const SectionBadge: React.FC<{ label: string; color?: keyof typeof BADGE_STYLES }> = ({
-
-  label,
-
-  color = "cyan",
-
-}) => (
-
-  <span
-
-    className={`inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-xs font-bold uppercase tracking-widest ${BADGE_STYLES[color]}`}
-
-  >
-
-    <span className="h-2 w-2 animate-pulse rounded-full bg-current" />
-
-    {label}
-
-  </span>
-
-);
-
-
-
-const SectionHeader: React.FC<{
-
-  badgeLabel: string;
-
-  badgeColor?: keyof typeof BADGE_STYLES;
-
-  title: React.ReactNode;
-
-  subtitle?: string;
-
-  centered?: boolean;
-
-}> = ({ badgeLabel, badgeColor = "cyan", title, subtitle, centered = false }) => (
-
-  <div className={`flex flex-col gap-3 ${centered ? "items-center text-center" : "items-start"}`}>
-
-    <ScrollReveal animation={centered ? "fade-up" : "slide-right"}>
-
-      <SectionBadge label={badgeLabel} color={badgeColor} />
-
-    </ScrollReveal>
-
-    <ScrollReveal animation={centered ? "fade-up" : "slide-right"} delay={80}>
-
-      <h2 className="text-3xl font-extrabold text-white sm:text-4xl lg:text-5xl">{title}</h2>
-
-    </ScrollReveal>
-
-    {subtitle && (
-
-      <ScrollReveal animation={centered ? "fade-up" : "slide-left"} delay={160}>
-
-        <p
-
-          className={`text-sm leading-relaxed text-slate-400 sm:text-base ${centered ? "mx-auto max-w-2xl" : "max-w-xl"
-
-            }`}
-
-        >
-
-          {subtitle}
-
-        </p>
-
-      </ScrollReveal>
-
-    )}
-
-  </div>
-
-);
-
-
-
-const AvatarBadge: React.FC<{ name: string }> = ({ name }) => {
-
-  const initials =
-
-    TESTIMONIAL_AVATARS[name] ??
-
-    name
-
-      .split(" ")
-
-      .map((n) => n[0])
-
-      .join("")
-
-      .slice(0, 2);
+export default function HomeView({ setActiveView }: HomeViewProps) {
+  const featuredProjects = CASE_STUDIES.filter((p) => p.featured).slice(0, 3);
+  const teamMembers = TEAM_MEMBERS.filter((m) => m.role !== "Strategic Advisor");
+  const advisor = TEAM_MEMBERS.find((m) => m.role === "Strategic Advisor");
 
   return (
-
-    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-cyan-500/30 to-indigo-500/30 text-sm font-bold text-white ring-2 ring-slate-800">
-
-      {initials}
-
-    </div>
-
-  );
-
-};
-
-
-
-// ─── Main Component ──────────────────────────────────────────────────────
-
-export default function HomeView({ setActiveView, setUserDraftPrompt }: HomeViewProps) {
-
-  const [draftPrompt, setDraftPrompt] = useState("");
-
-  const [selectedServiceFilter, setSelectedServiceFilter] = useState("all");
-
-
-
-  const handlePromptSubmit = (e: React.FormEvent) => {
-
-    e.preventDefault();
-
-    if (draftPrompt.trim().length >= 5) {
-
-      setUserDraftPrompt(draftPrompt);
-
-      setActiveView("ai-architect");
-
-    }
-
-  };
-
-
-
-  const featuredProjects = CASE_STUDIES.filter((p) => p.featured);
-
-
-
-  return (
-
-    <div className="bg-transparent text-white selection:bg-cyan-500/30">
-
-
-
-      {/* ─── SCENE 1 — HERO ─────────────────────────────────────────────── */}
-      <HeroScene setActiveView={setActiveView} />
-
-      {/* Mobile prompt */}
-      <ScrollReveal animation="fade-up" delay={200} threshold={0.05} className="mt-12 lg:hidden">
-        <div className="surface-card mx-auto max-w-xl rounded-2xl p-5">
-          <form onSubmit={handlePromptSubmit} className="flex flex-col gap-3 sm:flex-row">
-            <input
-              type="text"
-              value={draftPrompt}
-              onChange={(e) => setDraftPrompt(e.target.value)}
-              placeholder="Describe your product vision…"
-              className="footer-input flex-1 rounded-xl px-4 py-3 text-sm outline-none font-mono"
-            />
-            <button
-              type="submit"
-              className="btn-primary rounded-xl px-6 py-3 text-sm font-bold"
-            >
-              Blueprint
-            </button>
-          </form>
-        </div>
-      </ScrollReveal>
-
-      {/* ─── PRODUCTS ───────────────────────────────────────────────────── */}
-      <section className="border-t border-slate-800/40 py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent to-slate-900/20 parallax-section">
-
-        <div className="mx-auto max-w-7xl space-y-10">
-
-          <ScrollReveal animation="fade-up" threshold={0.1} className="text-center">
-
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/25 bg-emerald-500/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-emerald-400 mb-6">
-
-              <Sparkles className="h-3 w-3" />
-
-              Our Products
-
-            </div>
-
-            <h2 className="text-3xl font-extrabold text-white sm:text-4xl lg:text-5xl">
-
-              Flagship{" "}
-
-              <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">
-
-                Solutions
-
-              </span>
-
-            </h2>
-
-            <p className="mt-4 max-w-2xl mx-auto text-sm text-slate-400">
-
-              Production-ready products built by Promptly, designed to solve real business challenges.
-
-            </p>
-
-          </ScrollReveal>
-
-
-
-          <ScrollReveal animation="fade-up" delay={100} threshold={0.1}>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-
-              {/* xSender Card */}
-
-              <div className="group relative overflow-hidden rounded-3xl border border-emerald-500/20 bg-gradient-to-br from-emerald-950/30 to-slate-900/40 p-8 backdrop-blur-sm transition-all hover:border-emerald-500/40 hover:shadow-2xl hover:shadow-emerald-500/10 card-3d">
-
-                <div className="absolute top-0 right-0 h-32 w-32 bg-gradient-to-br from-emerald-500/20 to-transparent rounded-full blur-3xl group-hover:blur-2xl transition-all" />
-
-                
-
-                <div className="relative">
-
-                  <div className="flex items-center justify-between mb-6">
-
-                    <div className="flex items-center gap-3">
-
-                      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-500 group-hover:scale-110 transition-transform">
-
-                        <Sparkles className="h-6 w-6 text-white" />
-
-                      </div>
-
-                      <div>
-
-                        <h3 className="text-xl font-bold text-white group-hover:text-emerald-400 transition-colors">xSender</h3>
-
-                        <p className="text-xs text-emerald-400 font-semibold">WhatsApp Order Management</p>
-
-                      </div>
-
-                    </div>
-
-                    <div className="flex items-center gap-1 rounded-full bg-emerald-500/20 px-3 py-1">
-
-                      <div className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-
-                      <span className="text-xs font-semibold text-emerald-400">Live</span>
-
-                    </div>
-
-                  </div>
-
-
-
-                  <p className="text-sm text-slate-300 leading-relaxed mb-6">
-
-                    Transform messy WhatsApp chats into a professional ordering system. Perfect for businesses of any size, anywhere in the world.
-
-                  </p>
-
-
-
-                  <div className="space-y-3 mb-6 stagger-children">
-
-                    <div className="flex items-center gap-2 text-xs text-slate-400 group-hover:text-slate-300 transition-colors">
-
-                      <CheckCircle className="h-4 w-4 text-emerald-400" />
-
-                      <span>Product catalog system</span>
-
-                    </div>
-
-                    <div className="flex items-center gap-2 text-xs text-slate-400 group-hover:text-slate-300 transition-colors">
-
-                      <CheckCircle className="h-4 w-4 text-emerald-400" />
-
-                      <span>One-click WhatsApp ordering</span>
-
-                    </div>
-
-                    <div className="flex items-center gap-2 text-xs text-slate-400 group-hover:text-slate-300 transition-colors">
-
-                      <CheckCircle className="h-4 w-4 text-emerald-400" />
-
-                      <span>Order management dashboard</span>
-
-                    </div>
-
-                    <div className="flex items-center gap-2 text-xs text-slate-400 group-hover:text-slate-300 transition-colors">
-
-                      <CheckCircle className="h-4 w-4 text-emerald-400" />
-
-                      <span>Mobile-first design</span>
-
-                    </div>
-
-                  </div>
-
-
-
-                  <button
-
-                    onClick={() => setActiveView("contact")}
-
-                    className="magnetic-btn group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-6 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.02]"
-
-                  >
-
-                    Learn More
-
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-
-                  </button>
-
-                </div>
-
-              </div>
-
-
-
-              {/* Coming Soon Card */}
-
-              <div className="group relative overflow-hidden rounded-3xl border border-slate-800/50 bg-slate-900/40 p-8 backdrop-blur-sm transition-all hover:border-slate-700 card-3d">
-
-                <div className="absolute top-0 right-0 h-32 w-32 bg-gradient-to-br from-slate-500/10 to-transparent rounded-full blur-3xl group-hover:blur-2xl transition-all" />
-
-                
-
-                <div className="relative h-full flex flex-col items-center justify-center text-center">
-
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-800 mb-4 group-hover:scale-110 transition-transform">
-
-                    <Zap className="h-8 w-8 text-slate-400 group-hover:text-cyan-400 transition-colors" />
-
-                  </div>
-
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">More Coming Soon</h3>
-
-                  <p className="text-sm text-slate-400 max-w-xs">
-
-                    We're building more innovative products. Stay tuned for what's next from Promptly.
-
-                  </p>
-
-                  <div className="mt-6 flex items-center gap-2 text-xs text-slate-500">
-
-                    <span className="h-2 w-2 rounded-full bg-slate-600 animate-pulse" />
-
-                    <span>In Development</span>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </ScrollReveal>
-
-        </div>
-
-      </section>
-
-
-
-      {/* ─── CLIENT LOGOS ────────────────────────────────────────────────── */}
-
-      <section className="border-t border-slate-800/40 py-12">
-
-        <ScrollReveal animation="fade-up" className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-          <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-
-            Trusted by industry leaders
-
-          </p>
-
-          <div className="relative overflow-hidden">
-
-            <div className="flex animate-marquee gap-12 whitespace-nowrap">
-
-              {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((logo, i) => (
-
-                <div
-
-                  key={`${logo.name}-${i}`}
-
-                  className="flex shrink-0 items-center gap-3 rounded-xl surface-card px-6 py-3 backdrop-blur-sm transition hover:border-slate-700"
-
-                >
-
-                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-800 text-xs font-bold text-slate-300">
-
-                    {logo.initials}
-
-                  </span>
-
-                  <span className="text-sm font-semibold text-slate-400">{logo.name}</span>
-
-                </div>
-
-              ))}
-
-            </div>
-
-          </div>
-
-        </ScrollReveal>
-
-      </section>
-
-
-
-      {/* ─── AUTOMATION VALUE PROP ───────────────────────────────────────── */}
-      <section className="border-t border-slate-800/40 py-16 md:py-20 px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-7xl">
-          <ScrollReveal animation="fade-up" threshold={0.1}>
-            <div className="relative overflow-hidden rounded-3xl border border-cyan-500/20 bg-gradient-to-br from-slate-900/80 via-cyan-950/30 to-indigo-950/30 p-8 md:p-12 backdrop-blur-sm">
-
-              {/* Glow effects */}
-              <div className="absolute top-0 left-1/4 h-64 w-64 rounded-full bg-cyan-500/10 blur-3xl -translate-y-1/2" />
-              <div className="absolute bottom-0 right-1/4 h-64 w-64 rounded-full bg-indigo-500/10 blur-3xl translate-y-1/2" />
-
-              <div className="relative flex flex-col items-center text-center gap-8">
-                {/* Label */}
-                <span className="inline-flex items-center gap-2 rounded-full border border-cyan-500/25 bg-cyan-500/10 px-4 py-1.5 text-xs font-bold uppercase tracking-widest text-cyan-400">
-                  <Zap className="h-3 w-3" />
-                  What We Do
-                </span>
-
-                {/* Main statement */}
-                <h2 className="text-2xl font-extrabold text-white sm:text-3xl lg:text-4xl max-w-3xl leading-tight">
-                  We automate the repetitive tasks that your employees spend{" "}
-                  <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
-                    hours doing every day
-                  </span>
-                </h2>
-
-                {/* Supporting line */}
-                <p className="text-base text-slate-400 max-w-2xl leading-relaxed">
-                  Reducing costs, saving time, and allowing your team to focus on what truly drives growth.
-                </p>
-
-                {/* Benefit icons */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl mt-2">
-                  <div className="flex flex-col items-center gap-3 rounded-2xl surface-card p-5">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                      <MoveRight className="h-5 w-5 text-emerald-400" />
-                    </div>
-                    <p className="text-sm font-semibold text-white">Reduce Costs</p>
-                    <p className="text-xs text-slate-500 text-center">Cut overhead by eliminating manual, repetitive work</p>
-                  </div>
-                  <div className="flex flex-col items-center gap-3 rounded-2xl surface-card p-5">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500/10 border border-amber-500/20">
-                      <Zap className="h-5 w-5 text-amber-400" />
-                    </div>
-                    <p className="text-sm font-semibold text-white">Save Time</p>
-                    <p className="text-xs text-slate-500 text-center">Reclaim hours every day with intelligent automation</p>
-                  </div>
-                  <div className="flex flex-col items-center gap-3 rounded-2xl surface-card p-5">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-cyan-500/10 border border-cyan-500/20">
-                      <Users className="h-5 w-5 text-cyan-400" />
-                    </div>
-                    <p className="text-sm font-semibold text-white">Focus on Growth</p>
-                    <p className="text-xs text-slate-500 text-center">Let your team do the work that actually moves the needle</p>
-                  </div>
-                </div>
-
-                {/* CTA */}
+    <div>
+      {/* ═══ HERO ══════════════════════════════════════════════════════ */}
+      <section className="relative overflow-hidden border-b border-[var(--border)]">
+        <div className="container-page grid items-center gap-14 py-16 md:py-24 lg:grid-cols-12 lg:gap-12">
+          <div className="lg:col-span-6">
+            <ScrollReveal animation="fade-up">
+              <p className="eyebrow">Software Engineering Company</p>
+            </ScrollReveal>
+
+            <ScrollReveal animation="fade-up" delay={60}>
+              <h1 className="display-heading mt-5 text-[2.5rem] sm:text-5xl lg:text-[3.5rem]">
+                We build the software that runs your business
+              </h1>
+            </ScrollReveal>
+
+            <ScrollReveal animation="fade-up" delay={120}>
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-[var(--text-body)]">
+                Promptly designs, engineers and maintains AI-powered platforms,
+                custom business applications and internal systems — from
+                discovery through to production support.
+              </p>
+            </ScrollReveal>
+
+            <ScrollReveal animation="fade-up" delay={180}>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <button
+                  type="button"
+                  id="hero-cta-contact"
                   onClick={() => setActiveView("contact")}
-                  className="group magnetic-btn inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-all hover:scale-[1.02] hover:shadow-cyan-500/40"
+                  className="btn btn-primary group px-6 py-3.5"
                 >
-                  Start Automating
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  Start a Project
+                  <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+                </button>
+                <button
+                  type="button"
+                  id="hero-cta-portfolio"
+                  onClick={() => setActiveView("portfolio")}
+                  className="btn btn-secondary px-6 py-3.5"
+                >
+                  View Our Work
                 </button>
               </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-
-
-
-      {/* ─── PARTNERS ─────────────────────────────────────────────────── */}
-
-      <section className="border-t border-slate-800/40 py-12 px-4 sm:px-6 lg:px-8">
-
-        <ScrollReveal animation="fade-up" className="mx-auto max-w-7xl">
-
-          <p className="mb-8 text-center text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-
-            Powered by industry leaders
-
-          </p>
-
-          <RevealGroup className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-6" itemClassName="h-full">
-
-            {PARTNERS.map((partner) => (
-
-              <div
-
-                key={partner.name}
-
-                className="flex items-center justify-center rounded-xl surface-card px-6 py-4 backdrop-blur-sm transition hover:border-slate-700 hover:bg-slate-900/50"
-
-              >
-
-                <span className="text-sm font-semibold text-slate-400">{partner.name}</span>
-
-              </div>
-
-            ))}
-
-          </RevealGroup>
-
-        </ScrollReveal>
-
-      </section>
-
-
-
-      {/* ─── TECH STACK ─────────────────────────────────────────────────── */}
-
-      <section className="border-t border-slate-800/40 py-16 md:py-20 px-4 sm:px-6 lg:px-8 parallax-section">
-
-        <div className="mx-auto max-w-7xl space-y-12">
-
-          <SectionHeader
-
-            badgeLabel="Our Stack"
-
-            badgeColor="violet"
-
-            title={
-
-              <>
-
-                Technologies{" "}
-
-                <span className="bg-gradient-to-r from-violet-400 to-purple-400 bg-clip-text text-transparent">
-
-                  We Use
-
-                </span>
-
-              </>
-
-            }
-
-            subtitle="Modern, scalable technologies to build production-ready solutions."
-
-            centered
-
-          />
-
-
-
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 items-stretch">
-            {Object.entries(TECH_STACK).map(([category, technologies], categoryIndex) => (
-              <div key={category} className="h-full">
-                <ScrollReveal animation="fade-up" staggerIndex={categoryIndex} threshold={0.1} className="h-full">
-                  <div className="group magnetic-btn relative flex flex-col h-full overflow-hidden rounded-3xl surface-card p-6 backdrop-blur-sm transition-all hover:border-violet-500/40 hover:bg-slate-800/40 hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-1 card-3d">
-                    <div className="absolute top-0 right-0 h-32 w-32 bg-gradient-to-br from-violet-500/10 to-transparent rounded-full blur-3xl group-hover:blur-2xl transition-all" />
-
-                    
-
-                    <div className="relative">
-
-                      <div className="flex items-center gap-3 mb-4">
-
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/20 to-cyan-500/20 border border-violet-500/30 group-hover:scale-110 transition-transform">
-
-                          <Cpu className="h-5 w-5 text-violet-400 group-hover:text-cyan-400 transition-colors" />
-
-                        </div>
-
-                        <h3 className="text-sm font-bold uppercase tracking-widest text-slate-400 group-hover:text-violet-400 transition-colors capitalize">
-
-                          {category}
-
-                        </h3>
-
-                      </div>
-
-                      
-
-                      <div className="flex flex-wrap gap-2">
-
-                        {technologies.map((tech) => {
-
-                          const IconComponent = tech.icon;
-
-                          return (
-
-                            <div
-
-                              key={tech.name}
-
-                              className="flex items-center gap-2 rounded-xl border border-slate-700/60 bg-slate-800/50 px-3 py-2 text-sm font-medium text-slate-300 transition-all hover:border-violet-500/40 hover:text-violet-400 hover:bg-slate-800/70 hover:scale-105"
-
-                            >
-
-                              {IconComponent && <IconComponent className="h-4 w-4" />}
-
-                              <span>{tech.name}</span>
-
-                            </div>
-
-                          );
-
-                        })}
-
-                      </div>
-
-                    </div>
-
+            </ScrollReveal>
+
+            <ScrollReveal animation="fade-up" delay={240}>
+              <dl className="mt-12 grid max-w-lg grid-cols-3 gap-6 border-t border-[var(--border)] pt-8">
+                {AGENCY_STATS.slice(0, 3).map((stat) => (
+                  <div key={stat.label}>
+                    <dt className="sr-only">{stat.label}</dt>
+                    <dd>
+                      <AnimatedCounter
+                        value={stat.value}
+                        suffix={stat.suffix}
+                        decimals={stat.decimals}
+                        className="text-2xl font-bold tracking-tight text-[var(--text-heading)]"
+                      />
+                      <p className="mt-1 text-xs leading-snug text-[var(--text-micro)]">
+                        {stat.label}
+                      </p>
+                    </dd>
                   </div>
-
-                </ScrollReveal>
-
-              </div>
-
-            ))}
-
+                ))}
+              </dl>
+            </ScrollReveal>
           </div>
 
-        </div>
-
-      </section>
-
-
-
-      {/* ─── LEADERSHIP ─────────────────────────────────────────────────── */}
-
-      <section className="border-t border-slate-800/40 py-16 md:py-20 px-4 sm:px-6 lg:px-8 parallax-section">
-
-        <div className="mx-auto max-w-7xl space-y-12">
-
-          <SectionHeader
-
-            badgeLabel="Leadership"
-
-            badgeColor="cyan"
-
-            title={
-
-              <>
-
-                Meet the{" "}
-
-                <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
-
-                  Founder
-
-                </span>
-
-              </>
-
-            }
-
-            subtitle="Building the future of AI-powered digital solutions."
-
-            centered
-
-          />
-
-
-
-          <ScrollReveal animation="fade-up" threshold={0.1}>
-
-            <div className="max-w-4xl mx-auto">
-
-              <div className="group relative overflow-hidden rounded-3xl surface-card p-8 backdrop-blur-sm transition-all hover:border-cyan-500/40 hover:shadow-xl hover:shadow-cyan-500/10 card-3d">
-
-                <div className="flex flex-col md:flex-row items-center gap-8">
-
-                  <div className="relative shrink-0">
-
-                    <div className="h-48 w-48 md:h-56 md:w-56 rounded-2xl overflow-hidden border-2 border-cyan-500/30 shadow-xl">
-
-                      <img 
-
-                        src="/images/212.png" 
-
-                        alt="Promptly Founder" 
-
-                        className="h-full w-full object-cover"
-
-                      />
-
-                    </div>
-
-                    <div className="absolute -bottom-2 -right-2 flex h-10 w-10 items-center justify-center rounded-full bg-emerald-500 shadow-lg">
-
-                      <CheckCircle className="h-5 w-5 text-white" />
-
-                    </div>
-
-                  </div>
-
-                  
-
-                  <div className="flex-1 text-center md:text-left">
-
-                    <h3 className="text-3xl font-bold text-white mb-2">Promptly Founder</h3>
-
-                    <p className="text-base text-cyan-400 font-semibold mb-4">Founder & CEO</p>
-
-                    
-
-                    <p className="text-slate-400 text-base leading-relaxed mb-6">
-
-                      Passionate about building AI-powered solutions that transform businesses. With expertise in software development, AI automation, and digital transformation, leading a team dedicated to delivering exceptional results.
-
-                    </p>
-
-                    
-
-                    <button
-
-                      onClick={() => {
-                        setActiveView("about");
-                        window.scrollTo({ top: 0, behavior: "smooth" });
-                      }}
-
-                      className="magnetic-btn inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500 px-6 py-3 text-sm font-bold text-white transition-transform hover:scale-[1.02]"
-
-                    >
-
-                      Learn More
-
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-
-                    </button>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-            </div>
-
+          <ScrollReveal animation="fade-up" delay={140} className="lg:col-span-6">
+            <HeroPanel />
           </ScrollReveal>
-
         </div>
-
       </section>
 
-
-
-      {/* ─── TEAM ────────────────────────────────────────────────────────── */}
-
-      <section className="border-t border-slate-800/40 py-16 md:py-20 px-4 sm:px-6 lg:px-8 parallax-section">
-
-        <div className="mx-auto max-w-7xl space-y-12">
-
-          <SectionHeader
-
-            badgeLabel="The Team"
-
-            badgeColor="violet"
-
-            title={
-
-              <>
-
-                Senior specialists,{" "}
-
-                <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
-
-                  one cohesive squad
-
+      {/* ═══ CLIENT LOGOS ══════════════════════════════════════════════ */}
+      <section className="border-b border-[var(--border)] bg-[var(--bg-subtle)] py-10">
+        <div className="container-page">
+          <p className="mono-label text-center uppercase tracking-[0.18em]">
+            Trusted by teams across 6 industries
+          </p>
+          <div className="relative mt-6 overflow-hidden">
+            <div className="flex w-max animate-marquee items-center gap-14">
+              {[...CLIENT_LOGOS, ...CLIENT_LOGOS].map((logo, i) => (
+                <span
+                  key={`${logo.name}-${i}`}
+                  className="whitespace-nowrap text-base font-semibold tracking-tight text-[var(--text-micro)]"
+                >
+                  {logo.name}
                 </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
-              </>
-
-            }
-
-            subtitle="Architects, designers, and AI engineers working in tight collaboration—not handoffs between siloed vendors."
-
-            centered
-
+      {/* ═══ SERVICES ══════════════════════════════════════════════════ */}
+      <section className="section">
+        <div className="container-page">
+          <SectionHeading
+            eyebrow="What we do"
+            title="Engineering services, end to end"
+            lead="Four practices, one delivery team. Every engagement is scoped, estimated and shipped by the same senior engineers who run it in production."
           />
 
-          {/* Strategic Advisor Centered Prominent Card */}
-          {TEAM_MEMBERS.filter(member => member.role === "Strategic Advisor").map((advisor) => (
-            <div key={advisor.id} className="max-w-2xl mx-auto mt-16 w-full px-4 sm:px-0">
-              <ScrollReveal animation="fade-up" threshold={0.1}>
-                <div className="group relative pt-16 text-center">
+          <div className="mt-14 grid gap-6 md:grid-cols-2">
+            {AGENCY_SERVICES.map((service, i) => (
+              <ScrollReveal key={service.id} animation="fade-up" staggerIndex={i}>
+                <article className="surface-card card-interactive flex h-full flex-col p-7">
+                  <div className="flex items-start justify-between gap-4">
+                    <span className="icon-tile">{SERVICE_ICONS[service.id]}</span>
+                    <span className="chip">{service.badge}</span>
+                  </div>
 
-                  {/* Circular photo with violet→indigo gradient ring */}
-                  <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-10">
-                    <div className="h-32 w-32 rounded-full bg-gradient-to-br from-violet-500 to-indigo-500 p-[3px] shadow-xl group-hover:shadow-violet-500/40 transition-shadow">
-                      <div className="h-full w-full rounded-full overflow-hidden ring-4 ring-slate-900">
-                        <img
-                          src={advisor.image}
-                          alt={advisor.name}
-                          className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+                  <h3 className="mt-5 text-lg font-semibold tracking-tight text-[var(--text-heading)]">
+                    {service.title}
+                  </h3>
+
+                  <p className="mt-2.5 text-sm leading-relaxed text-[var(--text-body)]">
+                    {service.description}
+                  </p>
+
+                  <ul className="mt-5 space-y-2 border-t border-[var(--border)] pt-5">
+                    {service.details.slice(0, 4).map((detail) => (
+                      <li
+                        key={detail}
+                        className="flex items-start gap-2.5 text-sm text-[var(--text-body)]"
+                      >
+                        <Check
+                          className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)]"
+                          aria-hidden
                         />
-                      </div>
-                    </div>
-                    <div className="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full bg-violet-600 shadow-lg border border-violet-400">
-                      <Award className="h-4.5 w-4.5 text-white" />
-                    </div>
-                  </div>
+                        <span>{detail}</span>
+                      </li>
+                    ))}
+                  </ul>
 
-                  {/* Dark card body - in sync with other cards but slightly larger text and violet theme */}
-                  <div className="rounded-3xl border border-violet-500/30 bg-slate-900/60 backdrop-blur-sm shadow-xl hover:shadow-violet-500/10 hover:border-violet-500/50 transition-all hover:-translate-y-1 px-8 pt-16 pb-7 flex flex-col h-full">
-                    <h3 className="text-2xl font-extrabold text-white mb-0.5">{advisor.name}</h3>
-                    <p className="text-sm font-semibold text-violet-400 mb-4">{advisor.role}</p>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setActiveView(SERVICE_ROUTES[service.id] ?? "services")
+                    }
+                    className="link-arrow mt-6 self-start"
+                  >
+                    Explore {service.title}
+                    <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+                  </button>
+                </article>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
-                    <p className="text-sm text-slate-400 leading-relaxed mb-5 max-w-xl mx-auto">{advisor.bio}</p>
+      {/* ═══ AUTOMATION VALUE BAND (inverse) ═══════════════════════════ */}
+      <section className="section-inverse py-20 md:py-24">
+        <div className="container-page grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-5">
+            <p className="eyebrow" style={{ color: "var(--brand-400)" }}>
+              Automation
+            </p>
+            <h2 className="mt-5 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              We remove the repetitive work your team does every day
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-white/60">
+              Manual data entry, copy-paste reporting, chasing approvals across
+              inboxes. We map those processes, automate them, and hand you the
+              system that runs them.
+            </p>
+            <button
+              type="button"
+              onClick={() => setActiveView("contact")}
+              className="btn btn-on-inverse group mt-8 px-6 py-3.5"
+            >
+              Start Automating
+              <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+            </button>
+          </div>
 
-                    <div className="border-t border-slate-700/50 mb-4" />
-
-                    <p className="text-sm font-bold text-slate-200 mb-3">⭐ Expert in</p>
-                    <div className="flex flex-wrap justify-center gap-2 mb-5">
-                      {advisor.specialties.map((specialty) => (
-                        <span
-                          key={specialty}
-                          className="rounded-full bg-violet-500/10 border border-violet-500/20 px-3 py-1 text-xs font-medium text-violet-300 group-hover:bg-violet-500/20 transition-colors"
-                        >
-                          {specialty}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
+          <div className="grid gap-4 sm:grid-cols-3 lg:col-span-7">
+            {[
+              {
+                title: "Reduce cost",
+                body: "Cut overhead by eliminating manual, repetitive operations work.",
+              },
+              {
+                title: "Save time",
+                body: "Reclaim hours every day with intelligent, monitored automation.",
+              },
+              {
+                title: "Focus on growth",
+                body: "Let the team do the work that actually moves the business.",
+              },
+            ].map((item, i) => (
+              <ScrollReveal key={item.title} animation="fade-up" staggerIndex={i}>
+                <div className="card-inverse h-full p-6">
+                  <span className="mono-label text-white/40">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="mt-4 text-base font-semibold text-white">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-white/55">
+                    {item.body}
+                  </p>
                 </div>
               </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ PRODUCTS ══════════════════════════════════════════════════ */}
+      <section className="section">
+        <div className="container-page">
+          <SectionHeading
+            eyebrow="Our products"
+            title="Software we own and operate"
+            lead="Alongside client work we build and run our own products — the same engineering standard, held to our own uptime."
+          />
+
+          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+            <ScrollReveal animation="fade-up" className="lg:col-span-2">
+              <article className="surface-card flex h-full flex-col p-8">
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <span className="icon-tile">
+                      <Smartphone className="h-5 w-5" />
+                    </span>
+                    <div>
+                      <h3 className="text-xl font-semibold tracking-tight text-[var(--text-heading)]">
+                        xSender
+                      </h3>
+                      <p className="text-sm text-[var(--text-micro)]">
+                        WhatsApp order management platform
+                      </p>
+                    </div>
+                  </div>
+                  <span className="chip chip-accent">
+                    <span
+                      className="h-1.5 w-1.5 rounded-full bg-current"
+                      aria-hidden
+                    />
+                    Live
+                  </span>
+                </div>
+
+                <p className="mt-6 text-sm leading-relaxed text-[var(--text-body)]">
+                  Turns unstructured WhatsApp conversations into a real ordering
+                  system: a product catalogue customers can browse, one-click
+                  order capture, and a dashboard the business actually runs on.
+                </p>
+
+                <div className="mt-6 grid gap-x-6 gap-y-2.5 border-t border-[var(--border)] pt-6 sm:grid-cols-2">
+                  {[
+                    "Product catalogue system",
+                    "One-click WhatsApp ordering",
+                    "Order management dashboard",
+                    "Mobile-first storefront",
+                  ].map((f) => (
+                    <p
+                      key={f}
+                      className="flex items-start gap-2.5 text-sm text-[var(--text-body)]"
+                    >
+                      <Check
+                        className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)]"
+                        aria-hidden
+                      />
+                      {f}
+                    </p>
+                  ))}
+                </div>
+
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setActiveView("xsender")}
+                    className="btn btn-primary px-5"
+                  >
+                    View xSender
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveView("products")}
+                    className="btn btn-secondary px-5"
+                  >
+                    All Products
+                  </button>
+                </div>
+              </article>
+            </ScrollReveal>
+
+            <ScrollReveal animation="fade-up" delay={80}>
+              <div className="card-inset flex h-full flex-col justify-center p-8">
+                <span className="mono-label uppercase">In development</span>
+                <h3 className="mt-3 text-lg font-semibold tracking-tight text-[var(--text-heading)]">
+                  More products shipping soon
+                </h3>
+                <p className="mt-2.5 text-sm leading-relaxed text-[var(--text-body)]">
+                  Two internal tools are being productised for external release.
+                  Join the newsletter to hear first.
+                </p>
+              </div>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ PROCESS ═══════════════════════════════════════════════════ */}
+      <section className="section section-alt">
+        <div className="container-page">
+          <SectionHeading
+            eyebrow="How we work"
+            title="A delivery process you can plan around"
+            lead="Fixed-scope sprints, a demo at the end of each one, and a git repository handed over at every milestone."
+          />
+
+          <div className="mt-14 grid gap-px overflow-hidden rounded-[var(--r-lg)] border border-[var(--border)] bg-[var(--border)] md:grid-cols-3">
+            {PROCESS_STEPS.map((step, i) => {
+              const Icon = step.icon;
+              return (
+                <ScrollReveal
+                  key={step.id}
+                  animation="fade-up"
+                  staggerIndex={i}
+                  className="h-full"
+                >
+                  <div className="flex h-full flex-col bg-[var(--bg-panel)] p-8">
+                    <div className="flex items-center gap-4">
+                      <span className="icon-tile icon-tile-sm">
+                        <Icon className="h-4 w-4" aria-hidden />
+                      </span>
+                      <span className="mono-label">STEP {step.number}</span>
+                    </div>
+                    <h3 className="mt-5 text-lg font-semibold tracking-tight text-[var(--text-heading)]">
+                      {step.title}
+                    </h3>
+                    <p className="mt-2.5 text-sm leading-relaxed text-[var(--text-body)]">
+                      {step.description}
+                    </p>
+                  </div>
+                </ScrollReveal>
+              );
+            })}
+          </div>
+
+          {/* Assurances — a plain metric row, not four glowing cards. */}
+          <div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-[var(--r-lg)] border border-[var(--border)] bg-[var(--border)] md:grid-cols-4">
+            {ASSURANCES.map(({ icon: Icon, stat, label }) => (
+              <div
+                key={label}
+                className="flex items-center gap-4 bg-[var(--bg-panel)] p-6"
+              >
+                <Icon
+                  className="h-5 w-5 shrink-0 text-[var(--accent)]"
+                  strokeWidth={1.75}
+                  aria-hidden
+                />
+                <div>
+                  <p className="text-lg font-bold tracking-tight text-[var(--text-heading)]">
+                    {stat}
+                  </p>
+                  <p className="text-xs text-[var(--text-micro)]">{label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ SELECTED WORK ═════════════════════════════════════════════ */}
+      <section className="section">
+        <div className="container-page">
+          <SectionHeading
+            eyebrow="Selected work"
+            title="Projects with measurable outcomes"
+            lead="A sample of recent engagements. Full case studies include architecture, timelines and the numbers after launch."
+            action={{ label: "All case studies", onClick: () => setActiveView("portfolio") }}
+          />
+
+          <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {featuredProjects.map((proj, i) => (
+              <ScrollReveal key={proj.id} animation="fade-up" staggerIndex={i}>
+                <article
+                  className="surface-card card-interactive flex h-full cursor-pointer flex-col p-7"
+                  onClick={() => setActiveView("portfolio")}
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="mono-label uppercase">{proj.clientName}</span>
+                    <span className="chip">{proj.category}</span>
+                  </div>
+
+                  <h3 className="mt-5 text-lg font-semibold leading-snug tracking-tight text-[var(--text-heading)]">
+                    {proj.title}
+                  </h3>
+                  <p className="mt-2.5 text-sm leading-relaxed text-[var(--text-body)]">
+                    {proj.tagline}
+                  </p>
+
+                  <ul className="mt-5 space-y-2">
+                    {proj.metrics.slice(0, 2).map((met) => (
+                      <li
+                        key={met}
+                        className="flex items-start gap-2.5 text-sm font-medium text-[var(--text-heading)]"
+                      >
+                        <Check
+                          className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)]"
+                          aria-hidden
+                        />
+                        {met}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="mt-auto flex flex-wrap gap-1.5 border-t border-[var(--border)] pt-5">
+                    {proj.technologies.slice(0, 3).map((tech) => (
+                      <span key={tech} className="chip font-mono">
+                        {tech}
+                      </span>
+                    ))}
+                    {proj.technologies.length > 3 && (
+                      <span className="chip font-mono">
+                        +{proj.technologies.length - 3}
+                      </span>
+                    )}
+                  </div>
+                </article>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ INDUSTRIES ════════════════════════════════════════════════ */}
+      <section className="section section-alt">
+        <div className="container-page">
+          <SectionHeading
+            eyebrow="Who we help"
+            title="Same engineering, different rules"
+            lead="Each sector brings its own constraints — compliance, margins, integrations. We build to them rather than around them."
+          />
+
+          <div className="mt-14 grid gap-px overflow-hidden rounded-[var(--r-lg)] border border-[var(--border)] bg-[var(--border)] sm:grid-cols-2 lg:grid-cols-3">
+            {INDUSTRIES.map((industry) => {
+              const route = INDUSTRY_ROUTES[industry.id];
+              const Tag = route ? "button" : "div";
+              return (
+                <Tag
+                  key={industry.id}
+                  {...(route
+                    ? {
+                        type: "button" as const,
+                        onClick: () => setActiveView(route),
+                      }
+                    : {})}
+                  className={`group flex flex-col bg-[var(--bg-panel)] p-7 text-left transition-colors ${
+                    route ? "hover:bg-[var(--bg-panel-hover)]" : ""
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-3">
+                    <h3 className="text-base font-semibold tracking-tight text-[var(--text-heading)]">
+                      {industry.name}
+                    </h3>
+                    {route && (
+                      <ArrowUpRight className="h-4 w-4 shrink-0 text-[var(--text-micro)] transition-colors group-hover:text-[var(--accent)]" />
+                    )}
+                  </div>
+                  <p className="mt-1.5 text-sm text-[var(--text-body)]">
+                    {industry.description}
+                  </p>
+                  <div className="mt-5 flex flex-wrap gap-1.5">
+                    {industry.services.map((s) => (
+                      <span key={s} className="chip">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </Tag>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ TECH STACK ════════════════════════════════════════════════ */}
+      <section className="section">
+        <div className="container-page">
+          <SectionHeading
+            eyebrow="Technology"
+            title="A stack chosen for the next five years"
+            lead="Mainstream, well-supported technology with large talent pools — so the system stays maintainable long after we hand it over."
+          />
+
+          <div className="mt-14 grid gap-6 md:grid-cols-2">
+            {Object.entries(TECH_STACK).map(([category, technologies], i) => (
+              <ScrollReveal key={category} animation="fade-up" staggerIndex={i}>
+                <div className="surface-card h-full p-7">
+                  <h3 className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-micro)]">
+                    {TECH_CATEGORY_LABELS[category] ?? category}
+                  </h3>
+                  <div className="mt-5 flex flex-wrap gap-2">
+                    {technologies.map((tech) => {
+                      const Icon = tech.icon;
+                      return (
+                        <span
+                          key={tech.name}
+                          className="inline-flex items-center gap-2 rounded-[var(--r-sm)] border border-[var(--border)] bg-[var(--bg-inset)] px-2.5 py-1.5 text-[0.8125rem] font-medium text-[var(--text-body)]"
+                        >
+                          {Icon && <Icon className="h-4 w-4 shrink-0" aria-hidden />}
+                          {tech.name}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          <div className="mt-10 border-t border-[var(--border)] pt-8">
+            <p className="mono-label uppercase tracking-[0.16em]">
+              Platform partners
+            </p>
+            <div className="mt-5 flex flex-wrap gap-x-10 gap-y-3">
+              {PARTNERS.map((partner) => (
+                <span
+                  key={partner.name}
+                  className="text-sm font-semibold text-[var(--text-micro)]"
+                >
+                  {partner.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ STATS BAND ════════════════════════════════════════════════ */}
+      <section className="section-inverse py-16">
+        <div className="container-page grid grid-cols-2 gap-10 md:grid-cols-4">
+          {AGENCY_STATS.map((stat) => (
+            <div key={stat.label}>
+              <AnimatedCounter
+                value={stat.value}
+                suffix={stat.suffix}
+                decimals={stat.decimals}
+                className="text-3xl font-bold tracking-tight text-white sm:text-4xl"
+              />
+              <p className="mt-2 text-xs uppercase tracking-[0.12em] text-white/45">
+                {stat.label}
+              </p>
             </div>
           ))}
-
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3 pt-16 items-stretch">
-
-            {TEAM_MEMBERS.filter(member => member.name !== "Mahad Mateen Butt" && member.role !== "Strategic Advisor").map((member, i) => (
-
-              <div key={member.id} className="h-full">
-
-                <ScrollReveal animation="fade-up" staggerIndex={i} threshold={0.1} className="h-full">
-
-                  <div className="group relative pt-16 text-center h-full">
-
-                    {/* Circular photo with cyan→violet gradient ring */}
-                    <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-10">
-                      <div className="h-28 w-28 rounded-full bg-gradient-to-br from-cyan-500 to-violet-500 p-[3px] shadow-xl group-hover:shadow-cyan-500/40 transition-shadow">
-                        <div className="h-full w-full rounded-full overflow-hidden ring-4 ring-slate-900">
-                          <img
-                            src={member.image}
-                            alt={member.name}
-                            className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                          />
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Dark card body */}
-                    <div className="rounded-3xl border border-slate-800/70 bg-slate-900/60 backdrop-blur-sm shadow-xl hover:shadow-cyan-500/10 hover:border-cyan-500/30 transition-all hover:-translate-y-1 px-6 pt-16 pb-7 flex flex-col h-full">
-                      <h3 className="text-xl font-extrabold text-white mb-0.5">{member.name}</h3>
-                      <p className="text-sm font-semibold text-cyan-400 mb-4">{member.role}</p>
-
-                      <p className="text-sm text-slate-400 leading-relaxed mb-5">{member.bio}</p>
-
-                      <div className="border-t border-slate-700/50 mb-4" />
-
-                      <p className="text-sm font-bold text-slate-200 mb-3">⭐ Expert in</p>
-                      <div className="flex flex-wrap justify-center gap-2 mb-5">
-                        {member.specialties.map((specialty) => (
-                          <span
-                            key={specialty}
-                            className="rounded-full bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 text-xs font-medium text-cyan-300 group-hover:bg-cyan-500/20 transition-colors"
-                          >
-                            {specialty}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                  </div>
-
-                </ScrollReveal>
-
-              </div>
-
-            ))}
-
-          </div>
-
-
-
-          <ScrollReveal animation="fade-up" threshold={0.1}>
-
-            <div className="text-center">
-
-              <button
-
-                onClick={() => setActiveView("about")}
-
-                className="magnetic-btn group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-violet-500 to-cyan-500 px-8 py-3 text-sm font-bold text-white shadow-lg shadow-violet-500/25 transition-all hover:scale-[1.02] hover:shadow-violet-500/40"
-
-              >
-
-                Meet the full team
-
-                <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-
-              </button>
-
-            </div>
-
-          </ScrollReveal>
-
         </div>
-
       </section>
 
+      {/* ═══ TESTIMONIALS ══════════════════════════════════════════════ */}
+      <section className="section">
+        <div className="container-page">
+          <SectionHeading
+            eyebrow="Client feedback"
+            title="What teams say after launch"
+          />
 
+          <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {CLIENT_TESTIMONIALS.slice(0, 3).map((t, i) => (
+              <ScrollReveal key={t.id} animation="fade-up" staggerIndex={i}>
+                <figure className="surface-card flex h-full flex-col p-7">
+                  <Quote
+                    className="h-6 w-6 text-[var(--accent)] opacity-40"
+                    aria-hidden
+                  />
+                  <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-[var(--text-body)]">
+                    {t.quote}
+                  </blockquote>
+                  <figcaption className="mt-6 flex items-center gap-3 border-t border-[var(--border)] pt-5">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--bg-inset)] text-xs font-bold text-[var(--text-heading)]">
+                      {t.author
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .slice(0, 2)}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-semibold text-[var(--text-heading)]">
+                        {t.author}
+                      </p>
+                      <p className="truncate text-xs text-[var(--text-micro)]">
+                        {t.role}, {t.company}
+                        {t.country ? ` · ${t.country}` : ""}
+                      </p>
+                    </div>
+                    <span
+                      className="ml-auto flex shrink-0 items-center gap-1 text-xs font-semibold text-[var(--text-heading)]"
+                      aria-label={`Rated ${t.rating} out of 5`}
+                    >
+                      <Star
+                        className="h-3.5 w-3.5 fill-current text-[var(--accent)]"
+                        aria-hidden
+                      />
+                      {t.rating}.0
+                    </span>
+                  </figcaption>
+                </figure>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      {/* ─── STATISTICS ──────────────────────────────────────────────────── */}
+      {/* ═══ TEAM ══════════════════════════════════════════════════════ */}
+      <section className="section section-alt">
+        <div className="container-page">
+          <SectionHeading
+            eyebrow="The team"
+            title="Senior specialists, one delivery squad"
+            lead="Architects, engineers and designers working together — not handoffs between siloed vendors."
+            action={{ label: "About Promptly", onClick: () => setActiveView("about") }}
+          />
 
-      <section className="border-t border-slate-800/40 px-4 sm:px-6 lg:px-8 py-12 md:py-16">
-
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 sm:gap-5 md:grid-cols-4 md:gap-6">
-
-          {AGENCY_STATS.map((stat, i) => {
-
-            const style = STAT_CARD_STYLES[stat.accent];
-
-            return (
-
-              <div key={stat.label} className="h-full">
-
-                <ScrollReveal animation="fade-up" staggerIndex={i} className="h-full">
-
-                  <div
-
-                    className={`relative flex h-full flex-col items-center justify-center overflow-hidden rounded-2xl border px-5 py-8 text-center backdrop-blur-sm transition hover:scale-[1.02] sm:px-6 sm:py-10 ${style.card}`}
-
-                  >
-
-                    <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${style.bar}`} />
-
-                    <AnimatedCounter
-
-                      value={stat.value}
-
-                      suffix={stat.suffix}
-
-                      decimals={stat.decimals}
-
-                      className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl lg:text-5xl"
-
+          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {teamMembers.map((member, i) => (
+              <ScrollReveal key={member.id} animation="fade-up" staggerIndex={i}>
+                <article className="surface-card flex h-full flex-col p-6">
+                  <div className="flex items-center gap-4">
+                    <img
+                      src={member.image}
+                      alt={member.name}
+                      loading="lazy"
+                      className="h-14 w-14 shrink-0 rounded-[var(--r-md)] border border-[var(--border)] object-cover"
                     />
-
-                    <p className="mt-3 text-[10px] font-semibold uppercase leading-snug tracking-widest text-slate-500 sm:text-[11px]">
-
-                      {stat.label}
-
-                    </p>
-
+                    <div className="min-w-0">
+                      <h3 className="truncate text-base font-semibold tracking-tight text-[var(--text-heading)]">
+                        {member.name}
+                      </h3>
+                      <p className="truncate text-sm text-[var(--accent)]">
+                        {member.role}
+                      </p>
+                    </div>
                   </div>
 
-                </ScrollReveal>
-
-              </div>
-
-            );
-
-          })}
-
-        </div>
-
-      </section>
-
-
-
-      {/* ─── SCENE 2 — SYSTEMS ──────────────────────────────────────────── */}
-      <SystemsScene setActiveView={setActiveView} />
-
-
-
-      {/* ─── PORTFOLIO ────────────────────────────────────────────────────
-
-      <section className="border-t border-slate-800/40 py-16 md:py-20 px-4 sm:px-6 lg:px-8 parallax-section">
-
-        <div className="mx-auto max-w-7xl space-y-12">
-
-          <SectionHeader
-
-            badgeLabel="Selected Work"
-
-            badgeColor="cyan"
-
-            title={
-
-              <>
-
-                Projects that drive{" "}
-
-                <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
-
-                  measurable impact
-
-                </span>
-
-              </>
-
-            }
-
-            subtitle="Real results for real businesses. Explore our latest case studies and success stories."
-
-            centered
-
-          />
-
-
-
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-
-            {featuredProjects.map((proj, i) => (
-
-              <div key={proj.id}>
-
-                <ScrollReveal
-
-                  animation="fade-up"
-
-                  staggerIndex={i}
-
-                  threshold={0.1}
-
-                >
-
-                  <article
-
-                    className="group magnetic-btn relative flex h-full flex-col overflow-hidden rounded-3xl surface-card backdrop-blur-sm transition-all hover:border-cyan-500/40 hover:bg-slate-800/40 hover:shadow-xl hover:shadow-cyan-500/10 hover:-translate-y-1 card-3d"
-
-                    onClick={() => setActiveView("portfolio")}
-
-                  >
-
-                    <div className="absolute top-0 right-0 h-32 w-32 bg-gradient-to-br from-cyan-500/10 to-transparent rounded-full blur-3xl group-hover:blur-2xl transition-all" />
-
-                    
-
-                    <div className={`h-1.5 bg-gradient-to-r ${proj.visualTheme}`} />
-
-                    <div className="relative flex-1 p-6 md:p-8">
-
-                      <div className="flex items-center justify-between mb-4">
-
-                        <span className="text-xs font-mono uppercase text-slate-500 font-semibold group-hover:text-cyan-400 transition-colors">
-
-                          {proj.clientName}
-
-                        </span>
-
-                        <span
-
-                          className={`rounded-full border border-cyan-500/30 bg-cyan-500/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-cyan-400`}
-
-                        >
-
-                          {proj.category}
-
-                        </span>
-
-                      </div>
-
-                      
-
-                      <h3 className="text-xl font-extrabold text-white transition-colors group-hover:text-cyan-400 line-clamp-2 mb-3">
-
-                        {proj.title}
-
-                      </h3>
-
-                      <p className="text-sm leading-relaxed text-slate-400 line-clamp-2 group-hover:text-slate-300 transition-colors mb-4">
-
-                        {proj.tagline}
-
-                      </p>
-
-                      
-
-                      <div className="flex flex-wrap gap-2 mb-6">
-
-                        {proj.technologies.slice(0, 3).map((tech) => (
-
-                          <span
-
-                            key={tech}
-
-                            className="rounded-lg border border-slate-700/60 bg-slate-800/50 px-2.5 py-1 font-mono text-[10px] text-slate-400 group-hover:border-cyan-500/40 group-hover:text-cyan-400 transition-colors"
-
-                          >
-
-                            {tech}
-
-                          </span>
-
-                        ))}
-
-                        {proj.technologies.length > 3 && (
-
-                          <span className="rounded-lg border border-slate-700/60 bg-slate-800/50 px-2.5 py-1 font-mono text-[10px] text-slate-400">
-
-                            +{proj.technologies.length - 3}
-
-                          </span>
-
-                        )}
-
-                      </div>
-
-                      
-
-                      <div className="space-y-3 border-t border-slate-800/50 pt-5">
-
-                        {proj.metrics.slice(0, 2).map((met) => (
-
-                          <div key={met} className="flex items-center gap-2 text-xs font-semibold text-emerald-400">
-
-                            <ShieldCheck className="h-4 w-4 shrink-0" />
-
-                            {met}
-
-                          </div>
-
-                        ))}
-
-                      </div>
-
-                    </div>
-
-                    
-
-                    <div className="p-6 pt-0">
-
-                      <button className="magnetic-btn w-full group/btn inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 to-indigo-500 px-4 py-3 text-xs font-bold text-white shadow-lg shadow-cyan-500/25 transition-all hover:scale-[1.02] hover:shadow-cyan-500/40">
-
-                        View case study
-
-                        <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/btn:translate-x-1" />
-
-                      </button>
-
-                    </div>
-
-                  </article>
-
-                </ScrollReveal>
-
-              </div>
-
+                  <p className="mt-5 text-sm leading-relaxed text-[var(--text-body)]">
+                    {member.bio}
+                  </p>
+
+                  <div className="mt-auto flex flex-wrap gap-1.5 pt-5">
+                    {member.specialties.slice(0, 4).map((s) => (
+                      <span key={s} className="chip">
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                </article>
+              </ScrollReveal>
             ))}
-
           </div>
 
-
-
-          <ScrollReveal animation="fade-up" threshold={0.1} className="text-center">
-
-            <button
-
-              onClick={() => setActiveView("portfolio")}
-
-              className="magnetic-btn group inline-flex items-center gap-2 rounded-full border border-slate-700 px-8 py-3.5 text-sm font-semibold text-slate-200 transition hover:border-cyan-500/40 hover:text-white hover:scale-105"
-
-            >
-
-              Explore full portfolio
-
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-
-            </button>
-
-          </ScrollReveal>
-
-        </div>
-
-      </section> */}
-
-
-
-      {/* ─── WHY US & PROCESS ───────────────────────────────────────────── */}
-
-      <section className="border-t border-slate-800/40 py-16 md:py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-transparent to-slate-900/20">
-
-        <div className="mx-auto max-w-7xl space-y-16">
-
-          {/* ─── SCENE 3 — WORKFLOW ─────────────────────────────────────── */}
-          <WorkflowScene />
-
-
-
-          {/* Trust Signals — Premium */}
-          <ScrollReveal animation="fade-up" delay={0.2}>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-
-              {/* Security */}
-              <div className="group relative overflow-hidden rounded-3xl border border-emerald-500/20 bg-gradient-to-b from-emerald-950/40 to-slate-950/60 p-7 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:shadow-2xl hover:shadow-emerald-500/10">
-                {/* Ambient glow orb */}
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 h-24 w-24 rounded-full bg-emerald-500/15 blur-2xl group-hover:bg-emerald-500/25 transition-all" />
-                {/* Icon */}
-                <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500/15 border border-emerald-500/25 shadow-lg shadow-emerald-500/10">
-                  <ShieldCheck className="h-7 w-7 text-emerald-400" strokeWidth={1.5} />
-                </div>
-                {/* Stat */}
-                <p className="text-3xl font-black bg-gradient-to-r from-emerald-300 to-teal-300 bg-clip-text text-transparent leading-none mb-1">100%</p>
-                {/* Accent bar */}
-                <div className="mx-auto my-3 h-px w-12 bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent" />
-                <p className="text-xs font-semibold tracking-widest uppercase text-slate-400">Security Compliant</p>
-              </div>
-
-              {/* Delivery */}
-              <div className="group relative overflow-hidden rounded-3xl border border-cyan-500/20 bg-gradient-to-b from-cyan-950/40 to-slate-950/60 p-7 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/40 hover:shadow-2xl hover:shadow-cyan-500/10">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 h-24 w-24 rounded-full bg-cyan-500/15 blur-2xl group-hover:bg-cyan-500/25 transition-all" />
-                <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-cyan-500/15 border border-cyan-500/25 shadow-lg shadow-cyan-500/10">
-                  <Zap className="h-7 w-7 text-cyan-400" strokeWidth={1.5} />
-                </div>
-                <p className="text-3xl font-black bg-gradient-to-r from-cyan-300 to-sky-300 bg-clip-text text-transparent leading-none mb-1">&lt;8wks</p>
-                <div className="mx-auto my-3 h-px w-12 bg-gradient-to-r from-transparent via-cyan-500/60 to-transparent" />
-                <p className="text-xs font-semibold tracking-widest uppercase text-slate-400">Avg Delivery</p>
-              </div>
-
-              {/* Support */}
-              <div className="group relative overflow-hidden rounded-3xl border border-indigo-500/20 bg-gradient-to-b from-indigo-950/40 to-slate-950/60 p-7 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-indigo-500/40 hover:shadow-2xl hover:shadow-indigo-500/10">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 h-24 w-24 rounded-full bg-indigo-500/15 blur-2xl group-hover:bg-indigo-500/25 transition-all" />
-                <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-500/15 border border-indigo-500/25 shadow-lg shadow-indigo-500/10">
-                  <Users className="h-7 w-7 text-indigo-400" strokeWidth={1.5} />
-                </div>
-                <p className="text-3xl font-black bg-gradient-to-r from-indigo-300 to-blue-300 bg-clip-text text-transparent leading-none mb-1">24/7</p>
-                <div className="mx-auto my-3 h-px w-12 bg-gradient-to-r from-transparent via-indigo-500/60 to-transparent" />
-                <p className="text-xs font-semibold tracking-widest uppercase text-slate-400">Support Available</p>
-              </div>
-
-              {/* Rating */}
-              <div className="group relative overflow-hidden rounded-3xl border border-violet-500/20 bg-gradient-to-b from-violet-950/40 to-slate-950/60 p-7 text-center backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-violet-500/40 hover:shadow-2xl hover:shadow-violet-500/10">
-                <div className="absolute -top-6 left-1/2 -translate-x-1/2 h-24 w-24 rounded-full bg-violet-500/15 blur-2xl group-hover:bg-violet-500/25 transition-all" />
-                <div className="relative mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-500/15 border border-violet-500/25 shadow-lg shadow-violet-500/10">
-                  <Star className="h-7 w-7 text-violet-400" strokeWidth={1.5} />
-                </div>
-                <p className="text-3xl font-black bg-gradient-to-r from-violet-300 to-purple-300 bg-clip-text text-transparent leading-none mb-1">4.9/5</p>
-                <div className="mx-auto my-3 h-px w-12 bg-gradient-to-r from-transparent via-violet-500/60 to-transparent" />
-                <p className="text-xs font-semibold tracking-widest uppercase text-slate-400">Client Rating</p>
-              </div>
-
-            </div>
-          </ScrollReveal>
-
-
-        </div>
-
-      </section>
-
-      {/* ─── SCENE 4 — BUILT FOR YOUR WORLD ──────────────────────────── */}
-      <AudienceScene setActiveView={setActiveView} />
-
-
-
-      {/* ─── TESTIMONIALS ────────────────────────────────────────────────── */}
-
-      <section className="border-t border-slate-800/40 py-12 md:py-16">
-
-        {/* Heading — stays in normal content width */}
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mb-10">
-          <SectionHeader
-
-            badgeLabel="Client Stories"
-
-            badgeColor="cyan"
-
-            title="What Our Clients Say"
-
-            centered
-
-          />
-        </div>
-
-        {/* Full-width marquee — no container constraint */}
-        <div className="relative w-full overflow-hidden py-4">
-            {/* Left and right fade overlays to enhance layout */}
-            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-slate-950 via-slate-950/40 to-transparent pointer-events-none z-10 hidden md:block" />
-            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-slate-950 via-slate-950/40 to-transparent pointer-events-none z-10 hidden md:block" />
-
-            {/* Infinite Marquee Track */}
-            <div className="flex gap-8 w-max animate-marquee hover:[animation-play-state:paused] cursor-pointer">
-              {/* First Set of Testimonials */}
-              {CLIENT_TESTIMONIALS.map((t, i) => (
-                <div key={`first-${t.id}`} className="shrink-0">
-                  <div className="flex w-[480px] max-w-[85vw] min-h-[220px] rounded-3xl border border-slate-800/50 bg-slate-950/90 p-6 backdrop-blur-md transition-all duration-300 hover:border-cyan-500/30 hover:shadow-cyan-500/5 hover:shadow-2xl">
-                    {/* Left Column: Author Info */}
-                    <div className="w-[140px] shrink-0 flex flex-col items-center justify-center text-center border-r border-slate-800/40 pr-4 mr-4">
-                      {t.avatar === "panther" ? (
-                        <div className="h-14 w-14 rounded-full bg-gradient-to-br from-cyan-500/30 to-violet-500/30 p-[2px] shadow-lg mb-3 flex items-center justify-center border border-cyan-500/20">
-                          <div className="h-full w-full rounded-full bg-slate-950 overflow-hidden flex items-center justify-center text-cyan-400">
-                            <svg className="h-9 w-9" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M12 2c-.6 0-1.1.3-1.4.8L8.2 6.5C7.4 6.2 6.5 6 5.5 6c-2 0-3.5 1.5-3.5 3.5 0 2.2 1.5 4.5 3.5 5.5 1 2.5 3.5 4 6.5 4s5.5-1.5 6.5-4c2-1 3.5-3.3 3.5-5.5C22 7.5 20.5 6 18.5 6c-1 0-1.9.2-2.7.5L13.4 2.8c-.3-.5-.8-.8-1.4-.8zm-4 7c.8 0 1.5.7 1.5 1.5S8.8 12 8 12s-1.5-.7-1.5-1.5S7.2 9 8 9zm8 0c.8 0 1.5.7 1.5 1.5S16.8 12 16 12s-1.5-.7-1.5-1.5S15.2 9 16 9zm-4 4.5c1.4 0 2.5 1.1 2.5 2.5H9.5c0-1.4 1.1-2.5 2.5-2.5z" />
-                            </svg>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="h-14 w-14 rounded-full bg-gradient-to-br from-slate-800 to-slate-950 p-[2px] shadow-lg mb-3 flex items-center justify-center border border-slate-700/50">
-                          <div className="h-full w-full rounded-full bg-slate-900 overflow-hidden flex items-center justify-center text-slate-500">
-                            <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                          </div>
-                        </div>
-                      )}
-                      <p className="text-sm font-extrabold text-white leading-tight mb-1">{t.author}</p>
-                      <p className="text-[10px] text-slate-400 font-semibold leading-tight mb-2">
-                        {t.role}, {t.company}
-                      </p>
-                      {t.flag && t.country && (
-                        <div className="flex items-center gap-1 bg-slate-950/50 px-2 py-0.5 rounded-full border border-slate-800/80">
-                          <span className="text-xs leading-none">{t.flag}</span>
-                          <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">{t.country}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Right Column: Review Text & Stars */}
-                    <div className="flex-1 flex flex-col justify-between">
-                      <p className="text-[13px] leading-relaxed text-slate-300 italic font-medium mt-1">
-                        &ldquo;{t.quote}&rdquo;
-                      </p>
-                      <div className="flex justify-end gap-0.5 mt-2">
-                        {Array.from({ length: t.rating }).map((_, j) => (
-                          <Star key={j} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                        ))}
-                      </div>
-                    </div>
+          {advisor && (
+            <ScrollReveal animation="fade-up" className="mt-6">
+              <article className="surface-card flex flex-col gap-6 p-7 sm:flex-row sm:items-center">
+                <img
+                  src={advisor.image}
+                  alt={advisor.name}
+                  loading="lazy"
+                  className="h-20 w-20 shrink-0 rounded-[var(--r-md)] border border-[var(--border)] object-cover"
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-3">
+                    <h3 className="text-base font-semibold tracking-tight text-[var(--text-heading)]">
+                      {advisor.name}
+                    </h3>
+                    <span className="chip chip-accent">{advisor.role}</span>
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--text-body)]">
+                    {advisor.bio}
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {advisor.specialties.map((s) => (
+                      <span key={s} className="chip">
+                        {s}
+                      </span>
+                    ))}
                   </div>
                 </div>
-              ))}
-
-              {/* Duplicated Second Set for Seamless Loop */}
-              {CLIENT_TESTIMONIALS.map((t, i) => (
-                <div key={`second-${t.id}`} className="shrink-0">
-                  <div className="flex w-[480px] max-w-[85vw] min-h-[220px] rounded-3xl border border-slate-800/70 bg-slate-900/60 p-6 backdrop-blur-md transition-all duration-300 hover:border-cyan-500/30 hover:shadow-cyan-500/5 hover:shadow-2xl">
-                    {/* Left Column: Author Info */}
-                    <div className="w-[140px] shrink-0 flex flex-col items-center justify-center text-center border-r border-slate-800/40 pr-4 mr-4">
-                      {t.avatar === "panther" ? (
-                        <div className="h-14 w-14 rounded-full bg-gradient-to-br from-cyan-500/30 to-violet-500/30 p-[2px] shadow-lg mb-3 flex items-center justify-center border border-cyan-500/20">
-                          <div className="h-full w-full rounded-full bg-slate-950 overflow-hidden flex items-center justify-center text-cyan-400">
-                            <svg className="h-9 w-9" viewBox="0 0 24 24" fill="currentColor">
-                              <path d="M12 2c-.6 0-1.1.3-1.4.8L8.2 6.5C7.4 6.2 6.5 6 5.5 6c-2 0-3.5 1.5-3.5 3.5 0 2.2 1.5 4.5 3.5 5.5 1 2.5 3.5 4 6.5 4s5.5-1.5 6.5-4c2-1 3.5-3.3 3.5-5.5C22 7.5 20.5 6 18.5 6c-1 0-1.9.2-2.7.5L13.4 2.8c-.3-.5-.8-.8-1.4-.8zm-4 7c.8 0 1.5.7 1.5 1.5S8.8 12 8 12s-1.5-.7-1.5-1.5S7.2 9 8 9zm8 0c.8 0 1.5.7 1.5 1.5S16.8 12 16 12s-1.5-.7-1.5-1.5S15.2 9 16 9zm-4 4.5c1.4 0 2.5 1.1 2.5 2.5H9.5c0-1.4 1.1-2.5 2.5-2.5z" />
-                            </svg>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="h-14 w-14 rounded-full bg-gradient-to-br from-slate-800 to-slate-950 p-[2px] shadow-lg mb-3 flex items-center justify-center border border-slate-700/50">
-                          <div className="h-full w-full rounded-full bg-slate-900 overflow-hidden flex items-center justify-center text-slate-500">
-                            <svg className="h-8 w-8" fill="currentColor" viewBox="0 0 24 24">
-                              <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                          </div>
-                        </div>
-                      )}
-                      <p className="text-sm font-extrabold text-white leading-tight mb-1">{t.author}</p>
-                      <p className="text-[10px] text-slate-400 font-semibold leading-tight mb-2">
-                        {t.role}, {t.company}
-                      </p>
-                      {t.flag && t.country && (
-                        <div className="flex items-center gap-1 bg-slate-950/50 px-2 py-0.5 rounded-full border border-slate-800/80">
-                          <span className="text-xs leading-none">{t.flag}</span>
-                          <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider">{t.country}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Right Column: Review Text & Stars */}
-                    <div className="flex-1 flex flex-col justify-between">
-                      <p className="text-[13px] leading-relaxed text-slate-300 italic font-medium mt-1">
-                        &ldquo;{t.quote}&rdquo;
-                      </p>
-                      <div className="flex justify-end gap-0.5 mt-2">
-                        {Array.from({ length: t.rating }).map((_, j) => (
-                          <Star key={j} className="h-4 w-4 fill-amber-400 text-amber-400" />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
+              </article>
+            </ScrollReveal>
+          )}
         </div>
-
       </section>
 
-      {/* ─── SCENE 5 — CTA CLOSE ─────────────────────────────────────── */}
-      <CtaScene setActiveView={setActiveView} />
-
+      {/* ═══ CLOSING CTA ═══════════════════════════════════════════════ */}
+      <section className="section">
+        <div className="container-page">
+          <div className="surface-card flex flex-col items-start justify-between gap-8 p-10 md:flex-row md:items-center md:p-12">
+            <div>
+              <h2 className="section-title max-w-2xl">
+                Tell us what you need built
+              </h2>
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-[var(--text-body)]">
+                A 30-minute technical session, no deck and no pitch. We scope the
+                problem and tell you honestly what it takes to build. Typically a
+                reply within one business day.
+              </p>
+            </div>
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
+              <button
+                type="button"
+                id="cta-consultation"
+                onClick={() => setActiveView("consultation")}
+                className="btn btn-primary group px-6 py-3.5"
+              >
+                Book a Consultation
+                <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+              </button>
+              <button
+                type="button"
+                id="cta-contact"
+                onClick={() => setActiveView("contact")}
+                className="btn btn-secondary px-6 py-3.5"
+              >
+                Send a Brief
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
-
   );
-
 }
