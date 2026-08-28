@@ -131,7 +131,7 @@ export default function AIArchitectView({
         {/* Input */}
         {!architectResult && !loading && (
           <ScrollReveal delay={0.1}>
-            <div className="p-6 rounded-2xl border border-slate-900 bg-slate-900/50 space-y-6">
+            <div className="surface-card p-6 rounded-2xl space-y-6">
               <div className="flex items-center gap-2 text-xs font-mono text-slate-500">
                 <Terminal className="w-4 h-4 text-cyan-400" />
                 <span>root@promptly:~# _ system_planner</span>
@@ -174,7 +174,7 @@ export default function AIArchitectView({
 
             {/* Summary */}
             <ScrollReveal>
-              <div className="grid md:grid-cols-3 gap-4 p-5 border border-slate-900 bg-slate-900/30 rounded-xl">
+              <div className="surface-card grid md:grid-cols-3 gap-4 p-5 rounded-xl">
                 <div>
                   <CalendarRange className="text-cyan-400" />
                   <p className="text-xs text-slate-500">Timeline</p>

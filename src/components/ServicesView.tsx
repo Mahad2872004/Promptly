@@ -1,307 +1,278 @@
 import React, { useState } from "react";
 import { ViewType } from "../types";
 import { AGENCY_SERVICES } from "../data";
-import { Cpu, Bot, Monitor, Smartphone, CheckCircle2, ArrowRight, Shield, Rocket } from "lucide-react";
+import {
+  Cpu,
+  Bot,
+  Monitor,
+  Smartphone,
+  Check,
+  ArrowRight,
+  ShieldCheck,
+  Rocket,
+} from "lucide-react";
 import ScrollReveal from "./ui/ScrollReveal";
-import PageAtmosphere from "./ui/PageAtmosphere";
-import { accentVars } from "../theme/tokens";
+import PageHero from "./ui/PageHero";
+import SectionHeading from "./ui/SectionHeading";
+import FeatureCard from "./ui/FeatureCard";
+import CtaBand from "./ui/CtaBand";
 
 interface ServicesViewProps {
   setActiveView: (view: ViewType) => void;
 }
 
+const SERVICE_ICONS: Record<string, React.ReactNode> = {
+  "ai-powered-solutions": <Bot className="h-5 w-5" />,
+  "software-development": <Monitor className="h-5 w-5" />,
+  "digital-transformation": <Cpu className="h-5 w-5" />,
+  "startup-support": <Smartphone className="h-5 w-5" />,
+};
+
+const SERVICE_ROUTES: Record<string, ViewType> = {
+  "ai-powered-solutions": "ai-solutions",
+  "software-development": "software-development",
+  "digital-transformation": "digital-transformation",
+  "startup-support": "startup-support",
+};
+
+const PRINCIPLES = [
+  {
+    icon: <Rocket className="h-5 w-5" />,
+    title: "Weekly deployable builds",
+    description:
+      "Every sprint ends in something you can open, click through and comment on — not a status document.",
+  },
+  {
+    icon: <ShieldCheck className="h-5 w-5" />,
+    title: "Credentials never leave the server",
+    description:
+      "Secrets stay in server-side environments, access is scoped per environment, and every deploy is auditable.",
+  },
+  {
+    icon: <Cpu className="h-5 w-5" />,
+    title: "Documented handover",
+    description:
+      "Clean, commented code and a full repository at every milestone, so you are never locked to one vendor.",
+  },
+];
+
+/**
+ * Services index.
+ *
+ * A tab strip selects one practice and the detail panel below swaps. The
+ * previous version gave each tab its own gradient fill, border hue, ping dot
+ * and blurred halo; selection is now a solid accent left rule plus a filled
+ * icon tile, so which one is active is clearer with a quarter of the ink.
+ */
 export default function ServicesView({ setActiveView }: ServicesViewProps) {
-  const [selectedServiceId, setSelectedServiceId] = useState<string>("ai-powered-solutions");
+  const [selectedServiceId, setSelectedServiceId] = useState<string>(
+    "ai-powered-solutions"
+  );
 
   const activeService =
-    AGENCY_SERVICES.find((s) => s.id === selectedServiceId) || AGENCY_SERVICES[0];
-
-  const handleBookBrief = () => {
-    setActiveView("contact");
-  };
+    AGENCY_SERVICES.find((s) => s.id === selectedServiceId) ?? AGENCY_SERVICES[0];
 
   return (
-    <div className="bg-transparent text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 selection:bg-cyan-500/20 relative" style={accentVars("ai")}>
-      <PageAtmosphere module="ai" />
-      <div className="mx-auto max-w-7xl space-y-16">
+    <div>
+      <PageHero
+        eyebrow="Services"
+        title="Digital solutions for real business"
+        lead="AI-powered systems, custom software, digital transformation and startup support — four practices delivered by one senior engineering team."
+        primary={{ label: "Start a Project", onClick: () => setActiveView("contact") }}
+        secondary={{
+          label: "View Case Studies",
+          onClick: () => setActiveView("portfolio"),
+        }}
+      />
 
-        {/* Header Block */}
-        <ScrollReveal>
-          <div className="text-center space-y-6 max-w-3xl mx-auto">
-            <span className="inline-flex items-center gap-2 rounded-full border border-cyan-500/25 bg-cyan-500/10 px-4 py-2 text-xs font-bold uppercase tracking-widest text-cyan-400">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-400" />
-              </span>
-              AI-First Solutions
-            </span>
-            <p className="script-tagline mb-3">Whatever you need.</p>
-            <h1 className="display-heading font-sans text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
-              Digital Solutions for{" "}
-              <span className="bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text text-transparent">
-                Real Business
-              </span>
-            </h1>
-            <p className="text-base sm:text-lg text-slate-400 leading-relaxed max-w-2xl mx-auto">
-              AI-powered solutions, software development, digital transformation, and startup support — every service built with intelligent automation at the core.
-            </p>
-          </div>
-        </ScrollReveal>
-
-        {/* Tab Selector Grid */}
-        <ScrollReveal delay={0.1}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6" id="services-selector-tabs">
-            {AGENCY_SERVICES.map((serv, index) => {
+      {/* ── Practice selector + detail ─────────────────────────────────── */}
+      <section className="section">
+        <div className="container-page">
+          <div
+            className="grid grid-cols-2 gap-px overflow-hidden rounded-[var(--r-lg)] border border-[var(--border)] bg-[var(--border)] lg:grid-cols-4"
+            id="services-selector-tabs"
+          >
+            {AGENCY_SERVICES.map((serv) => {
               const isSelected = serv.id === selectedServiceId;
-              const gradients = {
-                "ai-powered-solutions": "from-cyan-500/20 via-blue-500/20 to-indigo-500/20",
-                "software-development": "from-blue-500/20 via-indigo-500/20 to-violet-500/20",
-                "digital-transformation": "from-emerald-500/20 via-teal-500/20 to-cyan-500/20",
-                "startup-support": "from-violet-500/20 via-purple-500/20 to-pink-500/20"
-              };
-              const borderColors = {
-                "ai-powered-solutions": "border-cyan-500/50",
-                "software-development": "border-blue-500/50",
-                "digital-transformation": "border-emerald-500/50",
-                "startup-support": "border-violet-500/50"
-              };
-              const iconColors = {
-                "ai-powered-solutions": "text-cyan-400",
-                "software-development": "text-blue-400",
-                "digital-transformation": "text-emerald-400",
-                "startup-support": "text-violet-400"
-              };
-
               return (
                 <button
                   key={serv.id}
+                  type="button"
                   onClick={() => setSelectedServiceId(serv.id)}
-                  className={`group relative flex flex-col items-center justify-center p-8 rounded-3xl border text-center transition-all duration-500 select-none cursor-pointer overflow-hidden focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:ring-offset-2 focus:ring-offset-slate-900
-                    ${
-                      isSelected
-                        ? `bg-gradient-to-br ${gradients[serv.id as keyof typeof gradients]} ${borderColors[serv.id as keyof typeof borderColors]} shadow-2xl scale-[1.03]`
-                        : "bg-slate-900/40 border-slate-800/60 hover:border-slate-700 hover:bg-slate-900/60 hover:scale-[1.01]"
-                    }
-                  `}
-                  style={{ animationDelay: `${index * 100}ms` }}
                   aria-pressed={isSelected}
-                  aria-label={`Select ${serv.title} service`}
+                  className={`relative flex flex-col items-start gap-4 p-6 text-left transition-colors ${
+                    isSelected
+                      ? "bg-[var(--bg-panel)]"
+                      : "bg-[var(--bg-subtle)] hover:bg-[var(--bg-panel-hover)]"
+                  }`}
                 >
-                  {/* Active indicator dot */}
-                  {isSelected && (
-                    <div className="absolute top-4 right-4 flex h-2 w-2">
-                      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
-                      <span className={`relative inline-flex h-2 w-2 rounded-full ${iconColors[serv.id as keyof typeof iconColors]}`} />
-                    </div>
-                  )}
-                  
-                  {/* Animated background gradient */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${gradients[serv.id as keyof typeof gradients]} opacity-0 transition-opacity duration-500 ${isSelected ? 'opacity-100' : 'group-hover:opacity-50'}`} />
-                  
-                  {/* Decorative glow */}
-                  {isSelected && (
-                    <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-indigo-500/20 blur-xl opacity-50" />
-                  )}
-                  
-                  <div className={`relative p-4 rounded-2xl mb-5 transition-all duration-500 backdrop-blur-sm
-                    ${isSelected 
-                      ? `bg-slate-950/50 ${iconColors[serv.id as keyof typeof iconColors]} scale-110 shadow-lg` 
-                      : "bg-slate-950/50 text-slate-400 group-hover:scale-105 group-hover:bg-slate-950/70"}
-                  `}
+                  {/* Selection is a solid 2px accent rule along the top. */}
+                  <span
+                    aria-hidden
+                    className="absolute inset-x-0 top-0 h-0.5 transition-colors"
+                    style={{
+                      background: isSelected ? "var(--accent)" : "transparent",
+                    }}
+                  />
+                  <span
+                    className={`icon-tile ${
+                      isSelected
+                        ? ""
+                        : "border-[var(--border)] bg-[var(--bg-inset)] text-[var(--text-micro)]"
+                    }`}
                   >
-                    {serv.id === "ai-powered-solutions" && <Bot className="w-7 h-7" />}
-                    {serv.id === "software-development" && <Monitor className="w-7 h-7" />}
-                    {serv.id === "digital-transformation" && <Cpu className="w-7 h-7" />}
-                    {serv.id === "startup-support" && <Smartphone className="w-7 h-7" />}
-                  </div>
-
-                  <span className={`relative font-sans font-bold text-base sm:text-lg transition-colors duration-300
-                    ${isSelected ? "text-white" : "text-slate-200 group-hover:text-white"}
-                  `}>
-                    {serv.title}
+                    {SERVICE_ICONS[serv.id]}
                   </span>
-
-                  {serv.badge && (
-                    <span className={`relative mt-3 px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all duration-300 border
-                      ${isSelected 
-                        ? `bg-slate-950/80 ${iconColors[serv.id as keyof typeof iconColors]} ${borderColors[serv.id as keyof typeof borderColors]}` 
-                        : "bg-slate-950/50 border-slate-800 text-slate-500 group-hover:border-slate-700"}
-                    `}>
+                  <span>
+                    <span
+                      className={`block text-sm font-semibold ${
+                        isSelected
+                          ? "text-[var(--text-heading)]"
+                          : "text-[var(--text-body)]"
+                      }`}
+                    >
+                      {serv.title}
+                    </span>
+                    <span className="mt-1 block text-xs text-[var(--text-micro)]">
                       {serv.badge}
                     </span>
-                  )}
-
-                  {/* Hover shine effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-                  
-                  {/* Selection indicator line */}
-                  {isSelected && (
-                    <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${gradients[serv.id as keyof typeof gradients]}`} />
-                  )}
+                  </span>
                 </button>
               );
             })}
           </div>
-        </ScrollReveal>
 
-        {/* Service Dashboard */}
-        <ScrollReveal delay={0.2}>
           <div
-            className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-8 md:p-10 rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900/40 to-slate-950/40 backdrop-blur-md transition-all duration-500"
             key={selectedServiceId}
+            className="animate-fadeIn mt-6 grid gap-px overflow-hidden rounded-[var(--r-lg)] border border-[var(--border)] bg-[var(--border)] lg:grid-cols-12"
           >
-            {/* Left */}
-            <div className="lg:col-span-5 space-y-6">
-              <div className={`h-1.5 w-20 bg-gradient-to-r ${activeService.heroColor} rounded-full animate-pulse`} />
-
-              <div className="space-y-4">
-                <span className="font-mono text-[11px] text-cyan-400 uppercase tracking-widest font-semibold">
-                  Service Overview
-                </span>
-                <h2 className="font-sans text-3xl font-extrabold text-slate-100 md:text-4xl leading-tight">
-                  {activeService.title}
-                </h2>
-              </div>
-
-              <p className="text-slate-300 text-base leading-relaxed font-sans">
+            <div className="bg-[var(--bg-panel)] p-8 lg:col-span-5 lg:p-10">
+              <p className="mono-label uppercase">Service overview</p>
+              <h2 className="mt-4 text-2xl font-bold tracking-tight text-[var(--text-heading)] md:text-3xl">
+                {activeService.title}
+              </h2>
+              <p className="mt-4 text-sm leading-relaxed text-[var(--text-body)]">
                 {activeService.description}
               </p>
 
-              <div className="p-5 rounded-2xl bg-slate-950/60 border border-slate-800/50 space-y-4">
-                <span className="font-mono text-[10px] text-slate-500 uppercase tracking-wider block">
-                  Why This Service
-                </span>
-
-                <div className="space-y-3">
-                  <div className="flex items-center gap-3 text-sm text-slate-300 group">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-500/10 group-hover:bg-cyan-500/20 transition-colors">
-                      <Shield className="w-4 h-4 text-cyan-400" />
-                    </div>
-                    <span>Enterprise-grade security standards</span>
+              {activeService.setupCost && (
+                <dl className="mt-8 space-y-3 border-t border-[var(--border)] pt-6 text-sm">
+                  <div className="flex items-baseline justify-between gap-4">
+                    <dt className="text-[var(--text-micro)]">Setup</dt>
+                    <dd className="font-semibold text-[var(--text-heading)]">
+                      {activeService.setupCost}
+                    </dd>
                   </div>
-
-                  <div className="flex items-center gap-3 text-sm text-slate-300 group">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 group-hover:bg-emerald-500/20 transition-colors">
-                      <Rocket className="w-4 h-4 text-emerald-400" />
+                  {activeService.ongoingCost && (
+                    <div className="flex items-baseline justify-between gap-4">
+                      <dt className="text-[var(--text-micro)]">Ongoing</dt>
+                      <dd className="font-semibold text-[var(--text-heading)]">
+                        {activeService.ongoingCost}
+                      </dd>
                     </div>
-                    <span>Fast deployment & time-to-market</span>
-                  </div>
+                  )}
+                </dl>
+              )}
 
-                  <div className="flex items-center gap-3 text-sm text-slate-300 group">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-indigo-500/10 group-hover:bg-indigo-500/20 transition-colors">
-                      <Cpu className="w-4 h-4 text-indigo-400" />
-                    </div>
-                    <span>AI-first approach & automation</span>
-                  </div>
-                </div>
-              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  setActiveView(SERVICE_ROUTES[activeService.id] ?? "contact")
+                }
+                className="link-arrow mt-8"
+              >
+                Full {activeService.title} page
+                <ArrowRight className="h-3.5 w-3.5" aria-hidden />
+              </button>
             </div>
 
-            {/* Right */}
-            <div className="lg:col-span-7 space-y-6 lg:border-l lg:border-slate-800/60 lg:pl-8">
-              <span className="font-mono text-[11px] text-slate-500 uppercase tracking-widest block font-semibold">
-                What's Included
-              </span>
+            <div className="bg-[var(--bg-panel)] p-8 lg:col-span-7 lg:p-10">
+              <p className="mono-label uppercase">What&apos;s included</p>
 
-              <div className="space-y-4">
-                {activeService.details.map((detail, index) => (
-                  <div key={index}>
-                    <ScrollReveal delay={index * 0.05}>
-                      <div className="flex items-start gap-4 p-4 rounded-2xl bg-slate-950/30 hover:bg-slate-950/50 border border-slate-900/60 transition-all hover:border-slate-700 hover:translate-x-1 cursor-default">
-                        <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-cyan-500/20 mt-0.5 group-hover:bg-cyan-500/30 transition-colors">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-cyan-400" />
-                        </div>
-                        <span className="text-sm text-slate-300 font-sans leading-relaxed">
-                          {detail}
-                        </span>
-                      </div>
-                    </ScrollReveal>
-                  </div>
+              <ul className="mt-5 space-y-3">
+                {activeService.details.map((detail) => (
+                  <li
+                    key={detail}
+                    className="flex items-start gap-3 text-sm text-[var(--text-body)]"
+                  >
+                    <Check
+                      className="mt-0.5 h-4 w-4 shrink-0 text-[var(--accent)]"
+                      aria-hidden
+                    />
+                    <span>{detail}</span>
+                  </li>
                 ))}
-              </div>
+              </ul>
 
-              <div className="pt-6 flex flex-col sm:flex-row gap-4">
+              {activeService.caveats && activeService.caveats.length > 0 && (
+                <div className="card-inset mt-8 p-5">
+                  <p className="mono-label uppercase">Good to know</p>
+                  <ul className="mt-3 space-y-2">
+                    {activeService.caveats.map((c) => (
+                      <li
+                        key={c}
+                        className="text-sm leading-relaxed text-[var(--text-body)]"
+                      >
+                        {c}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <button
-                  onClick={handleBookBrief}
-                  className="btn-primary flex-1 flex items-center justify-center gap-2 rounded-full px-6 py-4 text-sm font-bold cursor-pointer hover:scale-105 transition-transform"
+                  type="button"
+                  onClick={() => setActiveView("contact")}
+                  className="btn btn-primary px-6"
                 >
                   Start Your Project
-                  <ArrowRight className="w-4 h-4 text-[var(--bg-base)]" />
                 </button>
-
                 <button
+                  type="button"
                   onClick={() => setActiveView("portfolio")}
-                  className="btn-secondary flex-1 rounded-full px-6 py-4 text-sm font-bold text-center cursor-pointer hover:scale-105 transition-transform"
+                  className="btn btn-secondary px-6"
                 >
                   View Case Studies
                 </button>
               </div>
             </div>
           </div>
-        </ScrollReveal>
+        </div>
+      </section>
 
-        {/* Process Section */}
-        <ScrollReveal delay={0.3}>
-          <div className="border-t border-slate-800/40 py-20">
-            <div className="text-center mb-12">
-              <span className="eyebrow accent-text">
-                Our Process
-              </span>
-              <h2 className="font-sans text-2xl font-extrabold tracking-tight text-white sm:text-3xl mt-4">
-                How We Deliver Excellence
-              </h2>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="group p-6 rounded-3xl border border-slate-800/60 bg-slate-900/30 hover:border-cyan-500/30 hover:bg-slate-900/50 transition-all">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500/20 to-indigo-500/20 mb-4 group-hover:scale-110 transition-transform">
-                  <Rocket className="w-6 h-6 text-cyan-400" />
-                </div>
-                <span className="text-xs font-bold font-mono text-cyan-400 uppercase tracking-wider">
-                  01 / SPEED
-                </span>
-                <h3 className="font-sans font-bold text-lg text-slate-100 mt-2">
-                  Agile Weekly Milestones
-                </h3>
-                <p className="text-sm text-slate-400 leading-relaxed mt-3">
-                  Weekly deployable builds with real-time feedback loops. We move fast without cutting corners.
-                </p>
-              </div>
+      {/* ── Delivery principles ────────────────────────────────────────── */}
+      <section className="section section-alt">
+        <div className="container-page">
+          <SectionHeading
+            eyebrow="How we deliver"
+            title="Three commitments on every engagement"
+            lead="These hold whichever practice you engage. They are in the contract, not just on the site."
+          />
 
-              <div className="group p-6 rounded-3xl border border-slate-800/60 bg-slate-900/30 hover:border-emerald-500/30 hover:bg-slate-900/50 transition-all">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 mb-4 group-hover:scale-110 transition-transform">
-                  <Shield className="w-6 h-6 text-emerald-400" />
-                </div>
-                <span className="text-xs font-bold font-mono text-emerald-400 uppercase tracking-wider">
-                  02 / SECURITY
-                </span>
-                <h3 className="font-sans font-bold text-lg text-slate-100 mt-2">
-                  Zero-Leak Guardrails
-                </h3>
-                <p className="text-sm text-slate-400 leading-relaxed mt-3">
-                  All credentials isolated in server-side environments. Enterprise-grade security by default.
-                </p>
-              </div>
-
-              <div className="group p-6 rounded-3xl border border-slate-800/60 bg-slate-900/30 hover:border-violet-500/30 hover:bg-slate-900/50 transition-all">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-violet-500/20 to-purple-500/20 mb-4 group-hover:scale-110 transition-transform">
-                  <Cpu className="w-6 h-6 text-violet-400" />
-                </div>
-                <span className="text-xs font-bold font-mono text-violet-400 uppercase tracking-wider">
-                  03 / QUALITY
-                </span>
-                <h3 className="font-sans font-bold text-lg text-slate-100 mt-2">
-                  Continuous Handoff
-                </h3>
-                <p className="text-sm text-slate-400 leading-relaxed mt-3">
-                  Clean, documented code delivered for long-term ownership. Built to scale and maintain.
-                </p>
-              </div>
-            </div>
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {PRINCIPLES.map((p, i) => (
+              <ScrollReveal key={p.title} animation="fade-up" staggerIndex={i}>
+                <FeatureCard
+                  icon={p.icon}
+                  title={p.title}
+                  description={p.description}
+                />
+              </ScrollReveal>
+            ))}
           </div>
-        </ScrollReveal>
+        </div>
+      </section>
 
-      </div>
+      <CtaBand
+        title="Not sure which service you need?"
+        body="Describe the problem and we will tell you which practice fits — or that you do not need us at all."
+        primary={{ label: "Talk to an Engineer", onClick: () => setActiveView("contact") }}
+        secondary={{
+          label: "Book a Consultation",
+          onClick: () => setActiveView("consultation"),
+        }}
+      />
     </div>
   );
 }
