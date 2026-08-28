@@ -40,7 +40,7 @@ export default function XSenderView({ setActiveView }: XSenderViewProps) {
               { icon: <Shield className="h-6 w-6" />, title: "Secure Payments", desc: "Integrated payment gateway with end-to-end encryption" },
               { icon: <BarChart className="h-6 w-6" />, title: "Real-time Analytics", desc: "Track orders, revenue, and customer insights in real-time" },
             ].map((feature, i) => (
-              <div key={feature.title} className="p-6 rounded-2xl surface-card hover:border-emerald-500/40 transition-all">
+              <div key={feature.title} className="p-6 rounded-2xl surface-card transition-colors">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500/10 to-emerald-500/5">
                     <span className="text-emerald-400">{feature.icon}</span>
