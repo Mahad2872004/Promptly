@@ -452,11 +452,11 @@ export const TEAM_MEMBERS: TeamMember[] = [
 
     name: "Mahad Mateen Butt",
 
-    role: "Founder & CEO",
+    role: "Founder & Solution Architect",
 
     bio: "Mahad is a Full Stack Developer & AI Consultant leading Promptly's business strategy, product vision, and AI automation architecture. As the final decision maker, he drives client consulting, strategic partnerships, and the overall direction of the agency.",
 
-    specialties: ["Business Strategy", "Product Vision", "AI & Automation Architecture", "Client Consulting", "Partnerships", "Full Stack Dev", "AI Consulting", "Final Decision Maker"],
+    specialties: ["Solution Architecture", "Full Stack Development", "AI & Automation Architecture", "Product Strategy", "Client Consulting"],
 
     svgAvatarIndex: 1,
 
@@ -506,27 +506,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
 
   },
 
-  {
-
-    id: "team-6",
-
-    name: "Hasnain Farooq",
-
-    role: "Sales & Business Development Manager",
-
-    bio: "Hasnain owns the full sales engine at Promptly — from lead generation and client outreach to proposals, CRM management, and strategic partnerships. He drives the predictable revenue growth that fuels the agency's expansion.",
-
-    specialties: ["Lead Generation", "Client Outreach", "Sales Calls", "Proposal Follow-ups", "CRM Management", "Partnerships"],
-
-    svgAvatarIndex: 6,
-
-    image: "/images/hasnain.jpeg",
-
-    experience: "5+ years"
-
-  },
-
-  {
+{
 
     id: "team-advisor",
 
@@ -701,4 +681,5 @@ export const SYSTEM_FAQS: FAQItem[] = [
   }
 
 ];
+
 

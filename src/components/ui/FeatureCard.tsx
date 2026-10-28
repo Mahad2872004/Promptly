@@ -39,7 +39,7 @@ export default function FeatureCard({
   return (
     <article
       {...(interactive
-        ? { onClick, role: "button", tabIndex: 0 }
+        ? { onClick, role: "button", tabIndex: 0, onKeyDown: (e: React.KeyboardEvent) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onClick?.(); } } }
         : {})}
       className={`surface-card flex h-full flex-col p-6 ${
         interactive ? "card-interactive cursor-pointer" : ""

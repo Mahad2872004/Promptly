@@ -1,11 +1,11 @@
-import {StrictMode} from 'react';
-import {createRoot} from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
-import App from './App.tsx';
-import { ThemeProvider } from './theme/ThemeProvider';
-import './index.css';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App.tsx";
+import { ThemeProvider } from "./theme/ThemeProvider";
+import "./index.css";
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider>
       <BrowserRouter>
@@ -14,3 +14,7 @@ createRoot(document.getElementById('root')!).render(
     </ThemeProvider>
   </StrictMode>,
 );
+
+import "./marketing.css";
+import "./experience.css";
+import "./art-direction.css";

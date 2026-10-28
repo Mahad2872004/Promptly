@@ -39,12 +39,10 @@ function readStoredTheme(): Theme | null {
  * Mirrors the inline no-flash script in index.html — keep the two in sync.
  */
 function resolveInitialTheme(): Theme {
-  if (typeof window === "undefined") return "light";
+  if (typeof window === "undefined") return "dark";
   const stored = readStoredTheme();
   if (stored) return stored;
-  return window.matchMedia?.("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
+  return "dark";
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
@@ -68,20 +66,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     root.style.colorScheme = theme;
   }, [theme]);
 
-  const setTheme = useCallback(
-    (next: Theme) => {
-      setThemeState((prev) => {
-        if (prev === next) return prev;
-        try {
-          localStorage.setItem(THEME_STORAGE_KEY, next);
-        } catch {
-          /* private mode — theme still applies for this session */
-        }
-        return next;
-      });
-    },
-    []
-  );
+  const setTheme = useCallback((next: Theme) => {
+    setThemeState((prev) => {
+      if (prev === next) return prev;
+      try {
+        localStorage.setItem(THEME_STORAGE_KEY, next);
+      } catch {
+        /* private mode — theme still applies for this session */
+      }
+      return next;
+    });
+  }, []);
 
   // Drive the cross-fade with a class on <html> rather than a global
   // `transition: all`, which would make every hover on the page feel laggy.
@@ -100,12 +95,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     };
   }, [theme, reducedMotion]);
 
-  // Follow the OS only for users who have never made an explicit choice.
+  // Keep the brand default until the visitor explicitly selects a theme.
   useEffect(() => {
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
     const onChange = (e: MediaQueryListEvent) => {
       if (readStoredTheme()) return;
-      setThemeState(e.matches ? "dark" : "light");
+      setThemeState("dark");
     };
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);
@@ -113,15 +108,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   const toggleTheme = useCallback(
     () => setTheme(theme === "dark" ? "light" : "dark"),
-    [theme, setTheme]
+    [theme, setTheme],
   );
 
   const value = useMemo(
     () => ({ theme, setTheme, toggleTheme, isTransitioning, reducedMotion }),
-    [theme, setTheme, toggleTheme, isTransitioning, reducedMotion]
+    [theme, setTheme, toggleTheme, isTransitioning, reducedMotion],
   );
 
-  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
+  return (
+    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+  );
 }
 
 export function useTheme(): ThemeContextValue {
