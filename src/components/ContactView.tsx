@@ -17,6 +17,9 @@ interface ContactViewProps {
 }
 
 const PROJECT_TYPES = [
+  "Software engineering",
+  "Business automation",
+  "xSender product enquiry",
   "Enterprise SaaS",
   "AI / LLM Integration",
   "Cloud Architecture",
@@ -25,6 +28,7 @@ const PROJECT_TYPES = [
 ];
 
 const BUDGET_RANGES = [
+  "Not sure yet",
   "Under $20,000",
   "$20,000 – $40,000",
   "$40,000 – $60,000",
@@ -56,8 +60,12 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
-  const [projectType, setProjectType] = useState(PROJECT_TYPES[0]);
-  const [budget, setBudget] = useState(BUDGET_RANGES[1]);
+  const [projectType, setProjectType] = useState(
+    new URLSearchParams(window.location.search).get("product") === "xsender"
+      ? "xSender product enquiry"
+      : PROJECT_TYPES[0],
+  );
+  const [budget, setBudget] = useState(BUDGET_RANGES[0]);
   const [message, setMessage] = useState("");
 
   const [loading, setLoading] = useState(false);
@@ -68,7 +76,9 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
     e.preventDefault();
 
     if (!supabase) {
-      setErrorMsg("Contact form is not configured. Please add Supabase credentials.");
+      setErrorMsg(
+        "The form is temporarily unavailable. Please email promptlypk@gmail.com with your project details.",
+      );
       return;
     }
 
@@ -94,13 +104,17 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
 
       if (error) throw error;
 
-      setSuccessMsg("Thanks for reaching out — we have received your project brief.");
+      setSuccessMsg(
+        "Thanks for reaching out — we have received your project brief.",
+      );
       setName("");
       setEmail("");
       setCompany("");
       setMessage("");
     } catch (err: any) {
-      setErrorMsg(err.message || "Something went wrong. Please try again.");
+      setErrorMsg(
+        "We could not send your brief. Please try again or email promptlypk@gmail.com.",
+      );
     } finally {
       setLoading(false);
     }
@@ -111,13 +125,13 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
       <PageHero
         eyebrow="Contact"
         title="Start a project with us"
-        lead="Tell us about the software you need. We reply within one business day with a view on scope, timeline and whether we are the right team for it."
+        lead="Tell us what you want to build, improve, or understand. We will review your brief and discuss a practical next step."
       />
 
       <section className="section">
         <div className="container-page grid gap-10 lg:grid-cols-12 lg:gap-12">
           {/* ── Details column ──────────────────────────────────────── */}
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-4 contact-details-column">
             <h2 className="text-lg font-semibold tracking-tight text-[var(--text-heading)]">
               Reach us directly
             </h2>
@@ -206,7 +220,10 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
           </div>
 
           {/* ── Form column ─────────────────────────────────────────── */}
-          <ScrollReveal animation="fade-up" className="lg:col-span-8">
+          <ScrollReveal
+            animation="fade-up"
+            className="lg:col-span-8 contact-form-column"
+          >
             <div className="surface-card p-7 md:p-9">
               <div className="flex items-center gap-2.5 border-b border-[var(--border)] pb-5">
                 <span
@@ -219,7 +236,7 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
               </div>
 
               {successMsg ? (
-                <div className="py-10 text-center">
+                <div role="status" className="py-10 text-center">
                   <span className="icon-tile mx-auto">
                     <Check className="h-5 w-5" strokeWidth={2.5} />
                   </span>
@@ -227,8 +244,8 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
                     Brief received
                   </h3>
                   <p className="mx-auto mt-2.5 max-w-md text-sm leading-relaxed text-[var(--text-body)]">
-                    {successMsg} We will review the details and be in touch within
-                    one business day.
+                    {successMsg} We will review the details and be in touch
+                    within one business day.
                   </p>
                   <button
                     type="button"
@@ -247,7 +264,8 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
                         required
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="Sarah Jenkins"
+                        autoComplete="name"
+                        placeholder="Your name"
                         className="field"
                       />
                     </Field>
@@ -258,7 +276,8 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="sarah@company.com"
+                        autoComplete="email"
+                        placeholder="you@company.com"
                         className="field"
                       />
                     </Field>
@@ -269,6 +288,7 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
                       type="text"
                       value={company}
                       onChange={(e) => setCompany(e.target.value)}
+                      autoComplete="organization"
                       placeholder="Company name"
                       className="field"
                     />
@@ -320,7 +340,10 @@ export default function ContactView({ setActiveView }: ContactViewProps) {
                       role="alert"
                       className="flex items-start gap-2.5 rounded-[var(--r-md)] border border-red-500/30 bg-red-500/5 p-3.5 text-sm text-red-500"
                     >
-                      <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden />
+                      <AlertCircle
+                        className="mt-0.5 h-4 w-4 shrink-0"
+                        aria-hidden
+                      />
                       <span>{errorMsg}</span>
                     </div>
                   )}

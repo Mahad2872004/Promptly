@@ -1,54 +1,62 @@
-import React from "react";
-
+import React, { useId } from "react";
 interface LogoProps {
   className?: string;
   size?: number;
   showText?: boolean;
-  /** Renders the wordmark in white, for the dark footer and inverse bands. */
   onInverse?: boolean;
 }
-
-/**
- * Promptly mark + wordmark.
- *
- * The mark keeps its original isometric "P" geometry but is now rendered in a
- * single brand colour with white shapes at graded opacity, rather than the
- * previous cyan-plus-orange two-gradient construction. One hue, one mark.
- */
+/** Vector interpretation of Promptly's supplied turquoise/orange geometric P. */
 export default function Logo({
   className = "",
-  size = 32,
+  size = 36,
   showText = true,
   onInverse = false,
 }: LogoProps) {
+  const id = useId();
   return (
-    <div className={`flex select-none items-center gap-2.5 ${className}`}>
+    <div className={`brand-lockup ${className}`}>
       <svg
         width={size}
         height={size}
         viewBox="0 0 100 100"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        aria-hidden
+        aria-hidden="true"
       >
-        <rect x="0" y="0" width="100" height="100" rx="20" fill="var(--brand-700)" />
-        {/* Top bar — the roof of the P */}
-        <path d="M39 20H80L69 35H28L39 20Z" fill="#ffffff" />
-        {/* Left stem */}
-        <path d="M28 35H46V78H28V35Z" fill="#ffffff" />
-        {/* Right shoulder */}
-        <path d="M80 35H69V50H80V35Z" fill="#ffffff" opacity="0.55" />
-        {/* The bowl, closing back on the stem */}
-        <path d="M46 45H80V58H46V45Z" fill="#ffffff" opacity="0.78" />
-        <path d="M46 58H65L55 68H46V58Z" fill="#ffffff" opacity="0.55" />
+        <defs>
+          <linearGradient
+            id={`${id}-cyan`}
+            x1="5"
+            y1="5"
+            x2="92"
+            y2="94"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#00ddc3" />
+            <stop offset="1" stopColor="#009bb4" />
+          </linearGradient>
+          <linearGradient
+            id={`${id}-orange`}
+            x1="40"
+            y1="75"
+            x2="98"
+            y2="36"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop stopColor="#ff5426" />
+            <stop offset="1" stopColor="#ffab24" />
+          </linearGradient>
+        </defs>
+        <path d="M33 3H91L61 34H3L33 3Z" fill={`url(#${id}-cyan)`} />
+        <path d="M3 43H33V99H3V43Z" fill={`url(#${id}-cyan)`} />
+        <path d="M100 3V35H70L100 3Z" fill="#008ba9" />
+        <path
+          d="M62 35H100V51L74 77H42V54H81L62 35Z"
+          fill={`url(#${id}-orange)`}
+        />
       </svg>
-
       {showText && (
-        <span
-          className="font-sans text-[1.0625rem] font-bold tracking-[-0.02em]"
-          style={{ color: onInverse ? "#ffffff" : "var(--text-heading)" }}
-        >
-          Promptly
+        <span style={{ color: onInverse ? "#f6f8ff" : "var(--text-heading)" }}>
+          Promptly<span className="brand-period">.</span>
         </span>
       )}
     </div>

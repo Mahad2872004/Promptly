@@ -1,19 +1,13 @@
 import express from "express";
+import { pageMeta } from "./src/seo";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, Type } from "@google/genai";
 import dotenv from "dotenv";
-import 'dotenv/config';
-import { createRequire } from "module";
+import "dotenv/config";
 
 // Load .env file explicitly
 dotenv.config();
-
-// @ts-ignore
-if (typeof globalThis.require === "undefined") {
-  // @ts-ignore
-  globalThis.require = createRequire(import.meta.url);
-}
 
 dotenv.config();
 
@@ -28,7 +22,9 @@ function getGeminiClient(): GoogleGenAI {
   if (!aiInstance) {
     const key = process.env.GEMINI_API_KEY;
     if (!key) {
-      throw new Error("GEMINI_API_KEY is not configured in environment secrets.");
+      throw new Error(
+        "GEMINI_API_KEY is not configured in environment secrets.",
+      );
     }
     aiInstance = new GoogleGenAI({
       apiKey: key,
@@ -61,15 +57,43 @@ const fallbackSolutions: Record<string, ProjectBrief> = {
     id: "demo-saas",
     name: "Enterprise Multi-Tenant SaaS",
     email: "client@saascorp.com",
-    description: "A subscription-based workspace for logistics automation with sub-domains and RBAC.",
-    techStack: ["React", "TypeScript", "Tailwind CSS", "Express.js", "PostgreSQL", "Redis", "Stripe API"],
+    description:
+      "A subscription-based workspace for logistics automation with sub-domains and RBAC.",
+    techStack: [
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Express.js",
+      "PostgreSQL",
+      "Redis",
+      "Stripe API",
+    ],
     timeline: "8 - 10 Weeks",
     budget: "$42,000 - $55,000",
     phases: [
-      { name: "Phase 1: Discovery & Prompt-to-Spec", duration: "1.5 Weeks", details: "UX wireframes, database schemas, and API design specifications." },
-      { name: "Phase 2: Core Platform Engine", duration: "3.5 Weeks", details: "Multi-tenant logic, authentication, and core workflow triggers." },
-      { name: "Phase 3: Integration & Payment Gates", duration: "3 Weeks", details: "Stripe setup, sub-domain routing, and notifications engine." },
-      { name: "Phase 4: Optimization & QA Sprints", duration: "1 Week", details: "Load testing, visual polishing, and responsive compliance audit." },
+      {
+        name: "Phase 1: Discovery & Prompt-to-Spec",
+        duration: "1.5 Weeks",
+        details:
+          "UX wireframes, database schemas, and API design specifications.",
+      },
+      {
+        name: "Phase 2: Core Platform Engine",
+        duration: "3.5 Weeks",
+        details:
+          "Multi-tenant logic, authentication, and core workflow triggers.",
+      },
+      {
+        name: "Phase 3: Integration & Payment Gates",
+        duration: "3 Weeks",
+        details: "Stripe setup, sub-domain routing, and notifications engine.",
+      },
+      {
+        name: "Phase 4: Optimization & QA Sprints",
+        duration: "1 Week",
+        details:
+          "Load testing, visual polishing, and responsive compliance audit.",
+      },
     ],
     recommendations: [
       "Use Row-Level Security (RLS) in PostgreSQL with tenant IDs on every table to guarantee complete data isolation.",
@@ -81,15 +105,43 @@ const fallbackSolutions: Record<string, ProjectBrief> = {
     id: "demo-ai",
     name: "Agentic AI Customer Intelligence Portal",
     email: "client@promptintelligence.io",
-    description: "An AI-powered service analyzer extracting sentiment, auto-reply actions, and customer health logs.",
-    techStack: ["React", "TypeScript", "Vite", "Node.js", "Gemini 3.5 Flash", "Vector Database", "Tailwind CSS"],
+    description:
+      "An AI-powered service analyzer extracting sentiment, auto-reply actions, and customer health logs.",
+    techStack: [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Node.js",
+      "Gemini 3.5 Flash",
+      "Vector Database",
+      "Tailwind CSS",
+    ],
     timeline: "6 - 8 Weeks",
     budget: "$35,000 - $48,000",
     phases: [
-      { name: "Phase 1: Prompts & Retrieval Tuning", duration: "2 Weeks", details: "Define vector embedding schemas and prompt templates." },
-      { name: "Phase 2: Core Pipeline & Streaming API", duration: "3 Weeks", details: "Connect client webhooks with Node server-side Gemini streaming models." },
-      { name: "Phase 3: Dashboard & Intelligence View", duration: "2 Weeks", details: "Create comprehensive charts, activity streams, and auto-reply configurations." },
-      { name: "Phase 4: Secure Sandbox Deploys", duration: "1 Week", details: "Complete API rate limiting, telemetry logs, and containerized Cloud Run deployments." },
+      {
+        name: "Phase 1: Prompts & Retrieval Tuning",
+        duration: "2 Weeks",
+        details: "Define vector embedding schemas and prompt templates.",
+      },
+      {
+        name: "Phase 2: Core Pipeline & Streaming API",
+        duration: "3 Weeks",
+        details:
+          "Connect client webhooks with Node server-side Gemini streaming models.",
+      },
+      {
+        name: "Phase 3: Dashboard & Intelligence View",
+        duration: "2 Weeks",
+        details:
+          "Create comprehensive charts, activity streams, and auto-reply configurations.",
+      },
+      {
+        name: "Phase 4: Secure Sandbox Deploys",
+        duration: "1 Week",
+        details:
+          "Complete API rate limiting, telemetry logs, and containerized Cloud Run deployments.",
+      },
     ],
     recommendations: [
       "Use gemini-3.5-flash for high-speed, cost-efficient analysis of customer messages on server-side proxies.",
@@ -109,19 +161,22 @@ app.post("/api/gemini/analyze", async (req, res) => {
   const { prompt, type } = req.body;
 
   if (!prompt || typeof prompt !== "string" || prompt.trim().length < 5) {
-    return res.status(400).json({ error: "Please enter a descriptive prompt describing your software idea (minimum 5 characters)." });
+    return res.status(400).json({
+      error:
+        "Please enter a descriptive prompt describing your software idea (minimum 5 characters).",
+    });
   }
 
   try {
     const aiClient = getGeminiClient();
-    
+
     // Construct rich prompt
     const clientPrompt = `
       You are the "Promptly Core AI Architect Assistant" at "Promptly", an elite software development and design agency.
       A prospective client has described their product idea with the following prompt:
-      
+
       "${prompt}"
-      
+
       Your goal is to analyze this idea and produce a highly professional, comprehensive technical blueprint, recommendation checklist, development roadmap, and estimated time/cost.
       Analyze the request diligently and supply the result in the structured JSON schema format specified. Make the text content engaging, technically precise, and professional.
     `;
@@ -130,32 +185,46 @@ app.post("/api/gemini/analyze", async (req, res) => {
       model: "gemini-3.5-flash",
       contents: clientPrompt,
       config: {
-        systemInstruction: "You are the Lead Systems Architect at Promptly, an elite, top-tier software engineering agency. You analyze user prompts and create professional-grade architectural structures, specific technology stacks, phase breakdowns, and budget forecasts in structured JSON format.",
+        systemInstruction:
+          "You are the Lead Systems Architect at Promptly, an elite, top-tier software engineering agency. You analyze user prompts and create professional-grade architectural structures, specific technology stacks, phase breakdowns, and budget forecasts in structured JSON format.",
         responseMimeType: "application/json",
         responseSchema: {
           type: Type.OBJECT,
-          required: ["name", "description", "techStack", "timeline", "budget", "phases", "recommendations"],
+          required: [
+            "name",
+            "description",
+            "techStack",
+            "timeline",
+            "budget",
+            "phases",
+            "recommendations",
+          ],
           properties: {
             name: {
               type: Type.STRING,
-              description: "A polished, technical name for the client's software application",
+              description:
+                "A polished, technical name for the client's software application",
             },
             description: {
               type: Type.STRING,
-              description: "A professional, comprehensive architectural and business description explaining exactly how the system will meet the client's objectives.",
+              description:
+                "A professional, comprehensive architectural and business description explaining exactly how the system will meet the client's objectives.",
             },
             techStack: {
               type: Type.ARRAY,
               items: { type: Type.STRING },
-              description: "A list of specific technology recommendations (e.g. React, Tailwind CSS, PostgreSQL, Node.js, Docker, WebSockets, Firebase, etc.) customized for this concept.",
+              description:
+                "A list of specific technology recommendations (e.g. React, Tailwind CSS, PostgreSQL, Node.js, Docker, WebSockets, Firebase, etc.) customized for this concept.",
             },
             timeline: {
               type: Type.STRING,
-              description: "Estimated construction time range (e.g. '6 - 8 Weeks' or '10 - 12 Weeks')",
+              description:
+                "Estimated construction time range (e.g. '6 - 8 Weeks' or '10 - 12 Weeks')",
             },
             budget: {
               type: Type.STRING,
-              description: "Estimated professional agency development fee range (e.g. '$30,000 - $40,000')",
+              description:
+                "Estimated professional agency development fee range (e.g. '$30,000 - $40,000')",
             },
             phases: {
               type: Type.ARRAY,
@@ -164,16 +233,27 @@ app.post("/api/gemini/analyze", async (req, res) => {
                 type: Type.OBJECT,
                 required: ["name", "duration", "details"],
                 properties: {
-                  name: { type: Type.STRING, description: "Phase/Sprint Title" },
-                  duration: { type: Type.STRING, description: "Timeframe for this phase" },
-                  details: { type: Type.STRING, description: "Highly technical explanation of what will be developed and verified during this phase." },
+                  name: {
+                    type: Type.STRING,
+                    description: "Phase/Sprint Title",
+                  },
+                  duration: {
+                    type: Type.STRING,
+                    description: "Timeframe for this phase",
+                  },
+                  details: {
+                    type: Type.STRING,
+                    description:
+                      "Highly technical explanation of what will be developed and verified during this phase.",
+                  },
                 },
               },
             },
             recommendations: {
               type: Type.ARRAY,
               items: { type: Type.STRING },
-              description: "A set of 3-4 professional architectural recommendations or modern practices specific to their idea.",
+              description:
+                "A set of 3-4 professional architectural recommendations or modern practices specific to their idea.",
             },
           },
         },
@@ -191,24 +271,27 @@ app.post("/api/gemini/analyze", async (req, res) => {
       throw new Error("Empty response from AI engine.");
     }
   } catch (error: any) {
-    console.warn("Gemini compilation failed or key is missing. Yielding local fallback logic:", error.message);
-    
+    console.warn(
+      "Gemini compilation failed or key is missing. Yielding local fallback logic:",
+      error.message,
+    );
+
     // Choose appropriate local fallback matching the client type or generic
     const selectKey = type && fallbackSolutions[type] ? type : "saas";
     const baseFallback = fallbackSolutions[selectKey];
-    
-    // Customize fallback with their prompt slightly to make it feel responsive and highly professional
-    const customDescription = `[Sandbox Mode] We've analyzed your prompt ("${prompt.length > 60 ? prompt.substring(0, 57) + '...' : prompt}"). ${baseFallback.description}`;
+
+    // Return a clearly labeled example when live analysis is unavailable
+    const customDescription = `Example blueprint only. Live analysis is unavailable; this sample has not been tailored to your brief. ${baseFallback.description}`;
     const customBrief: ProjectBrief = {
       ...baseFallback,
-      name: prompt.length < 30 ? `Promptly Custom: ${prompt}` : "Promptly Dynamic Bespoke Enterprise System",
+      name: "Example business application blueprint",
       description: customDescription,
     };
 
     return res.json({
       success: true,
-      source: "Promptly Local AI Engine (Sandbox Fallback)",
-      note: "Using offline compiler mode. Set GEMINI_API_KEY environment variable in secrets to enable dynamic live model analytics.",
+      source: "Example blueprint (Offline Fallback)",
+      note: "Live analysis is currently unavailable. This is an illustrative sample, not an analysis or quotation for your project.",
       data: customBrief,
     });
   }
@@ -235,7 +318,8 @@ const contactDatabase: ContactSubmission[] = [
     company: "Lumina Health",
     projectType: "Enterprise Web App",
     budget: "$40k - $60k",
-    message: "We need a secure HIPAA-compliant telehealth patient check-in portal customized with high-end telemetry charts.",
+    message:
+      "We need a secure HIPAA-compliant telehealth patient check-in portal customized with high-end telemetry charts.",
     timestamp: "2026-05-19T14:30:00Z",
     status: "In Contact",
   },
@@ -246,16 +330,19 @@ const contactDatabase: ContactSubmission[] = [
     company: "FinTech Scale",
     projectType: "Mobile Application",
     budget: "$60k+",
-    message: "Building a React Native wealth management system. Eager to see Promptly's custom layout speed capabilities.",
+    message:
+      "Building a React Native wealth management system. Eager to see Promptly's custom layout speed capabilities.",
     timestamp: "2026-05-20T10:15:00Z",
     status: "Kickoff Scheduled",
-  }
+  },
 ];
 
 app.post("/api/contact", (req, res) => {
   const { name, email, company, projectType, budget, message } = req.body;
   if (!name || !email || !message) {
-    return res.status(400).json({ error: "Missing required fields: name, email, and message." });
+    return res
+      .status(400)
+      .json({ error: "Missing required fields: name, email, and message." });
   }
 
   const newSubmission: ContactSubmission = {
@@ -273,7 +360,8 @@ app.post("/api/contact", (req, res) => {
   contactDatabase.unshift(newSubmission);
   return res.json({
     success: true,
-    message: "Project brief successfully submitted to Promptly! Our engineers will review this within 12 hours.",
+    message:
+      "Project brief successfully submitted to Promptly! Our engineers will review this within 12 hours.",
     submission: newSubmission,
   });
 });
@@ -284,7 +372,10 @@ app.get("/api/contacts", (req, res) => {
 
 // Vite Middleware orchestration for development, asset server for production
 async function runServer() {
-  if (process.env.NODE_ENV !== "production") {
+  if (
+    process.env.NODE_ENV !== "production" &&
+    !process.argv[1]?.endsWith("server.cjs")
+  ) {
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",
@@ -293,9 +384,12 @@ async function runServer() {
   } else {
     // Service static built outputs
     const distPath = path.join(process.cwd(), "dist");
-    app.use(express.static(distPath));
+    app.use(express.static(distPath, { redirect: false }));
     app.get("*", (req, res) => {
-      res.sendFile(path.join(distPath, "index.html"));
+      const route = req.path.replace(/\/+$/, "") || "/";
+      if (pageMeta[route])
+        return res.sendFile(path.join(distPath, route, "index.html"));
+      res.status(404).sendFile(path.join(distPath, "index.html"));
     });
   }
 
@@ -307,8 +401,8 @@ async function runServer() {
     if (err.code === "EADDRINUSE") {
       console.error(
         `[Promptly Server] Port ${PORT} is already in use — another instance is probably still running.\n` +
-        `  Free it:  npx kill-port ${PORT}\n` +
-        `  Or use another port:  PORT=3001 npx tsx server.ts`
+          `  Free it:  npx kill-port ${PORT}\n` +
+          `  Or use another port:  PORT=3001 npx tsx server.ts`,
       );
       process.exit(1);
     }

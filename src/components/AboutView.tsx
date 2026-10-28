@@ -176,7 +176,7 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
       {founder && (
         <section className="section">
           <div className="container-page">
-            <SectionHeading eyebrow="Leadership" title="Founder & CEO" />
+            <SectionHeading eyebrow="Leadership" title="Founder & Solution Architect" />
 
             <ScrollReveal animation="fade-up" className="mt-14">
               <div className="grid gap-px overflow-hidden rounded-[var(--r-lg)] border border-[var(--border)] bg-[var(--border)] md:grid-cols-12">
@@ -320,3 +320,4 @@ export default function AboutView({ setActiveView }: AboutViewProps) {
     </div>
   );
 }
+

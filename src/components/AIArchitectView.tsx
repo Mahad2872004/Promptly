@@ -1,3 +1,4 @@
+import PageHero from "./ui/PageHero";
 import React, { useState, useEffect } from "react";
 import { ArchitectResponse, ViewType } from "../types";
 import {
@@ -8,7 +9,7 @@ import {
   Lightbulb,
   RefreshCw,
   ShieldCheck,
-  Sparkles
+  Sparkles,
 } from "lucide-react";
 
 import ScrollReveal from "./ui/ScrollReveal";
@@ -24,7 +25,7 @@ interface AIArchitectViewProps {
 export default function AIArchitectView({
   initialPrompt,
   setUserDraftPrompt,
-  setActiveView
+  setActiveView,
 }: AIArchitectViewProps) {
   const [prompt, setPrompt] = useState(initialPrompt);
   const [loading, setLoading] = useState(false);
@@ -36,12 +37,12 @@ export default function AIArchitectView({
 
   const loadingSequence = [
     "root@promptly:~# _ initialize_systems_analyser",
-    "Connecting to Promply server-side API proxy...",
-    "Invoking Gemini 3.5 Flash neural blueprint compiler...",
+    "Preparing your project brief...",
+    "Exploring the system requirements...",
     "Parsing functional requirements and scoping data constraints...",
     "Resolving database RLS tables and API route structures...",
     "Estimating development schedules and optimal sprint budgets...",
-    "Assembling comprehensive architecture package..."
+    "Assembling comprehensive architecture package...",
   ];
 
   useEffect(() => {
@@ -53,9 +54,7 @@ export default function AIArchitectView({
   const handleAnalyze = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (prompt.trim().length < 5) {
-      setErrorText(
-        "Please state a descriptive prompt (min 5 characters)."
-      );
+      setErrorText("Please state a descriptive prompt (min 5 characters).");
       return;
     }
 
@@ -66,7 +65,7 @@ export default function AIArchitectView({
 
     const interval = setInterval(() => {
       setLoadingStep((prev) =>
-        prev < loadingSequence.length - 1 ? prev + 1 : prev
+        prev < loadingSequence.length - 1 ? prev + 1 : prev,
       );
     }, 450);
 
@@ -74,7 +73,7 @@ export default function AIArchitectView({
       const response = await fetch("/api/gemini/analyze", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt, type: "saas" })
+        body: JSON.stringify({ prompt, type: "saas" }),
       });
 
       if (!response.ok) {
@@ -87,7 +86,7 @@ export default function AIArchitectView({
       if (resJson?.success) {
         setArchitectResult(resJson.data);
         setDataSource(
-          resJson.source + (resJson.note ? ` (${resJson.note})` : "")
+          resJson.source + (resJson.note ? ` (${resJson.note})` : ""),
         );
       } else {
         throw new Error(resJson.error || "Analysis failed.");
@@ -108,37 +107,30 @@ export default function AIArchitectView({
   };
 
   return (
-    <div className="bg-slate-950 text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 relative" style={accentVars("ai")}>
+    <div
+      className="tool-experience bg-slate-950 text-white min-h-screen py-16 px-4 sm:px-6 lg:px-8 relative"
+      style={accentVars("ai")}
+    >
       <PageAtmosphere module="ai" />
       <div className="mx-auto max-w-5xl space-y-12">
-
-        {/* Header */}
-        <ScrollReveal>
-          <div className="text-center space-y-4 max-w-2xl mx-auto">
-            <span className="eyebrow accent-text">
-              Generative Cognitive Modeler
-            </span>
-            <p className="script-tagline mb-3">Describe it. We'll draw it.</p>
-            <h1 className="display-heading text-4xl font-extrabold sm:text-5xl">
-              AI Project Architect
-            </h1>
-            <p className="text-sm text-slate-400">
-              Submit a prompt and get full system architecture instantly.
-            </p>
-          </div>
-        </ScrollReveal>
-
+        <PageHero
+          eyebrow="PROJECT EXPLORATION"
+          title="A clearer starting point for your next idea."
+          lead="Describe the problem and explore a preliminary technical blueprint. AI output and sample fallback plans need review; estimates are not quotes."
+        />
         {/* Input */}
         {!architectResult && !loading && (
           <ScrollReveal delay={0.1}>
             <div className="surface-card p-6 rounded-2xl space-y-6">
               <div className="flex items-center gap-2 text-xs font-mono text-slate-500">
                 <Terminal className="w-4 h-4 text-cyan-400" />
-                <span>root@promptly:~# _ system_planner</span>
+                <span>YOUR PROJECT BRIEF</span>
               </div>
 
               <form onSubmit={handleAnalyze} className="space-y-4">
                 <textarea
+                  aria-label="Describe your software idea"
+                  placeholder="What do you want to build, and who will use it?"
                   rows={4}
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
@@ -146,7 +138,9 @@ export default function AIArchitectView({
                 />
 
                 {errorText && (
-                  <p className="text-xs text-red-500">{errorText}</p>
+                  <p role="alert" className="text-xs text-red-500">
+                    {errorText}
+                  </p>
                 )}
 
                 <button className="bg-cyan-500 text-black px-6 py-3 text-xs font-bold rounded">
@@ -171,7 +165,6 @@ export default function AIArchitectView({
         {/* RESULT */}
         {architectResult && !loading && (
           <div className="space-y-8">
-
             {/* Summary */}
             <ScrollReveal>
               <div className="surface-card grid md:grid-cols-3 gap-4 p-5 rounded-xl">
@@ -197,13 +190,10 @@ export default function AIArchitectView({
 
             {/* Main Layout */}
             <div className="grid lg:grid-cols-12 gap-8">
-
               {/* Left */}
               <ScrollReveal className="lg:col-span-7 space-y-6">
                 <div className="p-6 border border-slate-900 rounded-2xl">
-                  <h2 className="text-xl font-bold">
-                    {architectResult.name}
-                  </h2>
+                  <h2 className="text-xl font-bold">{architectResult.name}</h2>
                   <p className="text-slate-400 text-sm">
                     {architectResult.description}
                   </p>
@@ -248,9 +238,7 @@ export default function AIArchitectView({
                       <div className="mt-4 border-l border-slate-800 pl-4">
                         <p className="text-sm font-bold">{p.name}</p>
                         <p className="text-xs text-cyan-400">{p.duration}</p>
-                        <p className="text-xs text-slate-400">
-                          {p.details}
-                        </p>
+                        <p className="text-xs text-slate-400">{p.details}</p>
                       </div>
                     </ScrollReveal>
                   ))}
@@ -273,11 +261,9 @@ export default function AIArchitectView({
                   </button>
                 </div>
               </ScrollReveal>
-
             </div>
           </div>
         )}
-
       </div>
     </div>
   );
