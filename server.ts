@@ -384,6 +384,9 @@ async function runServer() {
   } else {
     // Service static built outputs
     const distPath = path.join(process.cwd(), "dist");
+    app.get(["/portfolio", "/portfolio/"], (_req, res) =>
+      res.redirect(301, "/products"),
+    );
     app.use(express.static(distPath, { redirect: false }));
     app.get("*", (req, res) => {
       const route = req.path.replace(/\/+$/, "") || "/";

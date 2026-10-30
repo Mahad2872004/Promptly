@@ -1,3 +1,4 @@
+import { products } from "./data/products";
 export const SITE_URL = "https://promptly-seven-opal.vercel.app";
 export const pageMeta: Record<string, [string, string]> = {
   "/": [
@@ -25,16 +26,12 @@ export const pageMeta: Record<string, [string, string]> = {
     "Product discovery, MVP development, technical architecture, and launch support for founders.",
   ],
   "/products": [
-    "Our software products",
-    "Explore software built and owned by Promptly, including xSender for WhatsApp order management.",
+    "Products & Work",
+    "Explore xSender, Lumetry, LeadFlow, and RetailFlow: messaging automation, Shopify metrics, lead management, and retail operations.",
   ],
   "/products/xsender": [
     "xSender — WhatsApp order management",
     "Explore xSender, a Promptly product focused on organizing WhatsApp commerce workflows. Request a product walkthrough.",
-  ],
-  "/portfolio": [
-    "Our work",
-    "Explore Promptly’s product direction and working software demonstrations, including xSender and our project architect.",
   ],
   "/portfolio/xsender": [
     "xSender — product project",
@@ -77,3 +74,10 @@ export const pageMeta: Record<string, [string, string]> = {
     "Explore phased system modernization, architecture, and business software.",
   ],
 };
+
+for (const product of products) {
+  pageMeta[product.path] = [
+    `${product.name} — ${product.category}`,
+    product.detail,
+  ];
+}

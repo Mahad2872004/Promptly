@@ -3,13 +3,7 @@ import { ArrowUpRight, Plus, Minus } from "lucide-react";
 import { TEAM_MEMBERS } from "../data";
 import type { TeamMember } from "../types";
 import "./TeamSection.css";
-function TeamPortrait({
-  member,
-  index,
-}: {
-  member: TeamMember;
-  index: number;
-}) {
+function TeamPortrait({ member }: { member: TeamMember }) {
   const [open, setOpen] = useState(false);
   const panelId = `expertise-${member.id}`;
   return (
@@ -39,9 +33,6 @@ function TeamPortrait({
           width="600"
           height="750"
         />
-        <span className="team-index" aria-hidden="true">
-          P / 0{index + 1}
-        </span>
         <span className="portrait-corner" aria-hidden="true">
           <ArrowUpRight size={20} />
         </span>
@@ -95,8 +86,8 @@ export default function TeamSection() {
         </div>
       </div>
       <div className="team-portrait-grid">
-        {TEAM_MEMBERS.map((member, index) => (
-          <TeamPortrait key={member.id} member={member} index={index} />
+        {TEAM_MEMBERS.map((member) => (
+          <TeamPortrait key={member.id} member={member} />
         ))}
       </div>
       <div className="team-section-foot">

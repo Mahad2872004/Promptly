@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
 import { ViewType } from "./types";
+import { products } from "./data/products";
+import { ProductDetail } from "./components/ProductPortfolio";
 import XSenderProject from "./components/XSenderProject";
 import Seo from "./components/Seo";
 import MotionExperience from "./components/MotionExperience";
@@ -24,7 +32,6 @@ import {
   Services,
   Products,
   XSender,
-  Work,
   About,
   Consultation,
   Intro,
@@ -100,7 +107,10 @@ function AppContent() {
               path="/services/startup-support"
               element={<StartupSupportView setActiveView={setActiveView} />}
             />
-            <Route path="/portfolio" element={<Work />} />
+            <Route
+              path="/portfolio"
+              element={<Navigate to="/products" replace />}
+            />
             <Route
               path="/ai-architect"
               element={
@@ -131,6 +141,13 @@ function AppContent() {
             <Route path="/consultation" element={<Consultation />} />
             <Route path="/products" element={<Products />} />
             <Route path="/products/xsender" element={<XSender />} />
+            {products.slice(1).map((product) => (
+              <Route
+                key={product.id}
+                path={product.path}
+                element={<ProductDetail product={product} />}
+              />
+            ))}
             <Route
               path="/industries/startups"
               element={<StartupsView setActiveView={setActiveView} />}

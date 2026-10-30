@@ -6,7 +6,7 @@ export default function XSenderProject() {
       <Intro
         label="PRODUCT WORK / XSENDER"
         title="Giving conversational commerce a clear next step."
-        lead="A look at the business problem and product thinking behind Promptly’s WhatsApp order-management product."
+        lead="A look at the business problem and product thinking behind Promptly’s messaging automation product."
       />
       <section className="shell case-overview">
         <div>
@@ -46,12 +46,12 @@ export default function XSenderProject() {
             [
               "03 / Product direction",
               "Organize the handoff.",
-              "The documented xSender concept centers on a unified order workflow, connecting customer conversation, order details, operational review, and follow-through. The interface shown here illustrates that direction; it is not a production screenshot.",
+              "xSender connects questions, orders, bookings, and customer updates across WhatsApp, Instagram, and Facebook. Human handoff preserves the conversation context. The image above is captured from the actual public restaurant demo.",
             ],
             [
               "04 / Current evidence",
               "Explore the product directly.",
-              "This project page describes product intent, not a claimed customer outcome. A walkthrough is the next step to review current functionality, integration support, and availability with Promptly.",
+              "The live product website includes an interactive restaurant demo and details on channel setup. Explore the product to review its current workflows; the interface is evidence of functionality, not a claim about customer results.",
             ],
           ].map(([label, title, body]) => (
             <article key={label}>

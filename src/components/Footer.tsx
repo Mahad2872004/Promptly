@@ -27,8 +27,11 @@ export default function Footer(_props: any) {
         </div>
         <div>
           <h2>Explore</h2>
+          <Link to="/products">Products & Work</Link>
           <Link to="/products/xsender">xSender</Link>
-          <Link to="/portfolio">Our work</Link>
+          <Link to="/products/lumetry">Lumetry</Link>
+          <Link to="/products/leadflow">LeadFlow</Link>
+          <Link to="/products/retailflow">RetailFlow</Link>
           <Link to="/about">About Promptly</Link>
           <Link to="/consultation">Book a consultation</Link>
         </div>

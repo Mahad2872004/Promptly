@@ -37,8 +37,7 @@ export default function Header(_props: {
         >
           {[
             ["Services", "/services"],
-            ["Products", "/products"],
-            ["Work", "/portfolio"],
+            ["Products & Work", "/products"],
             ["About", "/about"],
           ].map(([label, path]) => (
             <NavLink key={path} to={path}>
