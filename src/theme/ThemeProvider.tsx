@@ -32,17 +32,19 @@ function readStoredTheme(): Theme | null {
   }
 }
 
+function systemTheme(): Theme {
+  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+
 /**
- * Resolves the boot theme. Light is the product default; the OS preference is
- * consulted only when the user has never chosen for themselves.
+ * Resolves the boot theme: the visitor's explicit choice if they made one,
+ * otherwise the OS preference.
  *
  * Mirrors the inline no-flash script in index.html — keep the two in sync.
  */
 function resolveInitialTheme(): Theme {
   if (typeof window === "undefined") return "dark";
-  const stored = readStoredTheme();
-  if (stored) return stored;
-  return "dark";
+  return readStoredTheme() ?? systemTheme();
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
@@ -95,12 +97,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     };
   }, [theme, reducedMotion]);
 
-  // Keep the brand default until the visitor explicitly selects a theme.
+  // Follow OS changes until the visitor explicitly selects a theme.
   useEffect(() => {
     const mq = window.matchMedia("(prefers-color-scheme: dark)");
     const onChange = (e: MediaQueryListEvent) => {
       if (readStoredTheme()) return;
-      setThemeState("dark");
+      setThemeState(e.matches ? "dark" : "light");
     };
     mq.addEventListener("change", onChange);
     return () => mq.removeEventListener("change", onChange);

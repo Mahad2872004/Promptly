@@ -34,11 +34,12 @@ try {
     await delay(100);
   }
   assert.ok(ready, "Production server becomes ready");
-  const sitemap = await readFile("public/sitemap.xml", "utf8");
+  const sitemap = await readFile("dist/sitemap.xml", "utf8");
   const urls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(
     (match) => new URL(match[1]).pathname,
   );
-  for (const route of [...urls, "/ai-architect", "/client-portal"]) {
+  assert.ok(!urls.includes("/portal-demo"), "Noindex route stays out of sitemap");
+  for (const route of [...urls, "/portal-demo"]) {
     const response = await fetch(base + route);
     assert.equal(response.status, 200, route);
     const html = await response.text();
@@ -48,11 +49,26 @@ try {
       `Canonical for ${route}`,
     );
     assert.match(html, /<script type="module" crossorigin src="\/assets\//);
-    if (route === "/client-portal") assert.ok(html.includes("noindex,follow"));
+    if (route === "/portal-demo") assert.ok(html.includes("noindex,follow"));
   }
-  const legacyWork = await fetch(base + "/portfolio", { redirect: "manual" });
-  assert.equal(legacyWork.status, 301);
-  assert.equal(legacyWork.headers.get("location"), "/products");
+  const redirects = {
+    "/portfolio": "/products",
+    "/portfolio/xsender": "/products/xsender",
+    "/ai-architect": "/blueprint",
+    "/client-portal": "/portal-demo",
+    "/consultation": "/contact#book",
+    "/industries/startups": "/industries#startups",
+    "/industries/ecommerce": "/industries#ecommerce",
+    "/industries/realestate": "/industries#realestate",
+    "/industries/enterprise": "/industries#enterprise",
+  };
+  for (const [from, to] of Object.entries(redirects)) {
+    for (const path of [from, `${from}/`]) {
+      const response = await fetch(base + path, { redirect: "manual" });
+      assert.equal(response.status, 301, `${path} redirects`);
+      assert.equal(response.headers.get("location"), to, `${path} → ${to}`);
+    }
+  }
   assert.equal((await fetch(base + "/unavailable-page")).status, 404);
   assert.equal((await fetch(base + "/robots.txt")).status, 200);
   assert.equal((await fetch(base + "/sitemap.xml")).status, 200);
@@ -75,7 +91,7 @@ try {
   assert.match(result.source, /Fallback/);
   assert.ok(result.data.phases.length > 0);
   console.log(
-    `PASS: ${urls.length + 2} routes, metadata, canonical links, sitemap, robots, 404, trailing slash, API health, validation and labeled offline estimator.`,
+    `PASS: ${urls.length + 1} routes, ${Object.keys(redirects).length * 2} redirects, metadata, canonical links, sitemap, robots, 404, trailing slash, API health, validation and labeled offline estimator.`,
   );
 } finally {
   server.kill();

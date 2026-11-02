@@ -1,250 +1,53 @@
-export type ViewType =
-
-  | "home"
-
-  | "services"
-
-  | "ai-solutions"
-
-  | "software-development"
-
-  | "digital-transformation"
-
-  | "startup-support"
-
-  | "portfolio"
-
-  | "ai-architect"
-
-  | "about"
-
-  | "client-portal"
-
-  | "contact"
-
-  | "consultation"
-
-  | "xsender"
-
-  | "products"
-
-  | "startups"
-
-  | "ecommerce"
-
-  | "realestate"
-
-  | "enterprise";
-
-
-
-export interface DemoProject {
-
-  id: string;
-
-  title: string;
-
-  clientName: string;
-
-  category: "SaaS" | "AI Integration" | "Cloud" | "Mobile";
-
-  tagline: string;
-
-  description: string;
-
-  longDescription: string;
-
-  metrics: string[];
-
-  technologies: string[];
-
-  visualTheme: string; // Tailwind colors like "from-cyan-500 to-blue-500"
-
-  featured: boolean;
-
-  testimonial?: {
-
-    quote: string;
-
-    author: string;
-
-    role: string;
-
-    company: string;
-
-  };
-
-}
-
-
-
-export interface AgencyService {
-
-  id: string;
-
-  title: string;
-
-  description: string;
-
-  details: string[];
-
-  iconName: string; // Lucide icon name mapping
-
-  badge: string;
-
-  heroColor: string;
-
-  caseStudyRef: string;
-
-  category: string;
-
-  /**
-   * Pricing shown in the Systems scene modal.
-   *
-   * TODO(promptly): these are placeholders — no pricing existed anywhere in
-   * the codebase. Replace with the real numbers; the modal renders whatever
-   * string is here verbatim, so "From $2,500" or "Custom quote" both work.
-   */
-  setupCost?: string;
-
-  ongoingCost?: string;
-
-  /** "Good to know" caveats — scope boundaries, dependencies, lead times. */
-  caveats?: string[];
-
-}
-
-
-
 export interface TeamMember {
-
   id: string;
-
   name: string;
-
   role: string;
-
   bio: string;
-
   specialties: string[];
-
   svgAvatarIndex: number;
-
+  /** Portrait path; when empty, the card shows a brand-gradient monogram. */
   image: string;
-
   experience?: string;
-
+  /** TODO: real content — LinkedIn profile URL. Rendered only when set. */
+  linkedin?: string;
 }
 
-
-
-export interface Testimonial {
-
-  id: string;
-
-  quote: string;
-
-  author: string;
-
-  role: string;
-
-  company: string;
-
-  rating: number;
-
-  flag?: string;
-
-  country?: string;
-
-  avatar?: string;
-
-}
-
-
-
-export interface FAQItem {
-
-  id: string;
-
-  question: string;
-
-  answer: string;
-
-}
-
-
-
-// Client Portal types for interactive simulator
+/* Client Portal demo (sample data only). */
 
 export interface PortalTask {
-
   id: string;
-
   title: string;
-
   status: "completed" | "in-progress" | "pending";
-
   phase: string;
-
   assignedTo: string;
-
 }
-
-
 
 export interface PortalInvoice {
-
   id: string;
-
   amount: string;
-
   date: string;
-
   status: "paid" | "sent" | "draft";
-
   item: string;
-
 }
-
-
 
 export interface PortalMessage {
-
   id: string;
-
   sender: "client" | "lead-engineer";
-
   text: string;
-
   timestamp: string;
-
 }
 
-
-
+/** Shape returned by POST /api/gemini/analyze (Project Blueprint). */
 export interface ArchitectResponse {
-
   name: string;
-
   description: string;
-
   techStack: string[];
-
   timeline: string;
-
   budget: string;
-
   phases: Array<{
-
     name: string;
-
     duration: string;
-
     details: string;
-
   }>;
-
   recommendations: string[];
-
 }
-
