@@ -27,11 +27,16 @@ export default function Footer(_props: any) {
         </div>
         <div>
           <h2>Explore</h2>
+<<<<<<< HEAD
           <Link to="/products">Products & Work</Link>
           <Link to="/products/xsender">xSender</Link>
           <Link to="/products/lumetry">Lumetry</Link>
           <Link to="/products/leadflow">LeadFlow</Link>
           <Link to="/products/retailflow">RetailFlow</Link>
+=======
+          <Link to="/products/xsender">xSender</Link>
+          <Link to="/portfolio">Our work</Link>
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
           <Link to="/about">About Promptly</Link>
           <Link to="/consultation">Book a consultation</Link>
         </div>

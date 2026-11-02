@@ -50,9 +50,12 @@ try {
     assert.match(html, /<script type="module" crossorigin src="\/assets\//);
     if (route === "/client-portal") assert.ok(html.includes("noindex,follow"));
   }
+<<<<<<< HEAD
   const legacyWork = await fetch(base + "/portfolio", { redirect: "manual" });
   assert.equal(legacyWork.status, 301);
   assert.equal(legacyWork.headers.get("location"), "/products");
+=======
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   assert.equal((await fetch(base + "/unavailable-page")).status, 404);
   assert.equal((await fetch(base + "/robots.txt")).status, 200);
   assert.equal((await fetch(base + "/sitemap.xml")).status, 200);

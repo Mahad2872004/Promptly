@@ -339,8 +339,13 @@
   letter-spacing: 0.06em;
 }
 .expertise-section {
+<<<<<<< HEAD
   background: var(--bg-base);
   color: var(--text-body);
+=======
+  background: #e9efee;
+  color: #435f63;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 .expertise-section .section-heading {
   padding-bottom: 5px;
@@ -350,17 +355,29 @@
   letter-spacing: -0.055em;
 }
 .expertise-showcase {
+<<<<<<< HEAD
   border: 1px solid var(--border);
   border-radius: 20px;
   overflow: hidden;
   background: var(--bg-panel);
+=======
+  border: 1px solid #c4d4d1;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #f7faf8;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   box-shadow: 0 24px 80px #20463e0a;
 }
 .expertise-selector {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+<<<<<<< HEAD
   border-bottom: 1px solid var(--border);
   background: var(--bg-subtle);
+=======
+  border-bottom: 1px solid #cbdad6;
+  background: #e1ebe7;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 .expertise-selector button {
   display: flex;
@@ -368,9 +385,15 @@
   gap: 15px;
   padding: 25px 28px;
   text-align: left;
+<<<<<<< HEAD
   color: var(--text-body);
   font-size: 14px;
   border-right: 1px solid var(--border);
+=======
+  color: #526b67;
+  font-size: 14px;
+  border-right: 1px solid #c4d4d1;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   transition:
     background 0.25s,
     color 0.25s;
@@ -382,23 +405,39 @@
 }
 .expertise-selector button > span {
   font: 10px monospace;
+<<<<<<< HEAD
   color: var(--text-micro);
+=======
+  color: #7d938c;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 .expertise-selector button > svg {
   margin-left: auto;
   width: 17px;
 }
 .expertise-selector button[aria-pressed="true"] {
+<<<<<<< HEAD
   background: var(--brand-navy);
   color: #f3f6fc;
 }
 .expertise-selector button[aria-pressed="true"] > span {
   color: var(--accent-solid);
+=======
+  background: #102d30;
+  color: #f1f9f4;
+}
+.expertise-selector button[aria-pressed="true"] > span {
+  color: #58cbb6;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 .expertise-selector button[aria-pressed="true"]:after {
   content: "";
   height: 3px;
+<<<<<<< HEAD
   background: var(--accent-solid);
+=======
+  background: #40cbb2;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   position: absolute;
   bottom: 0;
   left: 0;
@@ -414,28 +453,44 @@
 }
 .expertise-copy .kicker {
   font-size: 9px;
+<<<<<<< HEAD
   color: var(--accent);
+=======
+  color: #348172;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 .expertise-copy h3 {
   font-size: 43px;
   font-weight: 500;
   letter-spacing: -0.05em;
   line-height: 1.08;
+<<<<<<< HEAD
   color: var(--text-heading);
+=======
+  color: #18342f;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   margin: 20px 0;
 }
 .expertise-copy > p:not(.kicker) {
   font-size: 14px;
   line-height: 1.8;
   max-width: 380px;
+<<<<<<< HEAD
   color: var(--text-body);
+=======
+  color: #587169;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 .expertise-copy ul {
   display: grid;
   gap: 10px;
   margin: 25px 0 30px;
   font-size: 12px;
+<<<<<<< HEAD
   color: var(--text-body);
+=======
+  color: #4f6c60;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 .expertise-copy li {
   display: flex;
@@ -443,12 +498,21 @@
   align-items: center;
 }
 .expertise-copy li svg {
+<<<<<<< HEAD
   color: var(--accent);
 }
 .expertise-copy .action {
   background: var(--accent-solid);
   color: var(--accent-contrast);
   border-color: var(--accent-solid);
+=======
+  color: #228574;
+}
+.expertise-copy .action {
+  background: #133a33;
+  color: #f2faf5;
+  border-color: #133a33;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   font-size: 12px;
 }
 .expertise-active .technical-canvas {
@@ -458,27 +522,44 @@
 }
 .expertise-bottom {
   padding: 18px 28px;
+<<<<<<< HEAD
   border-top: 1px solid var(--border);
+=======
+  border-top: 1px solid #d5e0db;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   display: flex;
   justify-content: space-between;
   align-items: center;
   font: 8px monospace;
   letter-spacing: 0.08em;
+<<<<<<< HEAD
   color: var(--text-micro);
+=======
+  color: #6a8178;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 .expertise-bottom a {
   font: 11px inherit;
   display: flex;
   gap: 15px;
   align-items: center;
+<<<<<<< HEAD
   color: var(--accent);
+=======
+  color: #164d40;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 .expertise-note {
   margin-top: 30px;
 }
 .expertise-note .note-symbol {
+<<<<<<< HEAD
   background: var(--accent-soft);
   color: var(--accent);
+=======
+  background: #dce9e2;
+  color: #1e755c;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 .composed-hero {
   display: grid;
@@ -656,7 +737,11 @@
   margin-bottom: 16px;
 }
 .product-band {
+<<<<<<< HEAD
   background: var(--brand-navy);
+=======
+  background: #10292c;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   position: relative;
   overflow: hidden;
 }
@@ -665,7 +750,11 @@
   position: absolute;
   width: 800px;
   height: 800px;
+<<<<<<< HEAD
   border: 1px solid #233146;
+=======
+  border: 1px solid #386258;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   border-radius: 50%;
   right: -400px;
   top: 100px;
@@ -703,7 +792,11 @@
 .product-detail-preview {
   position: relative;
   padding: 60px !important;
+<<<<<<< HEAD
   background: var(--brand-navy);
+=======
+  background: linear-gradient(135deg, #143c3c, #111e30);
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   border: 1px solid #2e4b53;
   border-radius: 22px;
   margin-bottom: 75px !important;
@@ -862,6 +955,7 @@
   margin-block: 25px 90px;
 }
 .booking-panel {
+<<<<<<< HEAD
   background: var(--brand-navy);
   border: 1px solid #233146;
   border-radius: 16px;
@@ -881,6 +975,27 @@
 }
 .booking-panel .text-link {
   color: #f3f6fc;
+=======
+  background: #153a38;
+  border: 1px solid #35695b;
+  border-radius: 16px;
+  padding: 38px;
+  color: #a9cbc1;
+  box-shadow: 0 25px 60px #0002;
+}
+.booking-panel h2 {
+  color: #eff8f2;
+  font-size: 39px;
+}
+.booking-panel .kicker {
+  color: #68c9ac;
+}
+.booking-panel p {
+  color: #a9cbc1;
+}
+.booking-panel .text-link {
+  color: #d0e8dc;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 .contact-details-column {
   background: var(--bg-subtle);
@@ -905,8 +1020,13 @@
   box-shadow: 0 0 0 3px #2bc5ac22 !important;
 }
 .closing {
+<<<<<<< HEAD
   background: var(--bg-subtle) !important;
   color: var(--text-body) !important;
+=======
+  background: #daf0e5 !important;
+  color: #294b40 !important;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   border-top: 0 !important;
   margin-top: 45px;
   position: relative;
@@ -919,7 +1039,11 @@
   bottom: -140px;
   font-size: 530px;
   line-height: 1;
+<<<<<<< HEAD
   color: var(--border);
+=======
+  color: #b3d8c7;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   pointer-events: none;
   font-weight: 300;
 }
@@ -929,11 +1053,16 @@
   gap: 80px;
 }
 .closing h2 {
+<<<<<<< HEAD
   color: var(--text-heading) !important;
+=======
+  color: #14392f !important;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   font-size: clamp(42px, 4.5vw, 65px);
   letter-spacing: -0.055em;
 }
 .closing .kicker {
+<<<<<<< HEAD
   color: var(--accent) !important;
 }
 .closing p {
@@ -950,19 +1079,45 @@
 .site-footer {
   padding-top: 65px;
   background: var(--brand-navy) !important;
+=======
+  color: #3b8067 !important;
+}
+.closing p {
+  color: #4b7161 !important;
+}
+.closing .action.primary {
+  background: #153e32;
+  color: #f3faf5;
+  border-color: #153e32;
+}
+.closing .text-link {
+  color: #265942;
+}
+.site-footer {
+  padding-top: 65px;
+  background: #091722 !important;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 .footer-signature {
   font-size: clamp(80px, 17vw, 250px);
   letter-spacing: -0.085em;
   line-height: 0.85;
+<<<<<<< HEAD
   color: #1b293a;
+=======
+  color: #18323c;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   font-weight: 500;
   padding-block: 60px 0;
   overflow: hidden;
   user-select: none;
 }
 .footer-signature span {
+<<<<<<< HEAD
   color: var(--accent-solid);
+=======
+  color: #23685b;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 .footer-top {
   padding-bottom: 45px;
@@ -1252,7 +1407,11 @@
     min-height: 54px;
     padding: 16px 20px;
     font-size: 13px;
+<<<<<<< HEAD
     border-bottom: 1px solid var(--border);
+=======
+    border-bottom: 1px solid #c4d4d1;
+>>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
     border-right: 0;
   }
   .expertise-selector button > svg {
