@@ -16,3 +16,4 @@ shots/
 # Browser-verification artifacts
 shots/
 .gitignore
+dist-ssr

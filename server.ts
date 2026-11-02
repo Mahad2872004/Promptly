@@ -1,5 +1,5 @@
 import express from "express";
-import { pageMeta } from "./src/seo";
+import { pageMeta, privateMeta, REDIRECTS } from "./src/seo";
 import path from "path";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, Type } from "@google/genai";
@@ -384,14 +384,16 @@ async function runServer() {
   } else {
     // Service static built outputs
     const distPath = path.join(process.cwd(), "dist");
-    app.get(["/portfolio", "/portfolio/"], (_req, res) =>
-      res.redirect(301, "/products"),
-    );
+    for (const [from, to] of Object.entries(REDIRECTS))
+      app.get([from, `${from}/`], (_req, res) => res.redirect(301, to));
     app.use(express.static(distPath, { redirect: false }));
     app.get("*", (req, res) => {
       const route = req.path.replace(/\/+$/, "") || "/";
       if (pageMeta[route])
         return res.sendFile(path.join(distPath, route, "index.html"));
+      // Real but unindexed routes (e.g. /styleguide): the SPA shell, 200.
+      if (privateMeta[route])
+        return res.sendFile(path.join(distPath, "index.html"));
       res.status(404).sendFile(path.join(distPath, "index.html"));
     });
   }

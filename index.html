@@ -3,27 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="canonical" href="https://promptly-seven-opal.vercel.app/" /><meta property="og:title" content="Promptly — Software engineering, automation &amp; products" /><meta property="og:description" content="Custom software, intelligent workflows, and products built with purpose." /><meta property="og:type" content="website" /><meta property="og:url" content="https://promptly-seven-opal.vercel.app/" /><meta name="twitter:card" content="summary" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="https://promptly-seven-opal.vercel.app/" /><meta property="og:title" content="Promptly — Software engineering, automation &amp; products" /><meta property="og:description" content="Custom software, intelligent workflows, and products built with purpose." /><meta property="og:type" content="website" /><meta property="og:url" content="https://promptly-seven-opal.vercel.app/" /><meta property="og:image" content="https://promptly-seven-opal.vercel.app/og/default.png" /><meta property="og:image:width" content="1200" /><meta property="og:image:height" content="630" /><meta name="twitter:card" content="summary_large_image" /><meta name="twitter:image" content="https://promptly-seven-opal.vercel.app/og/default.png" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Software engineering, automation &amp; products | Promptly</title>
     <meta name="description" content="Promptly builds custom software, intelligent business workflows, and proprietary SaaS products. Explore our engineering services and xSender." />
-    <meta name="theme-color" content="#f7f9fc" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#080f1c" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fafbfc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b111a" media="(prefers-color-scheme: dark)" />
+    <link rel="preload" href="/fonts/inter-latin-opsz.woff2" as="font" type="font/woff2" crossorigin />
     <script>
-      // Applies the stored theme before first paint so a dark-mode user never
-      // sees a white flash. Light is the default when nothing is stored.
+      // Applies the theme before first paint so nobody sees a flash: the
+      // stored choice if there is one, otherwise the OS preference.
       // Mirrors resolveInitialTheme() in src/theme/ThemeProvider.tsx.
       (function () {
+        var theme;
         try {
           var stored = localStorage.getItem('promptly-theme');
-          var theme =
-            stored === 'dark' || stored === 'light'
-              ? stored
-              : 'dark';
-          if (theme === 'dark') document.documentElement.classList.add('dark');
-          document.documentElement.style.colorScheme = theme;
+          if (stored === 'dark' || stored === 'light') theme = stored;
         } catch (e) {
-          /* storage blocked — fall through to the light default */
+          /* storage blocked — fall back to the OS preference */
         }
+        if (!theme)
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        if (theme === 'dark') document.documentElement.classList.add('dark');
+        document.documentElement.style.colorScheme = theme;
       })();
     </script>
   </head>

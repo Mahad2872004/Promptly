@@ -12,8 +12,14 @@ export interface ProductDefinition {
   url: string;
   path: string;
   features: { title: string; text: string }[];
+  /** Channels/platforms named in the product's own copy. */
+  integrations?: ("whatsapp" | "instagram" | "facebook" | "shopify")[];
+  /** The public demo can be embedded in the page (no frame-blocking headers). */
+  embeddableDemo?: boolean;
   preview: {
     src: string;
+    /** 640w + full-width WebP; pair with a `sizes` that matches the slot. */
+    srcSet: string;
     alt: string;
     caption: string;
     width: number;
@@ -36,6 +42,8 @@ export const products: ProductDefinition[] = [
       "The public restaurant demo lets you explore the conversation flow. Channel setup and account options are explained on the xSender website.",
     url: "https://xsender-seven.vercel.app/",
     path: "/products/xsender",
+    integrations: ["whatsapp", "instagram", "facebook"],
+    embeddableDemo: true,
     features: [
       {
         title: "Answer with context",
@@ -51,11 +59,12 @@ export const products: ProductDefinition[] = [
       },
     ],
     preview: {
-      src: "/images/products/xsender.png",
+      src: "/images/products/xsender.webp",
+      srcSet: "/images/products/xsender-640.webp 640w, /images/products/xsender.webp 1272w",
       alt: "xSender live restaurant demo with a Cafe Delight conversation and menu, booking, tracking, and staff options",
       caption: "Actual xSender public demo · Cafe Delight example",
-      width: 1280,
-      height: 720,
+      width: 1272,
+      height: 716,
     },
   },
   {
@@ -72,6 +81,7 @@ export const products: ProductDefinition[] = [
     availability:
       "Shopify connection, data import, and performance metrics are available. Automated change detection, explanations, and prioritized recommendations are still in development.",
     url: "https://lumetry-pi.vercel.app/",
+    integrations: ["shopify"],
     path: "/products/lumetry",
     features: [
       {
@@ -88,7 +98,8 @@ export const products: ProductDefinition[] = [
       },
     ],
     preview: {
-      src: "/images/products/lumetry.png",
+      src: "/images/products/lumetry.webp",
+      srcSet: "/images/products/lumetry-640.webp 640w, /images/products/lumetry.webp 1250w",
       alt: "Lumetry workspace showing completed Shopify setup and data-source connection status",
       caption: "Actual Lumetry workspace · Shopify setup and data sources",
       width: 1250,
@@ -125,7 +136,8 @@ export const products: ProductDefinition[] = [
       },
     ],
     preview: {
-      src: "/images/products/leadflow.png",
+      src: "/images/products/leadflow.webp",
+      srcSet: "/images/products/leadflow-640.webp 640w, /images/products/leadflow.webp 1250w",
       alt: "LeadFlow overview with pipeline stages and follow-up overview, without individual contact records",
       caption: "Actual LeadFlow workspace · Pipeline overview",
       width: 1250,
@@ -162,7 +174,8 @@ export const products: ProductDefinition[] = [
       },
     ],
     preview: {
-      src: "/images/products/retailflow.png",
+      src: "/images/products/retailflow.webp",
+      srcSet: "/images/products/retailflow-640.webp 640w, /images/products/retailflow.webp 1440w",
       alt: "RetailFlow point-of-sale interface with product catalog, stock quantities, and an empty current sale",
       caption: "Actual RetailFlow application · Point of sale",
       width: 1440,

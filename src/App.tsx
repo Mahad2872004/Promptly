@@ -1,192 +1,116 @@
-import React, { useState, useEffect } from "react";
-import {
-  Routes,
-  Route,
-  Navigate,
-  useNavigate,
-  useLocation,
-} from "react-router-dom";
-import { ViewType } from "./types";
-import { products } from "./data/products";
-import { ProductDetail } from "./components/ProductPortfolio";
-import XSenderProject from "./components/XSenderProject";
+import React, { lazy, Suspense, useEffect, useRef } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { motion } from "motion/react";
 import Seo from "./components/Seo";
-import MotionExperience from "./components/MotionExperience";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import AISolutionsView from "./components/AISolutionsView";
-import SoftwareDevelopmentView from "./components/SoftwareDevelopmentView";
-import DigitalTransformationView from "./components/DigitalTransformationView";
-import StartupSupportView from "./components/StartupSupportView";
-import AIArchitectView from "./components/AIArchitectView";
-import PortalView from "./components/PortalView";
-import ContactView from "./components/ContactView";
-import StartupsView from "./components/StartupsView";
-import EcommerceView from "./components/EcommerceView";
-import RealEstateView from "./components/RealEstateView";
-import EnterpriseView from "./components/EnterpriseView";
+import { SiteHeader } from "./components/site/SiteHeader";
+import { SiteFooter } from "./components/site/SiteFooter";
+import { CommandPaletteProvider } from "./components/site/CommandPalette";
+import Home from "./pages/home/Home";
+import NotFound from "./pages/NotFound";
+import { PageSkeleton } from "./components/ui/PageSkeleton";
+import { useChatWidgetTheme } from "./components/site/useHideChatWidget";
+import { REDIRECTS } from "./seo";
+import { products } from "./data/products";
+import { allServices } from "./content/services";
 
-import { VIEW_PATHS, PATH_TO_VIEW } from "./routes";
-import {
-  Home,
-  Services,
-  Products,
-  XSender,
-  About,
-  Consultation,
-  Intro,
-} from "./components/Marketing";
+// Home ships in the main bundle (it's the landing page); every other route is
+// split into its own chunk and loaded on navigation.
+const ServicesOverview = lazy(() => import("./pages/services/ServicesOverview"));
+const ServicePage = lazy(() => import("./pages/service/ServicePage").then((m) => ({ default: m.ServicePage })));
+const ProductsOverview = lazy(() => import("./pages/products/ProductsOverview"));
+const ProductPage = lazy(() => import("./pages/product/ProductPage").then((m) => ({ default: m.ProductPage })));
+const Industries = lazy(() => import("./pages/industries/Industries"));
+const Process = lazy(() => import("./pages/process/Process"));
+const About = lazy(() => import("./pages/about/About"));
+const Faq = lazy(() => import("./pages/faq/Faq"));
+const Contact = lazy(() => import("./pages/contact/Contact"));
+const Blueprint = lazy(() => import("./pages/blueprint/Blueprint"));
+const PortalDemo = lazy(() => import("./pages/portal/PortalDemo"));
+const Privacy = lazy(() => import("./pages/Legal").then((m) => ({ default: m.Privacy })));
+const Terms = lazy(() => import("./pages/Legal").then((m) => ({ default: m.Terms })));
+const Styleguide = lazy(() => import("./pages/Styleguide"));
 
-function AppContent() {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [userDraftPrompt, setUserDraftPrompt] = useState("");
-
-  // Jump, don't glide. A smooth scroll from deep in a long page takes over a
-  // second, during which the incoming route's reveals evaluate against the
-  // wrong scroll position and fire early.
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
-  }, [location.pathname]);
-
-  // Navigate to a ViewType (used by all child components)
-  const setActiveView = (view: ViewType) => {
-    navigate(VIEW_PATHS[view]);
-  };
-
-  // Derive current active view from pathname for header active-state
-  const activeView: ViewType =
-    PATH_TO_VIEW[location.pathname.replace(/\/+$/, "") || "/"] ?? "home";
-
-  /*
-   * `overflow-x-clip` below, NOT `overflow-x-hidden`.
-   *
-   * `overflow: hidden` on either axis turns an element into a scroll
-   * container, and `position: sticky` inside a scroll container sticks to
-   * THAT container rather than the viewport. Since this element never scrolls
-   * itself, every pinned scene silently degraded to normal scrolling while
-   * still reserving its tall height — leaving big empty gaps. `clip` contains
-   * horizontal overflow the same way without creating a scroll container, so
-   * sticky keeps working.
-   */
-  return (
-    <div className="min-h-screen bg-[var(--bg-base)] font-sans text-[var(--text-body)] flex flex-col justify-between relative overflow-x-clip">
-      <div className="relative z-10 flex flex-col min-h-screen justify-between">
-        <Seo />
-        <MotionExperience />
-        <Header activeView={activeView} setActiveView={setActiveView} />
-
-        {/* Keying on pathname remounts the route subtree, so on-mount
-            entrances replay for every navigation rather than only the first. */}
-        <main
-          id="main"
-          tabIndex={-1}
-          className="flex-1"
-          key={location.pathname}
-        >
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/services" element={<Services />} />
-            <Route
-              path="/services/ai-solutions"
-              element={<AISolutionsView setActiveView={setActiveView} />}
-            />
-            <Route
-              path="/services/software-development"
-              element={
-                <SoftwareDevelopmentView setActiveView={setActiveView} />
-              }
-            />
-            <Route
-              path="/services/digital-transformation"
-              element={
-                <DigitalTransformationView setActiveView={setActiveView} />
-              }
-            />
-            <Route
-              path="/services/startup-support"
-              element={<StartupSupportView setActiveView={setActiveView} />}
-            />
-            <Route
-              path="/portfolio"
-              element={<Navigate to="/products" replace />}
-            />
-            <Route
-              path="/ai-architect"
-              element={
-                <AIArchitectView
-                  initialPrompt={userDraftPrompt}
-                  setUserDraftPrompt={setUserDraftPrompt}
-                  setActiveView={setActiveView}
-                />
-              }
-            />
-            <Route path="/about" element={<About />} />
-            <Route
-              path="/client-portal"
-              element={
-                <>
-                  <p className="demo-notice">
-                    Interactive demonstration — sample data and simulated
-                    replies. Changes are not saved.
-                  </p>
-                  <PortalView />
-                </>
-              }
-            />
-            <Route
-              path="/contact"
-              element={<ContactView setActiveView={setActiveView} />}
-            />
-            <Route path="/consultation" element={<Consultation />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/products/xsender" element={<XSender />} />
-            {products.slice(1).map((product) => (
-              <Route
-                key={product.id}
-                path={product.path}
-                element={<ProductDetail product={product} />}
-              />
-            ))}
-            <Route
-              path="/industries/startups"
-              element={<StartupsView setActiveView={setActiveView} />}
-            />
-            <Route
-              path="/industries/ecommerce"
-              element={<EcommerceView setActiveView={setActiveView} />}
-            />
-            <Route
-              path="/industries/realestate"
-              element={<RealEstateView setActiveView={setActiveView} />}
-            />
-            <Route
-              path="/industries/enterprise"
-              element={<EnterpriseView setActiveView={setActiveView} />}
-            />
-            {/* Dedicated project route and an explicit not-found state. */}
-            <Route path="/portfolio/xsender" element={<XSenderProject />} />
-            <Route
-              path="*"
-              element={
-                <>
-                  <Intro
-                    label="404 / PAGE NOT FOUND"
-                    title="This page has moved out of reach."
-                    lead="Use the navigation to explore our services and products, or get in touch with your question."
-                  />
-                </>
-              }
-            />
-          </Routes>
-        </main>
-
-        <Footer setActiveView={setActiveView} />
-      </div>
-    </div>
-  );
+/**
+ * Scroll to the #hash target once it has rendered. Lazy routes may still be
+ * downloading, so keep looking for ~3s of frames.
+ */
+function scrollToHash(id: string, attempts = 180) {
+  const el = document.getElementById(id);
+  if (el) return el.scrollIntoView();
+  if (attempts > 0) requestAnimationFrame(() => scrollToHash(id, attempts - 1));
 }
 
 export default function App() {
-  return <AppContent />;
+  const location = useLocation();
+  useChatWidgetTheme();
+
+  // Jump, don't glide: a long smooth scroll would make the incoming route's
+  // reveals evaluate against the wrong position. Hash links land on target.
+  useEffect(() => {
+    if (location.hash) scrollToHash(decodeURIComponent(location.hash.slice(1)));
+    else window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+  }, [location.pathname, location.hash]);
+
+  // The first page is pre-rendered HTML and must show immediately (and match
+  // the server markup), so only in-app navigations get the fade.
+  const firstRender = useRef(true);
+  useEffect(() => {
+    firstRender.current = false;
+  }, []);
+
+  /*
+   * `overflow-x-clip`, not `overflow-x-hidden`: `hidden` creates a scroll
+   * container, which silently breaks every `position: sticky` inside it.
+   */
+  return (
+    <CommandPaletteProvider>
+      <div className="relative flex min-h-screen flex-col overflow-x-clip bg-bg font-sans text-fg">
+        <Seo />
+        <SiteHeader />
+
+        {/* Keyed on pathname so entrances replay per route; the 200ms fade is
+            the route transition. */}
+        <motion.main
+          id="main"
+          tabIndex={-1}
+          className="flex-1 outline-none"
+          key={location.pathname}
+          initial={firstRender.current ? false : { opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.2 }}
+        >
+          <Suspense fallback={<PageSkeleton />}>
+            <Routes>
+              {Object.entries(REDIRECTS).map(([from, to]) => (
+                <Route key={from} path={from} element={<Navigate to={to} replace />} />
+              ))}
+
+              <Route path="/" element={<Home />} />
+              <Route path="/services" element={<ServicesOverview />} />
+              {allServices.map((s) => (
+                <Route key={s.slug} path={s.path} element={<ServicePage service={s} />} />
+              ))}
+              <Route path="/products" element={<ProductsOverview />} />
+              {products.map((p) => (
+                <Route key={p.id} path={p.path} element={<ProductPage product={p} />} />
+              ))}
+              <Route path="/industries" element={<Industries />} />
+              <Route path="/process" element={<Process />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/faq" element={<Faq />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/blueprint" element={<Blueprint />} />
+              <Route path="/portal-demo" element={<PortalDemo />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
+              <Route path="/styleguide" element={<Styleguide />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
+        </motion.main>
+
+        <SiteFooter />
+      </div>
+    </CommandPaletteProvider>
+  );
 }
