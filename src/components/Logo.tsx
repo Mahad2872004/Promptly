@@ -3,18 +3,12 @@ interface LogoProps {
   className?: string;
   size?: number;
   showText?: boolean;
-  onInverse?: boolean;
 }
 /** Vector interpretation of Promptly's supplied turquoise/orange geometric P. */
-export default function Logo({
-  className = "",
-  size = 36,
-  showText = true,
-  onInverse = false,
-}: LogoProps) {
+export default function Logo({ className = "", size = 36, showText = true }: LogoProps) {
   const id = useId();
   return (
-    <div className={`brand-lockup ${className}`}>
+    <span className={`inline-flex shrink-0 items-center gap-2.5 ${className}`}>
       <svg
         width={size}
         height={size}
@@ -55,10 +49,10 @@ export default function Logo({
         />
       </svg>
       {showText && (
-        <span style={{ color: onInverse ? "#f6f8ff" : "var(--text-heading)" }}>
-          Promptly<span className="brand-period">.</span>
+        <span className="text-[1.1875rem] font-semibold tracking-[-0.03em] text-fg">
+          Promptly<span className="text-spark">.</span>
         </span>
       )}
-    </div>
+    </span>
   );
 }
