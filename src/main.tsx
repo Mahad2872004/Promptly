@@ -1,20 +1,13 @@
-import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import React from "react";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import App from "./App.tsx";
-import { ThemeProvider } from "./theme/ThemeProvider";
+import { Root } from "./Root";
 import "./index.css";
 
-createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <ThemeProvider>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ThemeProvider>
-  </StrictMode>,
-);
+const container = document.getElementById("root")!;
+const app = <Root router={BrowserRouter} />;
 
-import "./marketing.css";
-import "./experience.css";
-import "./art-direction.css";
+// Public routes ship pre-rendered HTML (scripts/build-pages.ts), so hydrate
+// it. The dev server, /styleguide and 404s send an empty shell — render fresh.
+if (container.hasChildNodes()) hydrateRoot(container, app);
+else createRoot(container).render(app);
