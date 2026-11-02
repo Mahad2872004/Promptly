@@ -97,23 +97,6 @@
     #071923 100%
   );
 }
-<<<<<<< HEAD
-=======
-.team-index {
-  position: absolute;
-  top: 18px;
-  left: 17px;
-  z-index: 2;
-  font: 9px monospace;
-  letter-spacing: 0.12em;
-  color: #edf7f3;
-  background: #0a2429b3;
-  backdrop-filter: blur(8px);
-  padding: 7px 9px;
-  border: 1px solid #ffffff25;
-  border-radius: 4px;
-}
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 .portrait-corner {
   position: absolute;
   top: 17px;

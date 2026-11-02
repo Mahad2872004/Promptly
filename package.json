@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
   "name": "react-example",
   "private": true,
@@ -43,49 +42,3 @@
     "vite": "^6.2.3"
   }
 }
-=======
-{
-  "name": "react-example",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "node init && tsx server.ts",
-    "build": "node init && vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs && tsx scripts/build-pages.ts",
-    "start": "node init && node dist/server.cjs",
-    "clean": "rm -rf dist server.js",
-    "lint": "tsc --noEmit",
-    "test:build": "node scripts/verify-build.mjs"
-  },
-  "dependencies": {
-    "@google/genai": "^1.29.0",
-    "@supabase/supabase-js": "^2.110.8",
-    "@tailwindcss/vite": "^4.1.14",
-    "@vitejs/plugin-react": "^5.0.4",
-    "dotenv": "^17.2.3",
-    "express": "^4.21.2",
-    "lucide-react": "^0.546.0",
-    "motion": "^12.23.24",
-    "node-fetch": "^3.3.2",
-    "react": "^19.0.1",
-    "react-dom": "^19.0.1",
-    "react-icons": "^5.7.0",
-    "react-router-dom": "^7.18.2",
-    "vite": "^6.2.3"
-  },
-  "devDependencies": {
-    "@types/express": "^4.17.21",
-    "@types/node": "^22.14.0",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4",
-    "autoprefixer": "^10.4.21",
-    "esbuild": "^0.25.0",
-    "playwright": "^1.62.1",
-    "prettier": "^3.9.10",
-    "tailwindcss": "^4.1.14",
-    "tsx": "^4.21.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.3"
-  }
-}
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db

@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 import { products } from "./data/products";
-=======
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 export const SITE_URL = "https://promptly-seven-opal.vercel.app";
 export const pageMeta: Record<string, [string, string]> = {
   "/": [
@@ -29,25 +26,13 @@ export const pageMeta: Record<string, [string, string]> = {
     "Product discovery, MVP development, technical architecture, and launch support for founders.",
   ],
   "/products": [
-<<<<<<< HEAD
     "Products & Work",
     "Explore xSender, Lumetry, LeadFlow, and RetailFlow: messaging automation, Shopify metrics, lead management, and retail operations.",
-=======
-    "Our software products",
-    "Explore software built and owned by Promptly, including xSender for WhatsApp order management.",
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   ],
   "/products/xsender": [
     "xSender — WhatsApp order management",
     "Explore xSender, a Promptly product focused on organizing WhatsApp commerce workflows. Request a product walkthrough.",
   ],
-<<<<<<< HEAD
-=======
-  "/portfolio": [
-    "Our work",
-    "Explore Promptly’s product direction and working software demonstrations, including xSender and our project architect.",
-  ],
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   "/portfolio/xsender": [
     "xSender — product project",
     "Explore the problem, product direction, and order-management workflow behind xSender.",
@@ -89,7 +74,6 @@ export const pageMeta: Record<string, [string, string]> = {
     "Explore phased system modernization, architecture, and business software.",
   ],
 };
-<<<<<<< HEAD
 
 for (const product of products) {
   pageMeta[product.path] = [
@@ -97,5 +81,3 @@ for (const product of products) {
     product.detail,
   ];
 }
-=======
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db

@@ -5,14 +5,11 @@ import {
   TechnicalCanvas,
 } from "./DesignVisuals";
 import { products } from "../data/products";
-<<<<<<< HEAD
 import {
   ProductCollection,
   ProductDetail,
   ProductImage,
 } from "./ProductPortfolio";
-=======
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 import { Link } from "react-router-dom";
 import {
   ArrowRight,
@@ -115,79 +112,7 @@ export function Intro({
   );
 }
 export function ProductPreview() {
-<<<<<<< HEAD
   return <ProductImage product={products[0]} />;
-=======
-  return (
-    <figure className="product-preview">
-      <div className="preview-bar">
-        <span className="xsender-word">
-          <span>↗</span> xSender
-        </span>
-        <span>ORDER WORKSPACE</span>
-        <span className="avatar-dot">S</span>
-      </div>
-      <div className="preview-body">
-        <aside>
-          <span className="preview-selected">▦ &nbsp; Orders</span>
-          <span>◷ &nbsp; Activity</span>
-          <span>☷ &nbsp; Customers</span>
-          <span>⚙ &nbsp; Settings</span>
-        </aside>
-        <div className="order-content">
-          <div className="order-heading">
-            <div>
-              <small>YOUR WORKSPACE</small>
-              <h3>Orders, organized.</h3>
-            </div>
-            <span className="sample-label">Sample data</span>
-          </div>
-          <div className="order-summary">
-            <span>
-              <small>New</small>
-              <strong>08</strong>
-            </span>
-            <span>
-              <small>In progress</small>
-              <strong>12</strong>
-            </span>
-            <span>
-              <small>Completed</small>
-              <strong>24</strong>
-            </span>
-          </div>
-          <div className="order-table">
-            <div className="order-row table-label">
-              <span>ORDER</span>
-              <span>CUSTOMER</span>
-              <span>STATUS</span>
-            </div>
-            {[
-              ["#1048", "Sample customer A", "New"],
-              ["#1047", "Sample customer B", "Processing"],
-              ["#1046", "Sample customer C", "Completed"],
-            ].map((row) => (
-              <div className="order-row" key={row[0]}>
-                <strong>{row[0]}</strong>
-                <span>{row[1]}</span>
-                <span className="order-status">{row[2]}</span>
-              </div>
-            ))}
-          </div>
-          <div className="order-event">
-            <MessageSquare size={17} />
-            <span>Conversation → Order → Follow-through</span>
-            <ArrowRight size={15} />
-          </div>
-        </div>
-      </div>
-      <figcaption>
-        Illustrative interface · Product scope and availability confirmed on
-        enquiry.
-      </figcaption>
-    </figure>
-  );
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 export function Capabilities() {
   return <ExpertiseShowcase />;
@@ -326,11 +251,7 @@ export function Home() {
           <div className="product-feature">
             <div>
               <span className="product-label">
-<<<<<<< HEAD
                 BUILT BY PROMPTLY / CONVERSATION AUTOMATION
-=======
-                BUILT BY PROMPTLY / COMMERCE
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
               </span>
               <h3 className="product-name">
                 xSender<span>↗</span>
@@ -341,22 +262,12 @@ export function Home() {
                 Clarity out.
               </h2>
               <p>
-<<<<<<< HEAD
                 Customer conversations across WhatsApp, Instagram, and Facebook.
                 Answers, orders, bookings, and a clear handoff to your team.
               </p>
               <Action to="/products/xsender">Meet xSender</Action>
               <Link className="text-link" to="/products">
                 Explore products & work <ArrowRight size={16} />
-=======
-                A focused product for organizing WhatsApp commerce. Connecting
-                the customer conversation to the operational work behind every
-                order.
-              </p>
-              <Action to="/products/xsender">Meet xSender</Action>
-              <Link className="text-link" to="/portfolio">
-                Explore the work <ArrowRight size={16} />
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
               </Link>
             </div>
             <ProductPreview />
@@ -422,7 +333,6 @@ export function Services() {
     </>
   );
 }
-<<<<<<< HEAD
 export function XSender() {
   return (
     <>
@@ -431,125 +341,15 @@ export function XSender() {
     </>
   );
 }
-=======
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 export function Products() {
   return (
     <>
       <Intro
-<<<<<<< HEAD
         label="PRODUCTS & WORK"
         title="The thinking behind the software."
         lead="From customer conversations to commerce intelligence, lead management, and retail operations. Explore the software we build and the problems it addresses."
       />
       <ProductCollection />
-=======
-        label="THE PRODUCT PORTFOLIO"
-        title="Built here. Made to be useful."
-        lead="Alongside client work, we develop software of our own. Focused products for the everyday problems worth solving well."
-      />
-      {products.map((p) => (
-        <section className="shell product-feature product-listing" key={p.id}>
-          <div>
-            <p className="kicker">{p.audience}</p>
-            <h2>{p.name}</h2>
-            <h3>{p.description}</h3>
-            <p>{p.detail}</p>
-            <Action to={p.path}>Explore {p.name}</Action>
-          </div>
-          {p.preview.kind === "image" ? (
-            <img
-              className="product-actual-preview"
-              src={p.preview.src}
-              alt={p.preview.alt}
-              loading="lazy"
-            />
-          ) : (
-            <ProductPreview />
-          )}
-        </section>
-      ))}
-      <Closing />
-    </>
-  );
-}
-export function XSender() {
-  return (
-    <>
-      <Intro
-        label="A PROMPTLY PRODUCT / XSENDER"
-        title="From a conversation to an organized order."
-        lead="xSender focuses on WhatsApp order management for e-commerce businesses. A clearer way to connect customer conversations with operational follow-through."
-      />
-      <section className="shell product-detail-preview">
-        <ProductPreview />
-      </section>
-      <section className="shell section-pad split-story">
-        <div>
-          <p className="kicker">THE PROBLEM</p>
-          <h2>
-            Conversations move fast.
-            <br />
-            Operations need structure.
-          </h2>
-        </div>
-        <div>
-          <p>
-            When orders arrive in chats, details can become scattered across
-            conversations and spreadsheets. Keeping track of what needs
-            attention becomes a task of its own.
-          </p>
-          <p>
-            xSender’s product direction brings those steps into a focused order
-            workflow. Contact us to see the current product, discuss your
-            process, and confirm supported capabilities.
-          </p>
-          <Action to="/contact?product=xsender">
-            Request a product walkthrough
-          </Action>
-        </div>
-      </section>
-      <section className="shell workflow-story">
-        <p className="kicker">THE PRODUCT WORKFLOW</p>
-        <div>
-          {[
-            "Customer conversation",
-            "Order details",
-            "Operational review",
-            "Customer follow-through",
-          ].map((s, i) => (
-            <article key={s}>
-              <span>0{i + 1}</span>
-              <h3>{s}</h3>
-            </article>
-          ))}
-        </div>
-      </section>
-      <Closing />
-    </>
-  );
-}
-export function Work() {
-  return (
-    <>
-      <Intro
-        label="OUR WORK"
-        title="The thinking behind the software."
-        lead="Explore our own product direction and the working tools in this site. We show what can be inspected, without attaching unverified customer results."
-      />
-      <section className="shell product-feature product-listing">
-        <div>
-          <p className="kicker">01 / PROPRIETARY PRODUCT</p>
-          <h2>xSender</h2>
-          <p>
-            A focused approach to organizing WhatsApp commerce. Explore the
-            business problem, product direction, and illustrative workflow.
-          </p>
-          <Action to="/portfolio/xsender">Explore the project</Action>
-        </div>
-        <ProductPreview />
-      </section>
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
       <section className="shell section-pad work-tools">
         <article>
           <TechnicalCanvas kind="automation" small />

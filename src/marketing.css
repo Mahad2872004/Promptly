@@ -1856,21 +1856,8 @@ main:focus {
   margin-top: 16px;
 }
 .expertise-section {
-<<<<<<< HEAD
   background: var(--bg-base);
   color: var(--text-body);
-=======
-  background: #f4f7fb;
-  color: #526174;
-  --bg-base: #f4f7fb;
-  --bg-subtle: #e9f0f6;
-  --bg-panel: #fff;
-  --text-heading: #101e31;
-  --text-body: #526174;
-  --text-micro: #637389;
-  --border: #d5dfea;
-  --accent: #007e82;
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 .expertise-section .section-heading {
   margin-bottom: 55px;
@@ -1932,11 +1919,7 @@ main:focus {
 }
 .expertise-note strong {
   font-weight: 500;
-<<<<<<< HEAD
   color: var(--text-heading);
-=======
-  color: #1b2f46;
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
 }
 .expertise-note > a {
   display: flex;
@@ -1944,17 +1927,10 @@ main:focus {
   align-items: center;
   margin-left: auto;
   font-size: 12px;
-<<<<<<< HEAD
   color: var(--accent);
 }
 .product-band {
   background: var(--brand-navy);
-=======
-  color: #007e82;
-}
-.product-band {
-  background: #0b1525;
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
   color: #a1b1c7;
   padding-block: 95px;
   position: relative;

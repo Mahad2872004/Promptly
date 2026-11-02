@@ -43,7 +43,6 @@ Replaced the plain expertise rows with an accessible, keyboard-operated capabili
 Implementation lives in DesignVisuals.tsx and art-direction.css, using existing Motion. Illustrations are identified as system concepts; no customer proof or product availability claims were added. Motion respects reduced-motion preferences. New UI uses native buttons and visible keyboard focus.
 
 Validation: TypeScript, build and 19-route production smoke suite passed. Browser sweep of 19 routes × 3 widths (390/768/1440) found no horizontal overflow, broken loaded images or duplicate/missing H1s. Fixed a visual-class collision found in the mobile review, then rechecked affected templates at all three widths. Verified keyboard capability selection, mobile menu/Escape, dark/light appearance and contact form visibility. No deployment performed. Live submission/AI credentials and real product screenshots remain the same outstanding limitations.
-<<<<<<< HEAD
 
 
 ## Product portfolio update — 30 October 2026
@@ -55,5 +54,3 @@ Sources inspected directly: https://xsender-seven.vercel.app/ (public demo), htt
 Lumetry analysis/recommendations remain explicitly in development. LeadFlow team invitations remain planned, email requires configuration, and automation-tool connections are HTTP setups. No customer outcome metrics were added.
 
 Validation: TypeScript and production build passed; 22-route production checks passed with local-network permission. Browser review covered desktop Products/Lumetry and mobile LeadFlow, RetailFlow, Products, Work, and menu navigation at 390px; no horizontal overflow on checked pages. Existing contact, booking, estimator, and portal implementations were preserved. Not deployed.
-=======
->>>>>>> f2352d47e3c42130d53f9684049ede027c1ae7db
